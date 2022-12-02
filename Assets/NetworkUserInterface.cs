@@ -11,10 +11,13 @@ public class NetworkUserInterface : MonoBehaviour
     [SerializeField] private Button hostButton;
     [SerializeField] private Button joinButton;
 
-    void Start()
+    void Awake()
     {
         hostButton.onClick.AddListener(() => {
             NetworkManager.Singleton.StartHost();
+        });
+        joinButton.onClick.AddListener(() => {
+            NetworkManager.Singleton.StartClient();
         });
     }
 }
