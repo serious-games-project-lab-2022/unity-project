@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3ea523a2b414991a0718fef603482e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnDirection: 0
+  turnDirection: 0
 --- !u!1 &1205734429
 GameObject:
   m_ObjectHideFlags: 0
@@ -553,8 +553,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f3f4e2e37714db081a31f646d2d001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movementSpeed: 300
-  _inputService: {fileID: 1068180339}
+  movementSpeed: 300
+  inputService: {fileID: 1068180339}
 --- !u!50 &1676648631
 Rigidbody2D:
   serializedVersion: 4
