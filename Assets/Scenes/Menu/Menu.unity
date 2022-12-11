@@ -489,6 +489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pilotButton: {fileID: 399535500}
   instructorButton: {fileID: 906655791}
+  sharedGameStatePrefab: {fileID: 7932373952344602076, guid: fbe69fea390954826b281c250a831928, type: 3}
 --- !u!114 &1147028613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,7 +814,12 @@ MonoBehaviour:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1349277903}
     PlayerPrefab: {fileID: 0}
-    NetworkPrefabs: []
+    NetworkPrefabs:
+    - Override: 0
+      Prefab: {fileID: 7932373952344602079, guid: fbe69fea390954826b281c250a831928, type: 3}
+      SourcePrefabToOverride: {fileID: 7932373952344602079, guid: fbe69fea390954826b281c250a831928, type: 3}
+      SourceHashToOverride: 0
+      OverridingTargetPrefab: {fileID: 0}
     TickRate: 30
     ClientConnectionBufferTimeout: 10
     ConnectionApproval: 0
@@ -866,7 +872,7 @@ MonoBehaviour:
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
     Address: 127.0.0.1
-    Port: 7777
+    Port: 7778
     ServerListenAddress: 
   DebugSimulator:
     PacketDelayMS: 0

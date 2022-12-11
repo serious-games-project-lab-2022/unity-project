@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using TMPro;
+
 using Unity.Netcode;
 
 using UnityEngine;
@@ -8,16 +10,11 @@ using UnityEngine.UI;
 
 public class NetworkUserInterface : MonoBehaviour
 {
-    [SerializeField] private Button hostButton;
-    [SerializeField] private Button joinButton;
+    [SerializeField] private TextMeshProUGUI hashText;
+    [SerializeField] private SharedGameState sharedGameState;
 
     void Awake()
     {
-        hostButton.onClick.AddListener(() => {
-            NetworkManager.Singleton.StartHost();
-        });
-        joinButton.onClick.AddListener(() => {
-            NetworkManager.Singleton.StartClient();
-        });
+        hashText.text = sharedGameState.GetComponent<NetworkObject>().GetHashCode().ToString();
     }
 }

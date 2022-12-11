@@ -9,6 +9,7 @@ public class MenuUserInterface : NetworkBehaviour
 {
     [SerializeField] private Button pilotButton;
     [SerializeField] private Button instructorButton;
+    [SerializeField] private NetworkObject sharedGameStatePrefab;
 
     void Start()
     {
@@ -16,6 +17,12 @@ public class MenuUserInterface : NetworkBehaviour
             // Don't do anything if the host connects to it's own server
             if (clientIdentifier == 0) {
                 return;
+            }
+
+            if (IsServer) {
+                var sharedGameState = Instantiate(sharedGameStatePrefab);
+                DontDestroyOnLoad(sharedGameState);
+                sharedGameState.Spawn();
             }
 
             var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";
