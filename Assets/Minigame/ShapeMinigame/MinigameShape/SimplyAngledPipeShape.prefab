@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
+      propertyPath: m_Size.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Size.y
       value: 5
       objectReference: {fileID: 0}
@@ -33,7 +37,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[0].first.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[0].first.y
@@ -41,7 +45,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[1].first.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[1].first.y
@@ -49,7 +53,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[2].first.x
-      value: -3
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[2].first.y
@@ -57,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[3].first.x
-      value: -2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6896690793799064439, guid: 3c0f0c9963b054f9e89734017fc65626, type: 3}
       propertyPath: m_Tiles.Array.data[3].first.y
