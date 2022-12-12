@@ -77,8 +77,6 @@ public class MinigameShape : MonoBehaviour
         tilemapRenderer.sortingOrder = 0;
     }
 
-    
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isBeingDragged && collision.gameObject.tag == "MinigameShape")
