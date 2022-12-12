@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class MinigameShape : MonoBehaviour
 {
-    [HideInInspector] public TilemapCollider2D hitbox;
+    [HideInInspector] public Collider2D hitbox;
     private Rigidbody2D body;
-    private TilemapRenderer tilemapRenderer;
+    private SpriteRenderer spriteRenderer;
     private Tilemap tilemap;
 
     private Vector2 grabOffset = Vector2.zero;
@@ -20,8 +20,8 @@ public class MinigameShape : MonoBehaviour
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        hitbox = GetComponent<TilemapCollider2D>();
-        tilemapRenderer = GetComponent<TilemapRenderer>();
+        hitbox = GetComponent<Collider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         tilemap = GetComponent<Tilemap>();
 
         oldPosition = new Vector2(body.position.x, body.position.y);
@@ -41,7 +41,7 @@ public class MinigameShape : MonoBehaviour
                 }
             }
 
-            var newPosition = Snapping.Snap(to - grabOffset, Vector2.one);
+            var newPosition = Snapping.Snap(to - grabOffset, Vector2.one * 0.5f);
             body.MovePosition(newPosition);
         }
     }
@@ -70,22 +70,22 @@ public class MinigameShape : MonoBehaviour
 
     private void DrawOnTopOfOthers()
     {
-        tilemapRenderer.sortingOrder = 1;
+        GetComponent<Renderer>().sortingOrder = 1;
     }
 
     private void DrawOnSameLevelAsOthers()
     {
-        tilemapRenderer.sortingOrder = 0;
+        GetComponent<Renderer>().sortingOrder = 0;
     }
 
     private void DecreaseOpacity()
     {
-        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.5f);
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
     }
 
     private void ResetOpacity()
     {
-        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
+        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -95,11 +95,20 @@ public class MinigameShape : MonoBehaviour
             isIntersecting = true;
             DecreaseOpacity();
         }
+
+        if (collision.gameObject.tag == "ShapeMinigameArea")
+        {
+            body.position = olderPosition;
+            Release();
+        }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isIntersecting = false;
-        ResetOpacity();
+        if (collision.gameObject.tag == "MinigameShape")
+        {
+            isIntersecting = false;
+            ResetOpacity();
+        }
     }
 }
