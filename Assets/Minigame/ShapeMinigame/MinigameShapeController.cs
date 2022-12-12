@@ -14,26 +14,27 @@ public class MinigameShapeController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && currentlyDraggedShape == null)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             foreach (var shape in shapes)
             {
                 if (shape.hitbox.OverlapPoint(mousePosition))
                 {
-                    if (currentlyDraggedShape == null)
-                    {
-                        currentlyDraggedShape = shape;
-                        currentlyDraggedShape.Grab(at: mousePosition);
-                    }
+                    currentlyDraggedShape = shape;
+                    currentlyDraggedShape.Grab(at: mousePosition);
+                    break;
                 }
             }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            currentlyDraggedShape.Release();
-            currentlyDraggedShape = null;
+            if (currentlyDraggedShape != null)
+            {
+                currentlyDraggedShape.Release();
+                currentlyDraggedShape = null;
+            }
         }
     }
 

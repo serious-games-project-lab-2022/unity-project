@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class MinigameShape : MonoBehaviour
 {
-    public TilemapCollider2D hitbox;
+    [HideInInspector] public TilemapCollider2D hitbox;
     private Rigidbody2D body;
     private TilemapRenderer tilemapRenderer;
     private Tilemap tilemap;
@@ -14,7 +14,7 @@ public class MinigameShape : MonoBehaviour
     private Vector2 oldPosition = Vector2.zero;
     private Vector2 olderPosition = Vector2.zero;
 
-    public bool isBeingDragged = false;
+    [HideInInspector] public bool isBeingDragged = false;
     private bool isIntersecting = false;
 
     private void Start()
@@ -61,6 +61,7 @@ public class MinigameShape : MonoBehaviour
         isBeingDragged = false;
         grabOffset = Vector2.zero;
         DrawOnSameLevelAsOthers();
+        ResetOpacity();
         if (isIntersecting)
         {
             body.position = olderPosition;
@@ -77,18 +78,28 @@ public class MinigameShape : MonoBehaviour
         tilemapRenderer.sortingOrder = 0;
     }
 
+    private void DecreaseOpacity()
+    {
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.5f);
+    }
+
+    private void ResetOpacity()
+    {
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isBeingDragged && collision.gameObject.tag == "MinigameShape")
         {
             isIntersecting = true;
-            tilemap.color += new Color(0, 0, 0, -0.5f);
+            DecreaseOpacity();
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
         isIntersecting = false;
-        tilemap.color += new Color(0, 0, 0, 0.5f);
+        ResetOpacity();
     }
 }
