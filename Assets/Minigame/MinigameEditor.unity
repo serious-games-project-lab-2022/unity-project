@@ -416,7 +416,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1798279381}
   m_Layer: 0
-  m_Name: Minigame
+  m_Name: ShapeMinigame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

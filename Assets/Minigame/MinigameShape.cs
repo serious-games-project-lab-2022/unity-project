@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class MinigamePart : MonoBehaviour
+public class MinigameShape : MonoBehaviour
 {
 
     private Rigidbody2D body;
