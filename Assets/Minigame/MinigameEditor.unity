@@ -249,8 +249,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 1768165773}
     m_Modifications:
     - target: {fileID: 1084938951750807313, guid: d71bd278458b34541a10143538548195, type: 3}
-      propertyPath: m_IsTrigger
+      propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1084938951750807313, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1084938951750807313, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_UsedByComposite
@@ -262,11 +266,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_BodyType
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1000000
       objectReference: {fileID: 0}
     - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_AngularDrag
-      value: 1000000
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_UseAutoMass
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_GravityScale
@@ -275,6 +291,14 @@ PrefabInstance:
     - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_CollisionDetection
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7106469353827429875, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_UseFullKinematicContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8063739888117371409, guid: d71bd278458b34541a10143538548195, type: 3}
+      propertyPath: m_Color.a
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8063739888117371412, guid: d71bd278458b34541a10143538548195, type: 3}
       propertyPath: m_Name
@@ -423,15 +447,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_Mass
-      value: 1000000
+      value: 0.0001
       objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_BodyType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_Simulated
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_LinearDrag
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_AngularDrag
@@ -449,16 +477,36 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256130, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_UseFullKinematicContacts
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256131, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256131, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256131, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_UsedByComposite
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256134, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_Name
       value: PartSquareBlue
       objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256134, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_TagString
+      value: MinigameShape
+      objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256135, guid: eea97590048bf4068aab1f55b483561d, type: 3}
       propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089127045156256135, guid: eea97590048bf4068aab1f55b483561d, type: 3}
+      propertyPath: m_LocalScale.y
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5089127045156256135, guid: eea97590048bf4068aab1f55b483561d, type: 3}

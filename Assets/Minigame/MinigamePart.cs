@@ -10,12 +10,17 @@ public class MinigamePart : MonoBehaviour
     private TilemapCollider2D partCollider;
 
     private Vector2 mouseOffset = Vector2.zero;
+    private Vector2 oldPosition = Vector2.zero;
+    private Vector2 olderPosition = Vector2.zero;
     private bool isBeingDragged = false;
+    private bool isIntersecting = false;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
         partCollider = GetComponent<TilemapCollider2D>();
+        oldPosition = new Vector2(body.position.x, body.position.y);
+        olderPosition = new Vector2(body.position.x, body.position.y);
     }
 
     void Update()
@@ -37,6 +42,10 @@ public class MinigamePart : MonoBehaviour
         {
             isBeingDragged = false;
             mouseOffset = Vector2.zero;
+            if (isIntersecting)
+            {
+                body.position = olderPosition;
+            }
         }
     }
 
@@ -44,14 +53,31 @@ public class MinigamePart : MonoBehaviour
     {
         if (isBeingDragged)
         {
+            if (!isIntersecting)
+            {
+                if (oldPosition != body.position)
+                {
+                    olderPosition = new Vector2(oldPosition.x, oldPosition.y);
+                    oldPosition = new Vector2(body.position.x, body.position.y);
+                }
+            }
+
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             var newPosition = Snapping.Snap(mousePosition - mouseOffset, Vector2.one);
             body.MovePosition(newPosition);
         }
     }
 
-    void OnTrigger()
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Intersecting");
+        if (isBeingDragged && collision.gameObject.tag == "MinigameShape")
+        {
+            isIntersecting = true;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        isIntersecting = false;
     }
 }
