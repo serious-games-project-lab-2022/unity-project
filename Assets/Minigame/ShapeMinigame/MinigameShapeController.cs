@@ -26,7 +26,6 @@ public class MinigameShapeController : MonoBehaviour
                 {
                     currentlyDraggedShape = shape;
                     grabOffset = mousePosition - shape.body.position;
-                    currentlyDraggedShape.Grab();
                     break;
                 }
             }
@@ -36,7 +35,6 @@ public class MinigameShapeController : MonoBehaviour
         {
             if (currentlyDraggedShape != null)
             {
-                currentlyDraggedShape.Release();
                 grabOffset = Vector2.zero;
                 currentlyDraggedShape = null;
             }

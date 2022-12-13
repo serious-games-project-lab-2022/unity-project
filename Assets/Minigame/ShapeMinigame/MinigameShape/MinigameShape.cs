@@ -7,75 +7,34 @@ public class MinigameShape : MonoBehaviour
 {
     [HideInInspector] public Collider2D hitbox;
     public Rigidbody2D body;
-    private SpriteRenderer spriteRenderer;
     private Tilemap tilemap;
-    private TilemapRenderer tilemapRenderer;
-
-    private Vector2 oldPosition = Vector2.zero;
-    private Vector2 olderPosition = Vector2.zero;
-
-    [HideInInspector] public bool isBeingDragged = false;
-    private bool isIntersecting = false;
+    List<Vector3Int> usedCellCoordinates;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<TilemapCollider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         tilemap = GetComponent<Tilemap>();
-        tilemapRenderer = GetComponent<TilemapRenderer>();
-
-        oldPosition = new Vector2(body.position.x, body.position.y);
-        olderPosition = new Vector2(body.position.x, body.position.y);
+        usedCellCoordinates = GetAllUsedCellCoordinates();
     }
 
     public void Move(Vector2 to)
     {
         var newPosition = to;
-        if (isBeingDragged)
-        {
-            if (!isIntersecting)
-            {
-                if (oldPosition != body.position)
-                {
-                    olderPosition = new Vector2(oldPosition.x, oldPosition.y);
-                    oldPosition = new Vector2(body.position.x, body.position.y);
-                }
-            }
-            if (newPosition != body.position)
-            {
-                if (!DoesCollideWithOtherShapeWhenMovingTo(newPosition))
-                {
-                    body.MovePosition(newPosition);
-                }
-            }
-        }
-    }
+        if (newPosition == body.position) return;
+        if 
+        (
+            DoesCollideWithOtherShapeWhenMovingTo(newPosition)
+            || LeavesAllowedAreaWhenMovingTo(newPosition)
+        ) return;
 
-    public void Grab()
-    {
-        if (!isBeingDragged)
-        {
-            isBeingDragged = true;
-            DrawOnTopOfOthers();
-        }
-    }
-
-    public void Release()
-    {
-        isBeingDragged = false;
-        DrawOnSameLevelAsOthers();
-        ResetOpacity();
-        if (isIntersecting)
-        {
-            body.position = olderPosition;
-        }
+        body.MovePosition(newPosition);
     }
 
     private bool DoesCollideWithOtherShapeWhenMovingTo(Vector2 newPosition)
     {
         var relativeMovement = (Vector3) (newPosition - body.position);
-        foreach (var cellPosition in GetAllUsedCellCoordinates())
+        foreach (var cellPosition in usedCellCoordinates)
         {
             var worldPosition = tilemap.CellToWorld(cellPosition) + tilemap.cellSize * 0.5f;
             var rayStart = worldPosition + relativeMovement;
@@ -84,7 +43,35 @@ public class MinigameShape : MonoBehaviour
             foreach (var hit in hits)
             {
                 if (hit.collider == null) continue;
-                if (hit.collider == hitbox) continue;
+                if (hit.collider == this.hitbox) continue;
+                if (hit.collider.gameObject.tag != "MinigameShape") continue;
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool LeavesAllowedAreaWhenMovingTo(Vector2 newPosition)
+    {
+        var relativeMovement = (Vector3) (newPosition - body.position);
+        foreach (var cellPosition in usedCellCoordinates)
+        {
+            var worldPosition = tilemap.CellToWorld(cellPosition) + tilemap.cellSize * 0.5f;
+            var rayStart = worldPosition + relativeMovement;
+            var rayEnd = worldPosition + relativeMovement + relativeMovement.normalized * 0.1f;
+            var hits = Physics2D.RaycastAll(rayStart, rayEnd, distance: relativeMovement.magnitude * 0.1f);
+            var cellInAllowedArea = false;
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null) continue;
+                if (hit.collider.gameObject.tag == "ShapeMinigameArea")
+                {
+                    cellInAllowedArea = true;
+                }
+            }
+            if (!cellInAllowedArea)
+            {
                 return true;
             }
         }
@@ -96,22 +83,11 @@ public class MinigameShape : MonoBehaviour
         var allTiles = new List<Vector3Int>();
         foreach (var cellPosition in tilemap.cellBounds.allPositionsWithin)
         {   
-            if (tilemap.HasTile(cellPosition))
-            {
-                allTiles.Add(cellPosition);
-            }
+            if (!tilemap.HasTile(cellPosition)) continue;
+
+            allTiles.Add(cellPosition);
         }
         return allTiles;
-}
-
-    private void DrawOnTopOfOthers()
-    {
-        GetComponent<Renderer>().sortingOrder = 1;
-    }
-
-    private void DrawOnSameLevelAsOthers()
-    {
-        GetComponent<Renderer>().sortingOrder = 0;
     }
 
     private void DecreaseOpacity()
@@ -123,38 +99,4 @@ public class MinigameShape : MonoBehaviour
     {
         tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (isBeingDragged && collision.gameObject.tag == "MinigameShape")
-        {
-            isIntersecting = true;
-            DecreaseOpacity();
-        }
-
-        if (collision.gameObject.tag == "ShapeMinigameArea")
-        {
-            body.position = olderPosition;
-            Release();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "MinigameShape")
-        {
-            isIntersecting = false;
-            ResetOpacity();
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.G) && isBeingDragged)
-        {
-            var newPosition = body.position - new Vector2(0.5f, 0);
-            Debug.Log($"Does Collide: {DoesCollideWithOtherShapeWhenMovingTo(newPosition)}");
-        }
-    }
-
 }
