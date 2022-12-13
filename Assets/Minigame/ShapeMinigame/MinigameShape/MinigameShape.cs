@@ -42,7 +42,13 @@ public class MinigameShape : MonoBehaviour
                     oldPosition = new Vector2(body.position.x, body.position.y);
                 }
             }
-            body.MovePosition(newPosition);
+            if (newPosition != body.position)
+            {
+                if (!DoesCollideWithOtherShapeWhenMovingTo(newPosition))
+                {
+                    body.MovePosition(newPosition);
+                }
+            }
         }
     }
 
@@ -65,6 +71,38 @@ public class MinigameShape : MonoBehaviour
             body.position = olderPosition;
         }
     }
+
+    private bool DoesCollideWithOtherShapeWhenMovingTo(Vector2 newPosition)
+    {
+        var relativeMovement = (Vector3) (newPosition - body.position);
+        foreach (var cellPosition in GetAllUsedCellCoordinates())
+        {
+            var worldPosition = tilemap.CellToWorld(cellPosition) + tilemap.cellSize * 0.5f;
+            var rayStart = worldPosition + relativeMovement;
+            var rayEnd = worldPosition + relativeMovement + relativeMovement.normalized * 0.1f;
+            var hits = Physics2D.RaycastAll(rayStart, rayEnd, distance: relativeMovement.magnitude * 0.1f);
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null) continue;
+                if (hit.collider == hitbox) continue;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Vector3Int> GetAllUsedCellCoordinates()
+    {
+        var allTiles = new List<Vector3Int>();
+        foreach (var cellPosition in tilemap.cellBounds.allPositionsWithin)
+        {   
+            if (tilemap.HasTile(cellPosition))
+            {
+                allTiles.Add(cellPosition);
+            }
+        }
+        return allTiles;
+}
 
     private void DrawOnTopOfOthers()
     {
@@ -109,4 +147,14 @@ public class MinigameShape : MonoBehaviour
             ResetOpacity();
         }
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G) && isBeingDragged)
+        {
+            var newPosition = body.position - new Vector2(0.5f, 0);
+            Debug.Log($"Does Collide: {DoesCollideWithOtherShapeWhenMovingTo(newPosition)}");
+        }
+    }
+
 }
