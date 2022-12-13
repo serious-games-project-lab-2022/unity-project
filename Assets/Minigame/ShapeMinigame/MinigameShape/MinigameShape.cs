@@ -6,11 +6,11 @@ using UnityEngine.Tilemaps;
 public class MinigameShape : MonoBehaviour
 {
     [HideInInspector] public Collider2D hitbox;
-    private Rigidbody2D body;
+    public Rigidbody2D body;
     private SpriteRenderer spriteRenderer;
     private Tilemap tilemap;
+    private TilemapRenderer tilemapRenderer;
 
-    private Vector2 grabOffset = Vector2.zero;
     private Vector2 oldPosition = Vector2.zero;
     private Vector2 olderPosition = Vector2.zero;
 
@@ -20,9 +20,10 @@ public class MinigameShape : MonoBehaviour
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        hitbox = GetComponent<Collider2D>();
+        hitbox = GetComponent<TilemapCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         tilemap = GetComponent<Tilemap>();
+        tilemapRenderer = GetComponent<TilemapRenderer>();
 
         oldPosition = new Vector2(body.position.x, body.position.y);
         olderPosition = new Vector2(body.position.x, body.position.y);
@@ -30,6 +31,7 @@ public class MinigameShape : MonoBehaviour
 
     public void Move(Vector2 to)
     {
+        var newPosition = to;
         if (isBeingDragged)
         {
             if (!isIntersecting)
@@ -40,18 +42,15 @@ public class MinigameShape : MonoBehaviour
                     oldPosition = new Vector2(body.position.x, body.position.y);
                 }
             }
-
-            var newPosition = Snapping.Snap(to - grabOffset, Vector2.one * 0.5f);
             body.MovePosition(newPosition);
         }
     }
 
-    public void Grab(Vector2 at)
+    public void Grab()
     {
         if (!isBeingDragged)
         {
             isBeingDragged = true;
-            grabOffset = at - body.position;
             DrawOnTopOfOthers();
         }
     }
@@ -59,7 +58,6 @@ public class MinigameShape : MonoBehaviour
     public void Release()
     {
         isBeingDragged = false;
-        grabOffset = Vector2.zero;
         DrawOnSameLevelAsOthers();
         ResetOpacity();
         if (isIntersecting)
@@ -80,12 +78,12 @@ public class MinigameShape : MonoBehaviour
 
     private void DecreaseOpacity()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.5f);
     }
 
     private void ResetOpacity()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

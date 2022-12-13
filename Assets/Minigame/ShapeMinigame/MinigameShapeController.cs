@@ -6,10 +6,13 @@ public class MinigameShapeController : MonoBehaviour
 {
     private MinigameShape[] shapes;
     private MinigameShape currentlyDraggedShape = null;
+    private Vector2 grabOffset = Vector2.zero;
+    private Grid grid;
 
     void Start()
     {
         shapes = FindObjectsOfType<MinigameShape>();
+        grid = GetComponent<Grid>();
     }
 
     void Update()
@@ -22,7 +25,8 @@ public class MinigameShapeController : MonoBehaviour
                 if (shape.hitbox.OverlapPoint(mousePosition))
                 {
                     currentlyDraggedShape = shape;
-                    currentlyDraggedShape.Grab(at: mousePosition);
+                    grabOffset = mousePosition - shape.body.position;
+                    currentlyDraggedShape.Grab();
                     break;
                 }
             }
@@ -33,6 +37,7 @@ public class MinigameShapeController : MonoBehaviour
             if (currentlyDraggedShape != null)
             {
                 currentlyDraggedShape.Release();
+                grabOffset = Vector2.zero;
                 currentlyDraggedShape = null;
             }
         }
@@ -43,7 +48,8 @@ public class MinigameShapeController : MonoBehaviour
         if (currentlyDraggedShape != null)
         {
             Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            currentlyDraggedShape.Move(to: mousePosition);
+            var newPosition = Snapping.Snap(mousePosition - grabOffset, (Vector2) grid.cellSize);
+            currentlyDraggedShape.Move(to: newPosition);
         }
     }
 }
