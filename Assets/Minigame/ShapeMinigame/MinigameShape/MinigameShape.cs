@@ -6,109 +6,97 @@ using UnityEngine.Tilemaps;
 public class MinigameShape : MonoBehaviour
 {
     [HideInInspector] public Collider2D hitbox;
-    private Rigidbody2D body;
-    private SpriteRenderer spriteRenderer;
+    public Rigidbody2D body;
     private Tilemap tilemap;
-
-    private Vector2 grabOffset = Vector2.zero;
-    private Vector2 oldPosition = Vector2.zero;
-    private Vector2 olderPosition = Vector2.zero;
-
-    [HideInInspector] public bool isBeingDragged = false;
-    private bool isIntersecting = false;
+    List<Vector3Int> usedCellCoordinates;
 
     private void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        hitbox = GetComponent<Collider2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        hitbox = GetComponent<TilemapCollider2D>();
         tilemap = GetComponent<Tilemap>();
-
-        oldPosition = new Vector2(body.position.x, body.position.y);
-        olderPosition = new Vector2(body.position.x, body.position.y);
+        usedCellCoordinates = GetAllUsedCellCoordinates();
     }
 
     public void Move(Vector2 to)
     {
-        if (isBeingDragged)
+        var newPosition = to;
+        if (newPosition == body.position) return;
+        if 
+        (
+            DoesCollideWithOtherShapeWhenMovingTo(newPosition)
+            || LeavesAllowedAreaWhenMovingTo(newPosition)
+        ) return;
+
+        body.MovePosition(newPosition);
+    }
+
+    private bool DoesCollideWithOtherShapeWhenMovingTo(Vector2 newPosition)
+    {
+        var relativeMovement = (Vector3) (newPosition - body.position);
+        foreach (var cellPosition in usedCellCoordinates)
         {
-            if (!isIntersecting)
+            var worldPosition = tilemap.CellToWorld(cellPosition) + tilemap.cellSize * 0.5f;
+            var rayStart = worldPosition + relativeMovement;
+            var rayEnd = worldPosition + relativeMovement + relativeMovement.normalized * 0.1f;
+            var hits = Physics2D.RaycastAll(rayStart, rayEnd, distance: relativeMovement.magnitude * 0.1f);
+            foreach (var hit in hits)
             {
-                if (oldPosition != body.position)
+                if (hit.collider == null) continue;
+                if (hit.collider == this.hitbox) continue;
+                if (hit.collider.gameObject.tag != "MinigameShape") continue;
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool LeavesAllowedAreaWhenMovingTo(Vector2 newPosition)
+    {
+        var relativeMovement = (Vector3) (newPosition - body.position);
+        foreach (var cellPosition in usedCellCoordinates)
+        {
+            var worldPosition = tilemap.CellToWorld(cellPosition) + tilemap.cellSize * 0.5f;
+            var rayStart = worldPosition + relativeMovement;
+            var rayEnd = worldPosition + relativeMovement + relativeMovement.normalized * 0.1f;
+            var hits = Physics2D.RaycastAll(rayStart, rayEnd, distance: relativeMovement.magnitude * 0.1f);
+            var cellInAllowedArea = false;
+            foreach (var hit in hits)
+            {
+                if (hit.collider == null) continue;
+                if (hit.collider.gameObject.tag == "ShapeMinigameArea")
                 {
-                    olderPosition = new Vector2(oldPosition.x, oldPosition.y);
-                    oldPosition = new Vector2(body.position.x, body.position.y);
+                    cellInAllowedArea = true;
                 }
             }
-
-            var newPosition = Snapping.Snap(to - grabOffset, Vector2.one * 0.5f);
-            body.MovePosition(newPosition);
+            if (!cellInAllowedArea)
+            {
+                return true;
+            }
         }
+        return false;
     }
 
-    public void Grab(Vector2 at)
+    private List<Vector3Int> GetAllUsedCellCoordinates()
     {
-        if (!isBeingDragged)
-        {
-            isBeingDragged = true;
-            grabOffset = at - body.position;
-            DrawOnTopOfOthers();
+        var allTiles = new List<Vector3Int>();
+        foreach (var cellPosition in tilemap.cellBounds.allPositionsWithin)
+        {   
+            if (!tilemap.HasTile(cellPosition)) continue;
+
+            allTiles.Add(cellPosition);
         }
-    }
-
-    public void Release()
-    {
-        isBeingDragged = false;
-        grabOffset = Vector2.zero;
-        DrawOnSameLevelAsOthers();
-        ResetOpacity();
-        if (isIntersecting)
-        {
-            body.position = olderPosition;
-        }
-    }
-
-    private void DrawOnTopOfOthers()
-    {
-        GetComponent<Renderer>().sortingOrder = 1;
-    }
-
-    private void DrawOnSameLevelAsOthers()
-    {
-        GetComponent<Renderer>().sortingOrder = 0;
+        return allTiles;
     }
 
     private void DecreaseOpacity()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 0.5f);
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 0.5f);
     }
 
     private void ResetOpacity()
     {
-        spriteRenderer.color = new Color(spriteRenderer.color.r, spriteRenderer.color.g, spriteRenderer.color.b, 1f);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (isBeingDragged && collision.gameObject.tag == "MinigameShape")
-        {
-            isIntersecting = true;
-            DecreaseOpacity();
-        }
-
-        if (collision.gameObject.tag == "ShapeMinigameArea")
-        {
-            body.position = olderPosition;
-            Release();
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "MinigameShape")
-        {
-            isIntersecting = false;
-            ResetOpacity();
-        }
+        tilemap.color = new Color(tilemap.color.r, tilemap.color.g, tilemap.color.b, 1f);
     }
 }
