@@ -14,10 +14,14 @@ public class Minigame : MonoBehaviour
     public delegate void MinigameOver();
     public static event MinigameOver OnMinigameOver;
 
+    private MinigameShapeController minigameShapeController;
+
     
     // Start is called before the first frame update
     virtual protected void Start()
     { 
+       minigameShapeController = FindObjectOfType<MinigameShapeController>();
+       minigameShapeController.SetCanMoveShapes(true);
        secondsLeftToSolve = secondsToSolve;
        Debug.Log("Minigame start");
        timerBar.fillAmount = 1f; // Sets the timerbar to full
@@ -34,6 +38,7 @@ public class Minigame : MonoBehaviour
             {
                 OnMinigameOver(); // Trigger MinigameOver Event
             }
+            minigameShapeController.SetCanMoveShapes(false);
             Debug.Log("Time's UP!");
         }
     }

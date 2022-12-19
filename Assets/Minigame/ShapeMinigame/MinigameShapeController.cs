@@ -9,6 +9,8 @@ public class MinigameShapeController : MonoBehaviour
     private Vector2 grabOffset = Vector2.zero;
     private Grid grid;
 
+    private bool canMoveShapes;
+
     void Start()
     {
         shapes = FindObjectsOfType<MinigameShape>();
@@ -17,38 +19,49 @@ public class MinigameShapeController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0) && currentlyDraggedShape == null)
+        if (canMoveShapes)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            foreach (var shape in shapes)
+            if (Input.GetMouseButton(0) && currentlyDraggedShape == null)
             {
-                if (shape.hitbox.OverlapPoint(mousePosition))
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                foreach (var shape in shapes)
                 {
-                    currentlyDraggedShape = shape;
-                    grabOffset = mousePosition - shape.body.position;
-                    break;
+                    if (shape.hitbox.OverlapPoint(mousePosition))
+                    {
+                        currentlyDraggedShape = shape;
+                        grabOffset = mousePosition - shape.body.position;
+                        break;
+                    }
                 }
             }
-        }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (currentlyDraggedShape != null)
+            if (Input.GetMouseButtonUp(0))
             {
-                grabOffset = Vector2.zero;
-                currentlyDraggedShape = null;
+                if (currentlyDraggedShape != null)
+                {
+                    grabOffset = Vector2.zero;
+                    currentlyDraggedShape = null;
+                }
             }
         }
     }
 
     void FixedUpdate()
     {
-        if (currentlyDraggedShape != null)
-        {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var newPosition = Snapping.Snap(mousePosition - grabOffset, (Vector2) grid.cellSize);
-            currentlyDraggedShape.Move(to: newPosition);
-        }
+       if (canMoveShapes)
+       {
+           if (currentlyDraggedShape != null)
+           {
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var newPosition = Snapping.Snap(mousePosition - grabOffset, (Vector2) grid.cellSize);
+                currentlyDraggedShape.Move(to: newPosition);
+           }
+       }
+    }
+    
+    public void SetCanMoveShapes(bool CanMove)
+    {
+        canMoveShapes = CanMove;
     }
     
     // Computes the relative positions of shapes to each other. Picks the first shape and saves a list of vectors from the first shape to all other shapes
