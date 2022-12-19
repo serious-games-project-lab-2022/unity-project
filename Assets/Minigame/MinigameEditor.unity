@@ -3845,7 +3845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0090b38673047da8f4141ec1e1a5d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 5
+  secondsToSolve: 15
   timerBar: {fileID: 1001634253}
   shapePrefabs:
   - {fileID: 4226691278202596197, guid: c7610ef5ed4034cf4bb98642d5e68127, type: 3}
