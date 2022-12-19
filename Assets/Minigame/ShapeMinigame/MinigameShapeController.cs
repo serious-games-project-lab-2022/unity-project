@@ -50,4 +50,17 @@ public class MinigameShapeController : MonoBehaviour
             currentlyDraggedShape.Move(to: newPosition);
         }
     }
+    
+    // Computes the relative positions of shapes to each other. Picks the first shape and saves a list of vectors from the first shape to all other shapes
+    void computeRelativePostions()
+    {
+        if (shapes.Length!=0)
+        {
+            Vector2 relativePositionOfPair;
+            foreach (var shape in shapes)
+            {
+                //relativePositionOfPair = var.TBC
+            }
+        }
+    }
 }

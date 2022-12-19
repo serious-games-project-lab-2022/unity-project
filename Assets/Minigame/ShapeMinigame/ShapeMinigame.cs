@@ -35,13 +35,13 @@ public class ShapeMinigame : Minigame
         // Compute relative positions between all 
     }
 
-    void Start()
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
     }
 }
