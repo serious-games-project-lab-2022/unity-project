@@ -20,7 +20,7 @@ public class OverworldGoal : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "OverworldSpaceship"){
-            var characterController = other.GetComponent<CharacterController>();
+            var characterController = other.GetComponent<Spaceship>();
             characterController.achievedGoal(active);
         }
     }
