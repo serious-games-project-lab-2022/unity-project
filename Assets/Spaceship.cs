@@ -16,4 +16,14 @@ public class Spaceship : MonoBehaviour
     {
         // sharedGameState.spaceshipPosition.Value = new Vector2(transform.position.x, transform.position.y);
     }
+
+    // what to do when Overworld Goal is achieved
+    public void achievedGoal(bool achieved)
+    {
+        if(achieved == true){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);    
+            Debug.Log("Game Over!");   
+        }
+    }
+
 }
