@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MinigameShape
   - ShapeMinigameArea
+  - OverworldSpaceship
   layers:
   - Default
   - TransparentFX
