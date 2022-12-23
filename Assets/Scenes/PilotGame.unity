@@ -755,7 +755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e0d441d9799546149d22ed6f5fa17ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minigame1Prefab: {fileID: 6246570736824169630, guid: 18b2a2450de6d4ed3bfc4b48b7ecc9f9, type: 3}
 --- !u!4 &1079450833
 Transform:
   m_ObjectHideFlags: 0
@@ -868,9 +867,10 @@ GameObject:
   - component: {fileID: 1676648630}
   - component: {fileID: 1676648632}
   - component: {fileID: 1676648631}
+  - component: {fileID: 1676648633}
   m_Layer: 0
   m_Name: Spaceship
-  m_TagString: Untagged
+  m_TagString: OverworldSpaceship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -990,4 +990,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e97b29cc7c724782a2d19e4bcfed3d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedGameState: {fileID: 0}
+--- !u!58 &1676648633
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676648627}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.21133333}
+  serializedVersion: 2
+  m_Radius: 0.5
