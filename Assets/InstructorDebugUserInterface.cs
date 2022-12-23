@@ -10,11 +10,11 @@ public class InstructorDebugUserInterface : MonoBehaviour
 
     void Start()
     {
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        // sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
     }
 
     void Update()
     {
-        spaceshipPositionText.text = $"{sharedGameState.spaceshipPosition.Value.x}, {sharedGameState.spaceshipPosition.Value.x}";
+        // spaceshipPositionText.text = $"{sharedGameState.spaceshipPosition.Value.x}, {sharedGameState.spaceshipPosition.Value.x}";
     }
 }

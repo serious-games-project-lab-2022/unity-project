@@ -9,11 +9,11 @@ public class Spaceship : MonoBehaviour
 
     void Start()
     {
-        // sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
     }
 
     void Update()
     {
-        // sharedGameState.spaceshipPosition.Value = new Vector2(transform.position.x, transform.position.y);
+        sharedGameState.spaceshipPosition.Value = new Vector2(transform.position.x, transform.position.y);
     }
 }
