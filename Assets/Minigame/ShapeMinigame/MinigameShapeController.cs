@@ -19,7 +19,7 @@ public class MinigameShapeController : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && currentlyDraggedShape == null)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition = GameObject.Find("Minigame Camera").GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
             foreach (var shape in shapes)
             {
                 if (shape.hitbox.OverlapPoint(mousePosition))
@@ -45,7 +45,7 @@ public class MinigameShapeController : MonoBehaviour
     {
         if (currentlyDraggedShape != null)
         {
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 mousePosition = GameObject.Find("Minigame Camera").GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
             var newPosition = Snapping.Snap(mousePosition - grabOffset, (Vector2) grid.cellSize);
             currentlyDraggedShape.Move(to: newPosition);
         }
