@@ -10,7 +10,7 @@ public class Follow : MonoBehaviour {
 
     void Start()
     {
-        offset = this.transform.position;
+        offset = this.transform.position - objectToFollow.transform.position;
     }
     
     void Update () {
