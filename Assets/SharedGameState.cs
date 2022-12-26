@@ -7,16 +7,26 @@ public class SharedGameState : NetworkBehaviour
 {
     public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     private NetworkObject networkObject;
+    private bool IsPilot {
+        get { return IsHost; }
+    }
+    private bool IsInstructor {
+        get { return !IsHost; }
+    }
+    public delegate void InstructorReceivedGameState();
+    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate { };
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        
+        if (IsInstructor) {
+            DontDestroyOnLoad(this);
+            OnInstructorReceivedGameState();
+            InstructorReadyServerRpc();
+        }
     }
 
-    void OnNetworkSpawn()
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorReadyServerRpc()
     {
-        if (!IsServer) {
-
-        }
     }
 }
