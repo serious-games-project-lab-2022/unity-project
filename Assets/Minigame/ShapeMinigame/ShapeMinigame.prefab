@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0090b38673047da8f4141ec1e1a5d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 15
+  secondsToSolve: 45
   timerBar: {fileID: 2282977801075118543}
   minigameShapeController: {fileID: 2282977801491448000}
   shapePrefabs:
@@ -134,9 +134,9 @@ RectTransform:
   m_Father: {fileID: 2282977801226203793}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 313, y: -908}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 164, y: -588}
   m_SizeDelta: {x: 400, y: 20}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &2282977801075118540
