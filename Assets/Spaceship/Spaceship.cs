@@ -9,10 +9,7 @@ public class Spaceship : MonoBehaviour
 
     void Start()
     {
-        if (sharedGameState != null)
-        {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        }
+        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
     }
 
     void Update()

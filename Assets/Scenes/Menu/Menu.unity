@@ -1502,7 +1502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RunInBackground: 1
-  LogLevel: 0
+  LogLevel: 1
   NetworkConfig:
     ProtocolVersion: 0
     NetworkTransport: {fileID: 1349277903}
@@ -1614,7 +1614,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b666d67e82e135b41971b95ffe4341aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputField: {fileID: 1671841553}
 --- !u!1 &1556749245
 GameObject:
   m_ObjectHideFlags: 0
