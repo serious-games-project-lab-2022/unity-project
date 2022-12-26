@@ -6,6 +6,7 @@ TagManager:
   tags:
   - MinigameShape
   - ShapeMinigameArea
+  - MinigameCamera
   - OverworldSpaceship
   layers:
   - Default

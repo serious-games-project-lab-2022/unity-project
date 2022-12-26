@@ -15,6 +15,6 @@ public class NetworkUserInterface : MonoBehaviour
 
     void Awake()
     {
-       // hashText.text = sharedGameState.GetComponent<NetworkObject>().GetHashCode().ToString();
+        // hashText.text = sharedGameState.GetComponent<NetworkObject>().GetHashCode().ToString();
     }
 }
