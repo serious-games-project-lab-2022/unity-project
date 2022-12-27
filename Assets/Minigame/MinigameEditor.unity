@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 129732916}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: MinigameCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -376,6 +376,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2282977801491448000, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
+      propertyPath: minigameCamera
+      value: 
+      objectReference: {fileID: 129732914}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
 --- !u!1 &1950608397
