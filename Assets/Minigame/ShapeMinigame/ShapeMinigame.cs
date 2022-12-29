@@ -8,123 +8,65 @@ public class ShapeMinigame : Minigame
 {
     public List<MinigameShape> shapePrefabs;
 
-    void GenerateConfiguration()
+    public static List<Vector2> GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
-        Random.seed = 1234;
-        var grid = Instantiate(new GameObject());
+        var grid = Instantiate(new GameObject(), position: new Vector3(0, 0, -1), rotation: Quaternion.identity);
         grid.AddComponent<Grid>();
 
         // Shuffle prefabs
-        var shuffledShapePrefabs = shapePrefabs.OrderBy( x => Random.value ).ToList();
+        var shuffledShapePrefabs = shapePrefabs.OrderBy(x => Random.value).ToList();
         var centerShape = shuffledShapePrefabs[0];
-        var absolutePositions = new List<Vector3>() { centerShape.transform.position };
 
         var combinedShape = Instantiate(centerShape, parent: grid.transform);
-        Instantiate(centerShape, grid.transform);
+        var relativePositions = new List<Vector2>(shapePrefabs.Count);
+        foreach (var _ in shapePrefabs)
+        {
+            relativePositions.Add(Vector2.zero);
+        }
 
-        foreach (var currentShape in shuffledShapePrefabs.Skip(3).Take(1))
+        foreach (var currentShape in shuffledShapePrefabs.Skip(1))
         {
             var currentShapeClone = Instantiate(currentShape, parent: grid.transform);
-            var currentShapeCollider = currentShapeClone.GetComponent<TilemapCollider2D>();
-            var combinedShapeCollider = combinedShape.GetComponent<TilemapCollider2D>();
-            var overlapping = true;
-            var newPosition = currentShape.transform.position;
+            currentShapeClone.Start();
+            var overlapping =
+                currentShapeClone.DoesCollideWithOtherShapeWhenMovingTo(currentShapeClone.transform.position);
             while (overlapping)
             {
-                var collisionInformation = Physics2D.Distance(
-                    colliderA: currentShapeCollider,
-                    colliderB: combinedShapeCollider
-                );
-                overlapping = collisionInformation.isOverlapped;
-                Debug.Log(currentShape);
-                Debug.Log(overlapping);
-                if (!overlapping)
-                {
-                    break;
-                }
-                var positionWithoutOverlap = collisionInformation.normal * collisionInformation.distance;
-                newPosition = new Vector3(
-                    Mathf.Sign(positionWithoutOverlap.x) * Mathf.Ceil(Mathf.Abs(positionWithoutOverlap.x)),
-                    Mathf.Sign(positionWithoutOverlap.y) * Mathf.Ceil(Mathf.Abs(positionWithoutOverlap.y)),
-                    0
-                );
-                // newPosition = positionWithoutOverlap;
-                Debug.Log(newPosition);
-                Debug.DrawLine(collisionInformation.pointA, collisionInformation.pointB, Color.red, 60);
-                // currentShapeClone.gameObject.SetActive(false);
+                var randomCoordinateIndex = Random.Range(0, 2);
+                var randomOffset = Vector2.zero;
+                randomOffset[randomCoordinateIndex] = Random.Range(-1, 2);
+                var newPosition = currentShapeClone.transform.position + (Vector3) randomOffset;
+                overlapping = currentShapeClone.DoesCollideWithOtherShapeWhenMovingTo(newPosition);
+                
+                currentShapeClone.gameObject.SetActive(false);
                 currentShapeClone.transform.position = newPosition;
-                // currentShapeClone.gameObject.SetActive(true);
-                break;
+                currentShapeClone.gameObject.SetActive(true);
             }
+            var index = shapePrefabs.IndexOf(currentShape);
+            relativePositions[index] = currentShapeClone.transform.position;
             combinedShape.gameObject.SetActive(false);
-            Merge(currentShapeClone.GetComponent<Tilemap>(), into: combinedShape.GetComponent<Tilemap>(), offset: new Vector2Int((int) newPosition.x, (int) newPosition.y));
+            Merge(
+                currentShapeClone.GetComponent<Tilemap>(),
+                into: combinedShape.GetComponent<Tilemap>(),
+                offset: new Vector2Int(
+                    (int) currentShapeClone.transform.position.x,
+                    (int) currentShapeClone.transform.position.y
+                )
+            );
             combinedShape.gameObject.SetActive(true);
 
-            // Destroy(currentShapeClone.gameObject);
-            // currentShape.GetComponent<Tilemap>().CompressBounds();
-
-            // // Pick random side
-            // var randomSideIndex = Random.Range(0, 2);
-
-            // var combinedShapeTilemap = combinedShape.GetComponent<Tilemap>();
-            // var currentShapeTilemap = combinedShape.GetComponent<Tilemap>();
-
-            // // Pick random coordinate perpendicular to side normal
-            // var perpendicularSideIndex = randomSideIndex == 0 ? 1 : 0;
-            // var currentShapeBounds = currentShapeTilemap.cellBounds;
-            // var combinedShapeBounds = combinedShapeTilemap.cellBounds;
-            
-            // var currentShapeExtend =
-            //     currentShapeBounds.max[perpendicularSideIndex] - currentShapeBounds.min[perpendicularSideIndex];
-            
-            // var minimalOverlap = 1;
-            // var lowestPossiblePerpendicularCoordinate = combinedShapeBounds.min[perpendicularSideIndex] + minimalOverlap;
-            // var highestPossiblePerpendicularCoordinate =
-            //     combinedShapeBounds.max[perpendicularSideIndex] + currentShapeExtend - minimalOverlap;
-            
-            // var randomPerpendicularCoordinate = Random.Range(
-            //     lowestPossiblePerpendicularCoordinate,
-            //     highestPossiblePerpendicularCoordinate
-            // );
-            // var displacement = new Vector3Int();
-            // displacement[perpendicularSideIndex] = randomPerpendicularCoordinate;
-
-            // // Find closest coordinate parallel to side normal
-            // var minimalDistance = Mathf.Infinity;
-            // foreach (var currentShapeCellPosition in currentShapeTilemap.cellBounds.allPositionsWithin)
-            // {
-            //     var currentShapeTile = currentShapeTilemap.GetTile(currentShapeCellPosition);
-            //     if (currentShapeTile == null) continue;
-            //     var currentShapeDisplacedCellPosition = currentShapeCellPosition + displacement;
-
-            //     foreach (var combinedShapeCellPosition in combinedShapeTilemap.cellBounds.allPositionsWithin)
-            //     {
-            //         var currentCombinedShapeTile = combinedShapeTilemap.GetTile(combinedShapeCellPosition);
-            //         if (currentCombinedShapeTile == null) continue;
-            //         var cellsAreOnSameHeight = currentShapeDisplacedCellPosition[perpendicularSideIndex]
-            //             == combinedShapeCellPosition[perpendicularSideIndex];
-            //         if (cellsAreOnSameHeight)
-            //         {
-            //             var horizontalOrVerticalTileDistance = currentShapeDisplacedCellPosition[randomSideIndex]
-            //                 - combinedShapeCellPosition[randomSideIndex];
-            //             if (horizontalOrVerticalTileDistance < minimalDistance)
-            //             {
-            //                 minimalDistance = horizontalOrVerticalTileDistance;
-            //             }
-            //         }
-            //     }
-            // }
-            // Debug.Log(minimalDistance);
-
-            // Save coordinate
-
-            // Add shape to configuration
         }
-        // Destroy(combinedShape.gameObject);
-        // Compute relative positions between all 
+        // Compute relative positions between all shapes
+        for (int i = relativePositions.Count - 1; i >= 0; i--)
+        {
+            relativePositions[i] -= relativePositions[0];
+        }
+        // Clean-up the generation process
+        Destroy(grid.gameObject);
+        return relativePositions;
     }
 
-    void Merge(Tilemap sourceTilemap, Tilemap into, Vector2Int offset)
+    private static void Merge(Tilemap sourceTilemap, Tilemap into, Vector2Int offset)
     {
         var targetTilemap = into;
 
@@ -144,7 +86,7 @@ public class ShapeMinigame : Minigame
     protected override void Start()
     {
         base.Start();
-        GenerateConfiguration();
+        GenerateConfiguration(shapePrefabs);
     }
 
     protected override void Update()
