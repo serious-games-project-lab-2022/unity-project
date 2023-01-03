@@ -16,7 +16,7 @@ public class Spaceship : MonoBehaviour
     {
         if (sharedGameState != null)
         {
-            sharedGameState.spaceshipPosition.Value = new Vector2(transform.position.x, transform.position.y);
+            sharedGameState.spaceshipPosition.Value = new Vector3(transform.position.x, transform.position.y,transform.rotation.z);
         }
     }
 }
