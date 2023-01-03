@@ -28,5 +28,18 @@ public class SharedGameState : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void InstructorReadyServerRpc()
     {
+        var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
+        TransmitMinigameSolutionClientRpc(scenarioManager.minigameSolutions);
+    }
+
+    [ClientRpc]
+    public void TransmitMinigameSolutionClientRpc(MinigameSolutions solutions)
+    {
+        if (IsPilot)
+        {
+            return;
+        }
+
+        Debug.Log(solutions.shapeMinigameSolution[1]);
     }
 }
