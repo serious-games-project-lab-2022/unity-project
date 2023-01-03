@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class ShapeMinigame : Minigame
 {
     public List<MinigameShape> shapePrefabs;
+    private List<Vector2> solution;
 
     public static List<Vector2> GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
@@ -83,10 +84,14 @@ public class ShapeMinigame : Minigame
         }
     }
 
+    public void SetSolution(List<Vector2> newSolution)
+    {
+        solution = newSolution;
+    }
+
     protected override void Start()
     {
         base.Start();
-        GenerateConfiguration(shapePrefabs);
     }
 
     protected override void Update()
