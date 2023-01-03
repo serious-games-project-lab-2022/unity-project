@@ -13,7 +13,7 @@ public class Minigame : MonoBehaviour
     [SerializeField] private MinigameShapeController minigameShapeController;
 
     public delegate void MinigameOver();
-    public static event MinigameOver OnMinigameOver = delegate { };
+    public event MinigameOver OnMinigameOver = delegate { };
     
     // Start is called before the first frame update
     virtual protected void Start()
