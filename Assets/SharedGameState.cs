@@ -5,7 +5,8 @@ using Unity.Netcode;
 
 public class SharedGameState : NetworkBehaviour
 {
-    public NetworkVariable<Vector3> spaceshipPosition = new NetworkVariable<Vector3>(new Vector3(0, 0, 0), NetworkVariableReadPermission.Everyone);
+    public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
+    public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
     private NetworkObject networkObject;
     [SerializeField] private GameObject instructorShip; 
     private bool IsPilot {
