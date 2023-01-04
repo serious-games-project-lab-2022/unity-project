@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour
 
     void FixedUpdate()
     {
-        character.MoveRotation(character.rotation - inputService.turnDirection * Time.fixedDeltaTime * 200);
+        character.MoveRotation(character.rotation - inputService.turnDirection * Time.fixedDeltaTime * movementSpeed);
         character.AddRelativeForce(Vector2.up * Time.fixedDeltaTime * movementSpeed);
     }
 }
