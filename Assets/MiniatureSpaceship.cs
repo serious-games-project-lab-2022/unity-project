@@ -16,7 +16,6 @@ public class MiniatureSpaceship : MonoBehaviour
         };
     }
 
-
     void FixedUpdate()
     {
         if (sharedGameState == null)
