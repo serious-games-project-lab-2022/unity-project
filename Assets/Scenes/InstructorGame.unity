@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 199561121}
   - component: {fileID: 199561120}
   m_Layer: 0
-  m_Name: TestTriangle
+  m_Name: MiniatureSpaceship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

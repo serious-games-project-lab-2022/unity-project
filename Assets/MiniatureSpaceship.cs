@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class FollowSpaceShip : MonoBehaviour
+public class MiniatureSpaceship : MonoBehaviour
 {
     private SharedGameState sharedGameState;
 
