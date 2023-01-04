@@ -10,7 +10,7 @@ public class MinigameShape : MonoBehaviour
     private Tilemap tilemap;
     List<Vector3Int> usedCellCoordinates;
 
-    private void Start()
+    public void Start()
     {
         body = GetComponent<Rigidbody2D>();
         hitbox = GetComponent<TilemapCollider2D>();
@@ -31,7 +31,7 @@ public class MinigameShape : MonoBehaviour
         body.MovePosition(newPosition);
     }
 
-    private bool DoesCollideWithOtherShapeWhenMovingTo(Vector2 newPosition)
+    public bool DoesCollideWithOtherShapeWhenMovingTo(Vector2 newPosition)
     {
         var relativeMovement = (Vector3) (newPosition - body.position);
         foreach (var cellPosition in usedCellCoordinates)
