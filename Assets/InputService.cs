@@ -4,10 +4,19 @@ using UnityEngine;
 
 public class InputService : MonoBehaviour
 {
+    [HideInInspector]
     public float turnDirection = 0f;
+
+    [SerializeField]
+    private SteeringWheel steeringWheel;
 
     void Update()
     {
-        turnDirection = Input.GetAxis("Horizontal");
+        if (steeringWheel != null)
+        {
+            turnDirection = steeringWheel.steeringInput;
+        } else {
+            turnDirection = Input.GetAxis("Horizontal");
+        }
     }
 }

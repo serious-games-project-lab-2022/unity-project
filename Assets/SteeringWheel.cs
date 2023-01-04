@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.EventSystems;
 
-public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+public class SteeringWheel: MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     [Header("Steering Wheel Max Angle")]
     [SerializeField]
@@ -12,7 +12,7 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
     [SerializeField]
     private float releaseSpeed = 350f;
 
-    public static float steeringInput;
+    public float steeringInput;
 
     #region Events
 
