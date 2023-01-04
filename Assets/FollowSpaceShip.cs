@@ -1,43 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class FollowSpaceShip : MonoBehaviour
 {
     private SharedGameState sharedGameState;
-    private Rigidbody2D character;
+    private float rotation = 0;
 
     void Start()
     {
         SharedGameState.OnInstructorReceivedGameState += () => {
             sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         };
-
-        character = GetComponent<Rigidbody2D>();
-        transform.position = new Vector2(sharedGameState.spaceshipPosition.Value.x, sharedGameState.spaceshipPosition.Value.y);
-        transform.rotation = new Quaternion(0, 0, sharedGameState.spaceshipPosition.Value.z, 0);
+       
     }
 
 
     // Update is called once per frame
     [System.Obsolete]
-    void Update()
+    void FixedUpdate()
     {
-        if(sharedGameState != null)
+        
+        if (sharedGameState != null)
         {
-            transform.position = new Vector2(sharedGameState.spaceshipPosition.Value.x, sharedGameState.spaceshipPosition.Value.y);
-            //transform(new Vector2(sharedGameState.spaceshipPosition.Value.x, sharedGameState.spaceshipPosition.Value.y) * Time.fixedDeltaTime * 300f);
-            //transform.rotation.SetEulerRotation(new Vector3(0, 0, sharedGameState.spaceshipPosition.Value.z)); 
-            transform.rotation = new Quaternion(0, 0, sharedGameState.spaceshipPosition.Value.z, 0);
-            /*if (transform.rotation.z != sharedGameState.spaceshipPosition.Value.z)
+            transform.position = new Vector3(sharedGameState.spaceshipPosition.Value.x, sharedGameState.spaceshipPosition.Value.y, 0);
+
+            if(rotation != sharedGameState.spaceshipPosition.Value.z)
             {
-                character.MoveRotation(character.rotation - sharedGameState.spaceshipPosition.Value.z * Time.fixedDeltaTime * 300f);
-            }*/
+                //character.freezeRotation = false;
+                rotation = sharedGameState.spaceshipPosition.Value.z;
+                //character.rotation = rotation;
+                //transform.Rotate(new Vector3(0, 0, rotation) * Time.fixedDeltaTime * 300f);
+
+                //transform.rotation.z = rotation;
+                transform.eulerAngles = new Vector3(0, 0, rotation);
+            }
+
+            Debug.Log("rotation of instructor " + rotation + " , rotation of pilot " + sharedGameState.spaceshipPosition.Value.z);
+           
+            
         }
-        
-        
-       
+         
       
     }
 }
