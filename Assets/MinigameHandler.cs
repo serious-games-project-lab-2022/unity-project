@@ -20,6 +20,7 @@ public class MinigameHandler : MonoBehaviour
         );
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
         shapeMinigame.OnMinigameOver += () => {
+            shapeMinigame.gameObject.SetActive(false);
             Destroy(shapeMinigame.gameObject);
         };
     }
