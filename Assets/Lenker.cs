@@ -6,21 +6,13 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 {
     [Header("Steering Wheel Max Angle")]
     [SerializeField]
-    private float maxAngle = 450f;
+    private float maxAngle = 180f;
 
     [Header("Degrees Per Second")]
     [SerializeField]
     private float releaseSpeed = 350f;
 
     public static float steeringInput;
-
-
-    private RectTransform wheel;
-
-    private void Start()
-    {
-        wheel = GetComponent<RectTransform>();
-    }
 
     #region Events
 
@@ -31,19 +23,14 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     public void OnDrag(PointerEventData eventData)
     {
-
         CalculateWheelRotation(eventData);
-
         UpdateWheelImage();
-
         CalculateInput();
-
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         OnDrag(eventData);
-
         StartCoroutine(ReleaseWheel());
     }
 
@@ -58,7 +45,7 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     private void StartCalculatingWheelRotation(PointerEventData eventData)
     {
-        centerPoint = RectTransformUtility.WorldToScreenPoint(eventData.pressEventCamera, wheel.position);
+        centerPoint = RectTransformUtility.WorldToScreenPoint(eventData.pressEventCamera, transform.position);
         wheelPrevAngle = Vector2.Angle(Vector2.up, eventData.position - centerPoint);
     }
 
@@ -72,10 +59,13 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
         if ((pointerPos - centerPoint).sqrMagnitude >= 400f)
         {
             if (pointerPos.x > centerPoint.x)
+            {
                 wheelAngle += wheelNewAngle - wheelPrevAngle;
-
+            }
             else
+            {
                 wheelAngle -= wheelNewAngle - wheelPrevAngle;
+            }
         }
 
         // Make sure wheel angle never exceeds maximumSteeringAngle
@@ -90,19 +80,20 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
             float deltaAngle = releaseSpeed * Time.deltaTime;
 
             if (Mathf.Abs(deltaAngle) > Mathf.Abs(wheelAngle))
+            {
                 wheelAngle = 0f;
-
+            }
             else if (wheelAngle > 0f)
+            {
                 wheelAngle -= deltaAngle;
-
+            }
             else
+            {
                 wheelAngle += deltaAngle;
-
+            }
 
             UpdateWheelImage();
-
             CalculateInput();
-
 
             yield return null;
         }
@@ -115,7 +106,7 @@ public class Lenker : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointer
 
     private void UpdateWheelImage()
     {
-        wheel.localEulerAngles = new Vector3(0f, 0f, -wheelAngle);
+        transform.localEulerAngles = new Vector3(0f, 0f, -wheelAngle);
     }
 
     #endregion
