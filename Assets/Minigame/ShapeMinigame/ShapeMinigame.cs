@@ -4,12 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+using ShapeMinigameSolution = System.Collections.Generic.List<UnityEngine.Vector2>;
+
 public class ShapeMinigame : Minigame
 {
-    public List<MinigameShape> shapePrefabs;
-    private List<Vector2> solution;
+    private ShapeMinigameSolution solution;
 
-    public static List<Vector2> GenerateConfiguration(List<MinigameShape> shapePrefabs)
+    public static ShapeMinigameSolution GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
         var grid = Instantiate(new GameObject(), position: new Vector3(0, 0, -1), rotation: Quaternion.identity);
         grid.AddComponent<Grid>();
@@ -19,7 +20,7 @@ public class ShapeMinigame : Minigame
         var centerShape = shuffledShapePrefabs[0];
 
         var combinedShape = Instantiate(centerShape, parent: grid.transform);
-        var relativePositions = new List<Vector2>(shapePrefabs.Count);
+        var relativePositions = new ShapeMinigameSolution(shapePrefabs.Count);
         foreach (var _ in shapePrefabs)
         {
             relativePositions.Add(Vector2.zero);
@@ -84,7 +85,7 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    public void SetSolution(List<Vector2> newSolution)
+    public void SetSolution(ShapeMinigameSolution newSolution)
     {
         solution = newSolution;
     }

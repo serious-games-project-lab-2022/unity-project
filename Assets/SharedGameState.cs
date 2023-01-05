@@ -8,6 +8,8 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
 
+    public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+
     private bool IsPilot {
         get { return IsHost; }
     }
