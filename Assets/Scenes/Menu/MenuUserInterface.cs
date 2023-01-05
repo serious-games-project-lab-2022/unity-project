@@ -28,13 +28,14 @@ public class MenuUserInterface : NetworkBehaviour
             }
 
             if (IsServer) {
-                var sharedGameState = Instantiate(sharedGameStatePrefab);
-                DontDestroyOnLoad(sharedGameState);
-                sharedGameState.Spawn();
-
                 var scenarioManager = Instantiate(scenarioManagerPrefab);
                 DontDestroyOnLoad(scenarioManager);
                 scenarioManager.generateScenario();
+
+                var sharedGameState = Instantiate(sharedGameStatePrefab);
+                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
+                DontDestroyOnLoad(sharedGameState);
+                sharedGameState.Spawn();
             }
 
             var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";

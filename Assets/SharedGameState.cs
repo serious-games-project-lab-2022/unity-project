@@ -8,6 +8,8 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
 
+    public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+
     private bool IsPilot {
         get { return IsHost; }
     }
@@ -31,18 +33,5 @@ public class SharedGameState : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void InstructorReadyServerRpc()
     {
-        var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        TransmitMinigameSolutionClientRpc(scenarioManager.minigameSolutions);
-    }
-
-    [ClientRpc]
-    public void TransmitMinigameSolutionClientRpc(MinigameSolutions solutions)
-    {
-        if (IsPilot)
-        {
-            return;
-        }
-
-        Debug.Log(solutions.shapeMinigameSolution[1]);
     }
 }
