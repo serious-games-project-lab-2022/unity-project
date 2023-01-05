@@ -20,4 +20,8 @@ public class Spaceship : MonoBehaviour
             sharedGameState.spaceshipRotation.Value = transform.eulerAngles.z;
         }
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Hello");
+    }
 }
