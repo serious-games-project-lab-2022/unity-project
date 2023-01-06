@@ -15,7 +15,6 @@ public class MinigameBookIcon : MonoBehaviour, IPointerUpHandler, IPointerDownHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Clicked");
         book.Display();
     }
 }
