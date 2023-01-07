@@ -5,16 +5,15 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
+    private Image healthImage;
     public float currentHealthAmount;
     public float maxHealth = 1;
     // private float fuelAmount;
 
-    private Image healthImage;
+    
 
 
-    public delegate void PlayerLostMinigame(float value);
-    public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+    
 
     private void Awake()
     {
@@ -24,7 +23,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         currentHealthAmount = maxHealth;
-        OnPlayerLostMinigame += (float healthValue) =>
+        MinigameHandler.OnPlayerLostMinigame += (float healthValue) =>
         {
             DepletHealth(healthValue);
         };
@@ -41,15 +40,16 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
     }
-   
 
-   
-
-
-    private void GameOver()
+    public static void GameOver()
     {
 
     }
+   
+
+   
+
+
 
 
 
