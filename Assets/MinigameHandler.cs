@@ -6,7 +6,7 @@ public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
 
-    public delegate void PlayerLostMinigame(float value);
+    public delegate void PlayerLostMinigame(int damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     void Start()
@@ -20,7 +20,7 @@ public class MinigameHandler : MonoBehaviour
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
         shapeMinigame.OnMinigameOver += () => {
             Destroy(shapeMinigame.gameObject);
-            OnPlayerLostMinigame(1f);
+            OnPlayerLostMinigame(damageAmount: 1);
         };
     }
 }
