@@ -16,10 +16,11 @@ public class Spaceship : MonoBehaviour
     {
         if (sharedGameState != null)
         {
-            sharedGameState.spaceshipPosition.Value = new Vector2(transform.position.x, transform.position.y);
+            sharedGameState.spaceshipPosition.Value = new Vector2(transform.localPosition.x, transform.localPosition.y);
             sharedGameState.spaceshipRotation.Value = transform.eulerAngles.z;
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Hello");
