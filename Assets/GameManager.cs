@@ -6,41 +6,44 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    private float healthAmount;
+    public float currentHealthAmount;
+    public float maxHealth = 1;
     // private float fuelAmount;
 
     private Image healthImage;
 
 
+    public delegate void PlayerLostMinigame(float value);
+    public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+
     private void Awake()
     {
         healthImage = transform.Find("HealthBar").GetComponent<Image>();
     }
+   
     private void Start()
     {
-        healthAmount = 1f;
+        currentHealthAmount = maxHealth;
+        OnPlayerLostMinigame += (float healthValue) =>
+        {
+            DepletHealth(healthValue);
+        };
     }
 
-    private void Update()
-    {
-        UpdateTheHealthBar(healthAmount);
-    }
 
-    private void UpdateTheHealthBar(float healthValue)
+    private void DepletHealth(float healthValue)
     {
-        healthImage.fillAmount = healthValue;
+        currentHealthAmount -= healthValue;
+        healthImage.fillAmount = currentHealthAmount;
 
-        if(healthAmount <= 0f)
+        if(currentHealthAmount <= 0f)
         {
             GameOver();
         }
     }
    
 
-    public void setHealthAmount(float h)
-    {
-        this.healthAmount = h;
-    }
+   
 
 
     private void GameOver()
