@@ -23,6 +23,6 @@ public class Spaceship : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Hello");
+        //Debug.Log("Hello");
     }
 }

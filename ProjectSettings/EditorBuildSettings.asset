@@ -9,12 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/Menu.unity
     guid: b30e4829a00644bebac112c07b06cf4b
   - enabled: 1
+    path: Assets/Scenes/GameOver.unity
+    guid: 2bd01e7bb329c574eb5c9dcb198bb1d8
+  - enabled: 1
     path: Assets/Scenes/PilotGame.unity
     guid: 8cc19f95db1a94845a2ab4164daf01cc
+  - enabled: 1
+    path: Assets/Scenes/NetworkData.unity
+    guid: 1c9c5c696d0704570b58b3601844c4c9
   - enabled: 1
     path: Assets/Scenes/InstructorGame.unity
     guid: bf97000b1547742839587a4d474e567e
   - enabled: 1
-    path: Assets/Scenes/NetworkData.unity
-    guid: 1c9c5c696d0704570b58b3601844c4c9
+    path: Assets/Scenes/GameWon.unity
+    guid: 58391c80a4bce974aa549d27f56d1991
   m_configObjects: {}

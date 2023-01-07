@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
-public class MiniatureSpaceship : MonoBehaviour
+public class PilotToInstructorSynchronization : MonoBehaviour
 {
     private SharedGameState sharedGameState;
 
@@ -21,6 +22,15 @@ public class MiniatureSpaceship : MonoBehaviour
         if (sharedGameState == null)
         {
             return;
+        }
+        if (sharedGameState.gameOverSceneTransition.Value)
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
+        if(sharedGameState.gameWonSceneTransition.Value)
+        {
+            SceneManager.LoadScene("GameWon");
         }
         transform.localPosition = sharedGameState.spaceshipPosition.Value / 16;
         transform.eulerAngles = new Vector3(0, 0, sharedGameState.spaceshipRotation.Value);
