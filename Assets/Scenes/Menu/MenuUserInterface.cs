@@ -17,6 +17,7 @@ public class MenuUserInterface : NetworkBehaviour
     [SerializeField] private TextMeshProUGUI IpAddressInfoLabel;
     [SerializeField] private TMP_InputField ipAddressInput;
     [SerializeField] private NetworkObject sharedGameStatePrefab;
+    [SerializeField] private ScenarioManager scenarioManagerPrefab;
 
     void Start()
     {
@@ -27,7 +28,12 @@ public class MenuUserInterface : NetworkBehaviour
             }
 
             if (IsServer) {
+                var scenarioManager = Instantiate(scenarioManagerPrefab);
+                DontDestroyOnLoad(scenarioManager);
+                scenarioManager.generateScenario();
+
                 var sharedGameState = Instantiate(sharedGameStatePrefab);
+                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
                 DontDestroyOnLoad(sharedGameState);
                 sharedGameState.Spawn();
             }
