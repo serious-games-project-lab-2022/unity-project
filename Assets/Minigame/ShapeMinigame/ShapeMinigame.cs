@@ -8,6 +8,7 @@ public class ShapeMinigame : Minigame
 {
     private ShapeMinigameSolution solution;
     private ScenarioManager scenarioManager;
+    private List<MinigameShape> shapes = new List<MinigameShape>();
 
     public static ShapeMinigameSolutions GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
@@ -116,12 +117,15 @@ public class ShapeMinigame : Minigame
             var shapePrefab = scenarioManager.minigameShapePrefabs[index];
             var shape = Instantiate(shapePrefab, parent: minigameShapeController.transform);
             shape.transform.localPosition = new Vector3(cumulativeOffset, 0, 0);
+            shapes.Add(shape);
 
             var shapeTilemap = shape.GetComponent<Tilemap>();
             shapeTilemap.CompressBounds();
 
             cumulativeOffset += (shapeTilemap.cellBounds.xMax - shapeTilemap.cellBounds.xMin);
         }
+
+        minigameShapeController.SetShapes(shapes);
     }
 
     void Awake()
