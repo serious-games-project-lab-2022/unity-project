@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minigame : MonoBehaviour
+public abstract class Minigame : MonoBehaviour
 {
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
     
     [SerializeField] protected Image timerBar;
 
-    [SerializeField] private MinigameShapeController minigameShapeController;
+    [SerializeField] protected MinigameShapeController minigameShapeController;
 
     public delegate void MinigameOver();
     public event MinigameOver OnMinigameOver = delegate { };
@@ -44,4 +44,6 @@ public class Minigame : MonoBehaviour
         secondsLeftToSolve -= Time.deltaTime;
         timerBar.fillAmount = secondsLeftToSolve / secondsToSolve;
     }
+
+    protected abstract void CheckSolution();
 }

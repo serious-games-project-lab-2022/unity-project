@@ -4,13 +4,12 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-using ShapeMinigameSolution = System.Collections.Generic.List<UnityEngine.Vector2>;
-
 public class ShapeMinigame : Minigame
 {
     private ShapeMinigameSolution solution;
+    private ScenarioManager scenarioManager;
 
-    public static ShapeMinigameSolution GenerateConfiguration(List<MinigameShape> shapePrefabs)
+    public static ShapeMinigameSolutions GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
         var grid = Instantiate(new GameObject(), position: new Vector3(0, 0, -1), rotation: Quaternion.identity);
         grid.AddComponent<Grid>();
@@ -20,9 +19,11 @@ public class ShapeMinigame : Minigame
         var centerShape = shuffledShapePrefabs[0];
 
         var combinedShape = Instantiate(centerShape, parent: grid.transform);
-        var relativePositions = new ShapeMinigameSolution(shapePrefabs.Count);
-        foreach (var _ in shapePrefabs)
+        var shapeIndices = new List<int>(shapePrefabs.Count);
+        var relativePositions = new List<Vector2>(shapePrefabs.Count);
+        for (int i = 0; i < shuffledShapePrefabs.Count; i++)
         {
+            shapeIndices.Add(i);
             relativePositions.Add(Vector2.zero);
         }
 
@@ -65,7 +66,14 @@ public class ShapeMinigame : Minigame
         }
         // Clean-up the generation process
         Destroy(grid.gameObject);
-        return relativePositions;
+        return new ShapeMinigameSolutions() {
+            solutions = // new [] {
+                new ShapeMinigameSolution() {
+                    relativePositions = relativePositions.ToArray(),
+                    shapeIndices = shapeIndices.ToArray(),
+                // }
+            }
+        };
     }
 
     private static void Merge(Tilemap sourceTilemap, Tilemap into, Vector2Int offset)
@@ -90,9 +98,41 @@ public class ShapeMinigame : Minigame
         solution = newSolution;
     }
 
+    protected override void CheckSolution()
+    {
+        var currentRelativePositions = new List<Vector2>();
+    }
+
+    private void PlaceShapePrefabs()
+    {
+        if (solution == null)
+        {
+            throw new UnityException("Shape minigame does not have a solution");
+        }
+
+        var cumulativeOffset = 0;
+        foreach (var index in solution.shapeIndices)
+        {
+            var shapePrefab = scenarioManager.minigameShapePrefabs[index];
+            var shape = Instantiate(shapePrefab, parent: minigameShapeController.transform);
+            shape.transform.localPosition = new Vector3(cumulativeOffset, 0, 0);
+
+            var shapeTilemap = shape.GetComponent<Tilemap>();
+            shapeTilemap.CompressBounds();
+
+            cumulativeOffset += (shapeTilemap.cellBounds.xMax - shapeTilemap.cellBounds.xMin);
+        }
+    }
+
+    void Awake()
+    {
+        scenarioManager = FindObjectOfType<ScenarioManager>();
+    }
+
     protected override void Start()
     {
         base.Start();
+        PlaceShapePrefabs();
     }
 
     protected override void Update()

@@ -5,25 +5,19 @@ using Unity.Netcode;
 
 public struct MinigameSolutions: INetworkSerializable
 {
-    public Vector2[] shapeMinigameSolution;
+    public ShapeMinigameSolutions shapeMinigameSolutions;
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
-        int length = 0;
-        if (!serializer.IsReader)
-        {
-            length = shapeMinigameSolution.Length;
-        }
-        serializer.SerializeValue(ref length);
-
         if (serializer.IsReader)
         {
-            shapeMinigameSolution = new Vector2[length];
+            shapeMinigameSolutions = new ShapeMinigameSolutions {
+                solutions = new ShapeMinigameSolution {
+                    relativePositions = new Vector2[] {},
+                    shapeIndices = new int[] {},
+                }
+            };
         }
-
-        for (int index = 0; index < length; index++)
-        {
-            serializer.SerializeValue(ref shapeMinigameSolution[index]);
-        }
+        shapeMinigameSolutions.NetworkSerialize(serializer);
     }
 }

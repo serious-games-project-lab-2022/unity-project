@@ -9,7 +9,7 @@ public class MinigameHandler : MonoBehaviour
     void Start()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        shapeMinigamePrefab.SetSolution(new List<Vector2> (scenarioManager.minigameSolutions.shapeMinigameSolution));
+        shapeMinigamePrefab.SetSolution(scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions);
         var shapeMinigame = Instantiate(
             shapeMinigamePrefab,
             parent: this.transform
