@@ -20,8 +20,10 @@ public class MinigameHandler : MonoBehaviour
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
         shapeMinigame.OnMinigameOver += (bool solved) => {
             Destroy(shapeMinigame.gameObject);
-            Debug.Log(solved);
-            OnPlayerLostMinigame(damageAmount: 1);
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 1);
+            }
         };
     }
 }
