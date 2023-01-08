@@ -7,6 +7,9 @@ public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
 
+    public delegate void PlayerLostMinigame(int damageAmount);
+    public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+
     void Start()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
@@ -18,6 +21,7 @@ public class MinigameHandler : MonoBehaviour
         shapeMinigame.OnMinigameOver += (bool solved) => {
             Destroy(shapeMinigame.gameObject);
             Debug.Log(solved);
+            OnPlayerLostMinigame(damageAmount: 1);
         };
     }
 }

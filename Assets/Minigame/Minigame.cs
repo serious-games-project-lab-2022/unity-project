@@ -15,7 +15,10 @@ public abstract class Minigame : MonoBehaviour
 
     public delegate void MinigameOver(bool solved);
     public event MinigameOver OnMinigameOver = delegate { };
-    
+
+
+
+
     // Start is called before the first frame update
     virtual protected void Start()
     { 
