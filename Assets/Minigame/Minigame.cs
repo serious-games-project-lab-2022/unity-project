@@ -10,9 +10,10 @@ public abstract class Minigame : MonoBehaviour
     
     [SerializeField] protected Image timerBar;
 
+    // TODO: this should get refactored
     [SerializeField] protected MinigameShapeController minigameShapeController;
 
-    public delegate void MinigameOver();
+    public delegate void MinigameOver(bool solved);
     public event MinigameOver OnMinigameOver = delegate { };
     
     // Start is called before the first frame update
@@ -32,7 +33,7 @@ public abstract class Minigame : MonoBehaviour
             depleteTimerBar();
             if (secondsLeftToSolve < 0)
             {
-                OnMinigameOver();
+                CheckSolution();
                 minigameShapeController.SetCanMoveShapes(false);
                 secondsLeftToSolve = 0;
             }
@@ -45,5 +46,10 @@ public abstract class Minigame : MonoBehaviour
         timerBar.fillAmount = secondsLeftToSolve / secondsToSolve;
     }
 
-    protected abstract void CheckSolution();
+    protected void EmitEndedEvent(bool solved)
+    {
+        OnMinigameOver(solved);
+    }
+
+    public abstract void CheckSolution();
 }

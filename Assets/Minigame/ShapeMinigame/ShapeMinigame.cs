@@ -99,9 +99,18 @@ public class ShapeMinigame : Minigame
         solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
     }
 
-    protected override void CheckSolution()
+    public override void CheckSolution()
     {
         var currentRelativePositions = new List<Vector2>();
+        foreach (var shape in shapes)
+        {
+            currentRelativePositions.Add(
+                shape.transform.localPosition - shapes[0].transform.localPosition
+            );
+        }
+
+        var solved = currentRelativePositions.SequenceEqual(solution.relativePositions);
+        EmitEndedEvent(solved);
     }
 
     private void PlaceShapePrefabs()
@@ -138,10 +147,18 @@ public class ShapeMinigame : Minigame
         base.Start();
         GetSolution();
         PlaceShapePrefabs();
+        SetCamera();
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    private void SetCamera()
+    {
+        var canvas = GetComponentInChildren<Canvas>();
+        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
+        canvas.worldCamera = minigameCamera;
     }
 }

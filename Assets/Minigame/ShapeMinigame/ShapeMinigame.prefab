@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2282977799741602006}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0090b38673047da8f4141ec1e1a5d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 45
+  secondsToSolve: 60
   timerBar: {fileID: 2282977801075118543}
   minigameShapeController: {fileID: 2282977801491448000}
 --- !u!1 &2282977800996122755
@@ -129,11 +129,11 @@ RectTransform:
   m_Father: {fileID: 2282977801226203793}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 164, y: -588}
-  m_SizeDelta: {x: 400, y: 20}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 59.5, y: 12}
+  m_SizeDelta: {x: 109, y: 14}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2282977801075118540
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4bced9cc6f70a14448c633fb2143d065, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 51c44cc2855d040f28f815e0b7426271, type: 3}
   m_Type: 3
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1366,8 +1366,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2282977801226203792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.009259259, y: 0.009259259, z: 0.009259259}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.0625, y: 0.0625, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2282977801075118542}
@@ -1377,8 +1377,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -4.5, y: -0.5}
-  m_SizeDelta: {x: 1920.0001, y: 1080}
+  m_AnchoredPosition: {x: 0.02, y: -0.88}
+  m_SizeDelta: {x: 168, y: 196}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2282977801226203796
 Canvas:
@@ -1532,10 +1532,10 @@ RectTransform:
   m_Father: {fileID: 2282977801226203793}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 888, y: -598}
-  m_SizeDelta: {x: 293.75, y: 100}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -27.5, y: 12}
+  m_SizeDelta: {x: 47, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7611214406658191242
 CanvasRenderer:
@@ -1619,13 +1619,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2282977799741602006}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 2282977799741602004}
+        m_TargetAssemblyTypeName: ShapeMinigame, Assembly-CSharp
+        m_MethodName: CheckSolution
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

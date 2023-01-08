@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MinigameHandler : MonoBehaviour
 {
@@ -14,8 +15,9 @@ public class MinigameHandler : MonoBehaviour
             parent: this.transform
         );
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        shapeMinigame.OnMinigameOver += () => {
+        shapeMinigame.OnMinigameOver += (bool solved) => {
             Destroy(shapeMinigame.gameObject);
+            Debug.Log(solved);
         };
     }
 }
