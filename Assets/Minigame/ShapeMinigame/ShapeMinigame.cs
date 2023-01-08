@@ -93,9 +93,9 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    public void SetSolution(ShapeMinigameSolution newSolution)
+    private void GetSolution()
     {
-        solution = newSolution;
+        solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
     }
 
     protected override void CheckSolution()
@@ -132,6 +132,7 @@ public class ShapeMinigame : Minigame
     protected override void Start()
     {
         base.Start();
+        GetSolution();
         PlaceShapePrefabs();
     }
 
