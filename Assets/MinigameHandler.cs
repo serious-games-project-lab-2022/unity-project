@@ -22,7 +22,7 @@ public class MinigameHandler : MonoBehaviour
             Destroy(shapeMinigame.gameObject);
             if (!solved)
             {
-                OnPlayerLostMinigame(damageAmount: 1);
+                OnPlayerLostMinigame(damageAmount: 3);
             }
         };
     }
