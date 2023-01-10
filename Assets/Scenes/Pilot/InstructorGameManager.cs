@@ -11,23 +11,21 @@ public class InstructorGameManager : MonoBehaviour
     {
         SharedGameState.OnInstructorReceivedGameState += () => {
             sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+            sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
+                EndGame(gameEndedSuccessfully);
+            };
         };
     }
 
-    void FixedUpdate()
+    void EndGame(bool gameEndedSuccessfully)
     {
-        if (sharedGameState == null)
-        {
-            return;
-        }
-        if (sharedGameState.gameOverSceneTransition.Value)
-        {
-            SceneManager.LoadScene("GameOver");
-        }
-
-        if(sharedGameState.gameWonSceneTransition.Value)
+        if (gameEndedSuccessfully)
         {
             SceneManager.LoadScene("GameWon");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

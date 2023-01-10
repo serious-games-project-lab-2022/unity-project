@@ -11,8 +11,6 @@ public class SharedGameState : NetworkBehaviour
 
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
 
-    public NetworkVariable<bool> gameOverSceneTransition = new NetworkVariable<bool>();
-    public NetworkVariable<bool> gameWonSceneTransition = new NetworkVariable<bool>();
     private bool IsPilot {
         get { return IsHost; }
     }
@@ -21,9 +19,12 @@ public class SharedGameState : NetworkBehaviour
     }
 
     public delegate void InstructorReceivedGameState();
-    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate { };
+    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
 
+    public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
+    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
    
+
     public override void OnNetworkSpawn()
     {
        
@@ -40,5 +41,11 @@ public class SharedGameState : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void InstructorReadyServerRpc()
     {
+    }
+
+    [ClientRpc]
+    public void GameEndedClientRpc(bool gameEndedSuccessfully)
+    {
+        OnInstructorReceivedGameEndedRpc(gameEndedSuccessfully);
     }
 }

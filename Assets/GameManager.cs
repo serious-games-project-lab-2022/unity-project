@@ -28,11 +28,9 @@ public class GameManager : MonoBehaviour
         
         OverworldGoal.OnCollidedWithSpaceship += () =>
         {
-            WonGame();
+            EndGame(gameEndedSuccessfully: true);
         };
     }
-
-  
 
     private void DepleteHealth(int by = 1)
     {
@@ -42,20 +40,20 @@ public class GameManager : MonoBehaviour
 
         if (currentHealthAmount <= 0)
         {
-            
-            EndGame();
+            EndGame(gameEndedSuccessfully: false);
         }
     }
 
-    private void EndGame()
+    private void EndGame(bool gameEndedSuccessfully)
     {
-        sharedGameState.gameOverSceneTransition.Value = true;
-        SceneManager.LoadScene("GameOver");
-    }
-
-    private void WonGame()
-    {
-        sharedGameState.gameWonSceneTransition.Value = true;
-        SceneManager.LoadScene("GameWon");
+        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+        if (gameEndedSuccessfully)
+        {
+            SceneManager.LoadScene("GameWon");
+        }
+        else
+        {
+            SceneManager.LoadScene("GameOver");
+        }
     }
 }
