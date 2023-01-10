@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     private SharedGameState sharedGameState;
-    public int maxHealth = 1;
+    public int maxHealth = 3;
     [HideInInspector]
     public int currentHealthAmount;
     
@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
         OverworldGoal.OnCollidedWithSpaceship += () =>
         {
             EndGame(gameEndedSuccessfully: true);
+        };
+
+        Spaceship.OnCollidedWithTerrain += () => {
+            DepleteHealth(by: 1);
         };
     }
 

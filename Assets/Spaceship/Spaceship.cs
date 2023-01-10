@@ -7,6 +7,9 @@ public class Spaceship : MonoBehaviour
 {
     private SharedGameState sharedGameState;
 
+    public delegate void CollidedWithTerrain();
+    public static event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
+
     void Start()
     {
         sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
@@ -23,6 +26,9 @@ public class Spaceship : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //Debug.Log("Hello");
+        if (collision.gameObject.tag == "OverworldTerrain")
+        {
+            OnCollidedWithTerrain();
+        }
     }
 }
