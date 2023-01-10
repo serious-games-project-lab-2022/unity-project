@@ -1401,7 +1401,7 @@ GameObject:
   - component: {fileID: 1676648635}
   m_Layer: 0
   m_Name: Spaceship
-  m_TagString: Untagged
+  m_TagString: OverworldSpaceship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1485,7 +1485,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91f3f4e2e37714db081a31f646d2d001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 100
+  movementSpeed: 300
   inputService: {fileID: 1712793884}
 --- !u!50 &1676648631
 Rigidbody2D:

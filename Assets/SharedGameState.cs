@@ -19,7 +19,11 @@ public class SharedGameState : NetworkBehaviour
     }
 
     public delegate void InstructorReceivedGameState();
-    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate { };
+    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
+
+    public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
+    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
+   
 
     public override void OnNetworkSpawn()
     {
@@ -35,5 +39,11 @@ public class SharedGameState : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void InstructorReadyServerRpc()
     {
+    }
+
+    [ClientRpc]
+    public void GameEndedClientRpc(bool gameEndedSuccessfully)
+    {
+        OnInstructorReceivedGameEndedRpc(gameEndedSuccessfully);
     }
 }
