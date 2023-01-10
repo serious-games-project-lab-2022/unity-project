@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public delegate void HealthChanged(int newHealthValue);
     public event HealthChanged OnHealthChanged = delegate {};
 
-    
+
     private void Start()
     {
         currentHealthAmount = maxHealth;

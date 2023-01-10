@@ -27,7 +27,6 @@ public class SharedGameState : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-       
         if (IsInstructor)
         {
             DontDestroyOnLoad(this);
@@ -35,7 +34,6 @@ public class SharedGameState : NetworkBehaviour
             Debug.Log(minigameSolutions.Value.shapeMinigameSolution[1]);
             InstructorReadyServerRpc();
         }
-       
     }
 
     [ServerRpc(RequireOwnership = false)]
