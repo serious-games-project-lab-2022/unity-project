@@ -9,9 +9,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void generateMinigameSolutions()
     {
-        minigameSolutions = new MinigameSolutions {
-            shapeMinigameSolution = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs).ToArray()
-        };
+        minigameSolutions.shapeMinigameSolutions = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs);
     }
 
     public void generateScenario()

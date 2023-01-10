@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Minigame : MonoBehaviour
+public abstract class Minigame : MonoBehaviour
 {
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
     
     [SerializeField] protected Image timerBar;
 
-    [SerializeField] private MinigameShapeController minigameShapeController;
+    // TODO: this should get refactored
+    [SerializeField] protected MinigameShapeController minigameShapeController;
 
-    public delegate void MinigameOver();
+    public delegate void MinigameOver(bool solved);
     public event MinigameOver OnMinigameOver = delegate { };
 
 
@@ -35,7 +36,7 @@ public class Minigame : MonoBehaviour
             depleteTimerBar();
             if (secondsLeftToSolve < 0)
             {
-                OnMinigameOver();
+                CheckSolution();
                 minigameShapeController.SetCanMoveShapes(false);
                 secondsLeftToSolve = 0;
             }
@@ -47,4 +48,11 @@ public class Minigame : MonoBehaviour
         secondsLeftToSolve -= Time.deltaTime;
         timerBar.fillAmount = secondsLeftToSolve / secondsToSolve;
     }
+
+    protected void EmitEndedEvent(bool solved)
+    {
+        OnMinigameOver(solved);
+    }
+
+    public abstract void CheckSolution();
 }

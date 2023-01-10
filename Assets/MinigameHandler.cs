@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MinigameHandler : MonoBehaviour
 {
@@ -12,15 +13,17 @@ public class MinigameHandler : MonoBehaviour
     void Start()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        shapeMinigamePrefab.SetSolution(new List<Vector2> (scenarioManager.minigameSolutions.shapeMinigameSolution));
         var shapeMinigame = Instantiate(
             shapeMinigamePrefab,
             parent: this.transform
         );
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        shapeMinigame.OnMinigameOver += () => {
+        shapeMinigame.OnMinigameOver += (bool solved) => {
             Destroy(shapeMinigame.gameObject);
-            OnPlayerLostMinigame(damageAmount: 1);
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 1);
+            }
         };
     }
 }

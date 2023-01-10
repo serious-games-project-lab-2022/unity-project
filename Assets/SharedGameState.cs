@@ -31,7 +31,6 @@ public class SharedGameState : NetworkBehaviour
         {
             DontDestroyOnLoad(this);
             OnInstructorReceivedGameState();
-            Debug.Log(minigameSolutions.Value.shapeMinigameSolution[1]);
             InstructorReadyServerRpc();
         }
     }

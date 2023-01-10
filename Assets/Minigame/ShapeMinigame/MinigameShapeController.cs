@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MinigameShapeController : MonoBehaviour
 {
-    private MinigameShape[] shapes;
+    private List<MinigameShape> shapes;
     private MinigameShape currentlyDraggedShape = null;
     private Vector2 grabOffset = Vector2.zero;
     private Grid grid;
@@ -12,9 +12,13 @@ public class MinigameShapeController : MonoBehaviour
     private bool canMoveShapes;
     private Camera minigameCamera;
 
+    public void SetShapes(List<MinigameShape> newShapes)
+    {
+        shapes = newShapes;
+    }
+
     void Start()
     {
-        shapes = FindObjectsOfType<MinigameShape>();
         grid = GetComponent<Grid>();
         minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
     }
@@ -65,6 +69,4 @@ public class MinigameShapeController : MonoBehaviour
     {
         canMoveShapes = CanMove;
     }
-    
-    
 }

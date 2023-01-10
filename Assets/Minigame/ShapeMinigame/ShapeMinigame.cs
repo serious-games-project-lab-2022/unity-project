@@ -4,13 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-using ShapeMinigameSolution = System.Collections.Generic.List<UnityEngine.Vector2>;
-
 public class ShapeMinigame : Minigame
 {
     private ShapeMinigameSolution solution;
+    private ScenarioManager scenarioManager;
+    private List<MinigameShape> shapes = new List<MinigameShape>();
 
-    public static ShapeMinigameSolution GenerateConfiguration(List<MinigameShape> shapePrefabs)
+    public static ShapeMinigameSolutions GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
         var grid = Instantiate(new GameObject(), position: new Vector3(0, 0, -1), rotation: Quaternion.identity);
         grid.AddComponent<Grid>();
@@ -20,9 +20,11 @@ public class ShapeMinigame : Minigame
         var centerShape = shuffledShapePrefabs[0];
 
         var combinedShape = Instantiate(centerShape, parent: grid.transform);
-        var relativePositions = new ShapeMinigameSolution(shapePrefabs.Count);
-        foreach (var _ in shapePrefabs)
+        var shapeIndices = new List<int>(shapePrefabs.Count);
+        var relativePositions = new List<Vector2>(shapePrefabs.Count);
+        for (int i = 0; i < shuffledShapePrefabs.Count; i++)
         {
+            shapeIndices.Add(i);
             relativePositions.Add(Vector2.zero);
         }
 
@@ -65,7 +67,14 @@ public class ShapeMinigame : Minigame
         }
         // Clean-up the generation process
         Destroy(grid.gameObject);
-        return relativePositions;
+        return new ShapeMinigameSolutions() {
+            solutions = // new [] {
+                new ShapeMinigameSolution() {
+                    relativePositions = relativePositions.ToArray(),
+                    shapeIndices = shapeIndices.ToArray(),
+                // }
+            }
+        };
     }
 
     private static void Merge(Tilemap sourceTilemap, Tilemap into, Vector2Int offset)
@@ -85,18 +94,71 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    public void SetSolution(ShapeMinigameSolution newSolution)
+    private void GetSolution()
     {
-        solution = newSolution;
+        solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
+    }
+
+    public override void CheckSolution()
+    {
+        var currentRelativePositions = new List<Vector2>();
+        foreach (var shape in shapes)
+        {
+            currentRelativePositions.Add(
+                shape.transform.localPosition - shapes[0].transform.localPosition
+            );
+        }
+
+        var solved = currentRelativePositions.SequenceEqual(solution.relativePositions);
+        EmitEndedEvent(solved);
+    }
+
+    private void PlaceShapePrefabs()
+    {
+        if (solution == null)
+        {
+            throw new UnityException("Shape minigame does not have a solution");
+        }
+
+        var cumulativeOffset = 0;
+        foreach (var index in solution.shapeIndices)
+        {
+            var shapePrefab = scenarioManager.minigameShapePrefabs[index];
+            var shape = Instantiate(shapePrefab, parent: minigameShapeController.transform);
+            shape.transform.localPosition = new Vector3(cumulativeOffset, 0, 0);
+            shapes.Add(shape);
+
+            var shapeTilemap = shape.GetComponent<Tilemap>();
+            shapeTilemap.CompressBounds();
+
+            cumulativeOffset += (shapeTilemap.cellBounds.xMax - shapeTilemap.cellBounds.xMin);
+        }
+
+        minigameShapeController.SetShapes(shapes);
+    }
+
+    void Awake()
+    {
+        scenarioManager = FindObjectOfType<ScenarioManager>();
     }
 
     protected override void Start()
     {
         base.Start();
+        GetSolution();
+        PlaceShapePrefabs();
+        SetCamera();
     }
 
     protected override void Update()
     {
         base.Update();
+    }
+
+    private void SetCamera()
+    {
+        var canvas = GetComponentInChildren<Canvas>();
+        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
+        canvas.worldCamera = minigameCamera;
     }
 }

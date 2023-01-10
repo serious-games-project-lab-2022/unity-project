@@ -21,12 +21,13 @@ public class ShapeMinigameBook : MinigameBook
     void GenerateSolutionExplanation()
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolution;
+        // TODO: this should not be hard coded
+        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
 
-        for (var i = 0; i < shapeMinigameSolution.Length; i++)
+        foreach (var index in shapeMinigameSolution.shapeIndices)
         {
-            var shapePrefab = scenarioManagerPrefab.minigameShapePrefabs[i];
-            var shapePosition = shapeMinigameSolution[i];
+            var shapePrefab = scenarioManagerPrefab.minigameShapePrefabs[index];
+            var shapePosition = shapeMinigameSolution.relativePositions[index];
 
             var shape = Instantiate(shapePrefab, parent: grid.transform);
             shape.transform.localPosition = shapePosition;
