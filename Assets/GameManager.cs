@@ -1,18 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField] private NetworkObject sharedGameStatePrefab;
+    [SerializeField] private ScenarioManager scenarioManagerPrefab;
+
     void Start()
     {
-        
+        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
+            // Don't do anything if the host connects to it's own server
+            if (clientIdentifier == 0)
+            {
+                return;
+            }
+
+            if (IsServer)
+            {
+                var scenarioManager = Instantiate(scenarioManagerPrefab);
+                DontDestroyOnLoad(scenarioManager);
+                scenarioManager.generateScenario();
+
+                var sharedGameState = Instantiate(sharedGameStatePrefab);
+                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
+                DontDestroyOnLoad(sharedGameState);
+                sharedGameState.Spawn();
+            }
+
+            var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+        };
     }
 
-    // Update is called once per frame
-    void Update()
+    public void initHost()
     {
-        
+        NetworkManager.Singleton.StartHost(); 
+    }
+
+    public void initClient()
+    {
+        NetworkManager.Singleton.StartClient();
     }
 }
