@@ -35,13 +35,14 @@ public class GameManager : NetworkBehaviour
         };
     }
 
-    public void initHost()
+    public void InitHost()
     {
         NetworkManager.Singleton.StartHost(); 
     }
 
-    public void initClient()
+    public void InitClient()
     {
         NetworkManager.Singleton.StartClient();
     }
+
 }

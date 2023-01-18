@@ -55,7 +55,7 @@ public class MenuUserInterface : NetworkBehaviour
             instructorButton.gameObject.SetActive(false);
             pilotButton.gameObject.SetActive(false);
             IpAddressInfoLabel.gameObject.SetActive(true);
-            gameManager.initHost();
+            gameManager.InitHost();
             //NetworkManager.Singleton.StartHost();
         });
 
@@ -69,7 +69,7 @@ public class MenuUserInterface : NetworkBehaviour
         confirmationButton.onClick.AddListener(() => {
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
-            gameManager.initClient();
+            gameManager.InitClient();
             //NetworkManager.Singleton.StartClient();
         });
     }
