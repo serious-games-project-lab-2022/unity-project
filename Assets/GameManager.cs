@@ -30,7 +30,7 @@ public class GameManager : NetworkBehaviour
                 sharedGameState.Spawn();
             }
 
-            var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
+            var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         };
     }
