@@ -64,3 +64,6 @@ crashlytics-build.properties
 
 # Mac files
 **/.DS_Store
+
+# Visual Studio
+.vsconfig
