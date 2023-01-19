@@ -26,4 +26,11 @@ public class MiniatureSpaceship : MonoBehaviour
         transform.localPosition = sharedGameState.spaceshipPosition.Value / 16;
         transform.eulerAngles = new Vector3(0, 0, sharedGameState.spaceshipRotation.Value);
     }
+
+    private void OnDestroy()
+    {
+        SharedGameState.OnInstructorReceivedGameState -= () => {
+            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        };
+    }
 }

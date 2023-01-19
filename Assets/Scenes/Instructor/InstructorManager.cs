@@ -28,4 +28,14 @@ public class InstructorManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+
+    private void OnDestroy()
+    {
+        SharedGameState.OnInstructorReceivedGameState -= () => {
+            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+            sharedGameState.OnInstructorReceivedGameEndedRpc -= (bool gameEndedSuccessfully) => {
+                EndGame(gameEndedSuccessfully);
+            };
+        };
+    }
 }

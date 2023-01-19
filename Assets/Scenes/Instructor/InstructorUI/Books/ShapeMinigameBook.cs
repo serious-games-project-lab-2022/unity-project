@@ -44,4 +44,12 @@ public class ShapeMinigameBook : MinigameBook
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
     }
+
+
+    private void OnDestroy()
+    {
+        SharedGameState.OnInstructorReceivedGameState -= () => {
+            GenerateSolutionExplanation();
+        };
+    }
 }

@@ -60,4 +60,22 @@ public class PilotManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+
+
+    private void OnDestroy()
+    {
+        MinigameHandler.OnPlayerLostMinigame -= (int damageAmount) =>
+        {
+            DepleteHealth(by: damageAmount);
+        };
+
+        OverworldGoal.OnCollidedWithSpaceship -= () =>
+        {
+            EndGame(gameEndedSuccessfully: true);
+        };
+
+        Spaceship.OnCollidedWithTerrain -= () => {
+            DepleteHealth(by: 1);
+        };
+    }
 }

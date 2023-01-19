@@ -21,4 +21,12 @@ public class HealthBar : MonoBehaviour
     {
         bar.fillAmount = fillAmount;
     }
+
+    private void OnDestroy()
+    {
+        pilotManager.OnHealthChanged -= (int newHealthValue) =>
+        {
+            UpdateHealthBar(fillAmount: ((float)newHealthValue) / pilotManager.maxHealth);
+        };
+    }
 }
