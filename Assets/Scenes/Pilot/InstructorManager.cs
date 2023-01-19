@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class InstructorGameManager : MonoBehaviour
+public class InstructorManager : MonoBehaviour
 {
     private SharedGameState sharedGameState;
 

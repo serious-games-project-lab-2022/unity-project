@@ -6,14 +6,14 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField]
-    private GameManager gameManager;
+    private PilotManager pilotManager;
     private Image bar;
 
     void Awake()
     {
         bar = GetComponent<Image>();
-        gameManager.OnHealthChanged += (int newHealthValue) => {
-            UpdateHealthBar(fillAmount: ((float) newHealthValue) / gameManager.maxHealth);
+        pilotManager.OnHealthChanged += (int newHealthValue) => {
+            UpdateHealthBar(fillAmount: ((float) newHealthValue) / pilotManager.maxHealth);
         };
     }
 

@@ -16,32 +16,13 @@ public class MenuUserInterface : NetworkBehaviour
 
     [SerializeField] private TextMeshProUGUI IpAddressInfoLabel;
     [SerializeField] private TMP_InputField ipAddressInput;
-    [SerializeField] private NetworkObject sharedGameStatePrefab;
-    [SerializeField] private ScenarioManager scenarioManagerPrefab;
+    [SerializeField] private GameManager gameManagerPrefab;
 
     void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
-            // Don't do anything if the host connects to it's own server
-            if (clientIdentifier == 0) {
-                return;
-            }
+        var gameManager = Instantiate(gameManagerPrefab);
+        DontDestroyOnLoad(gameManager);
 
-            if (IsServer) {
-                var scenarioManager = Instantiate(scenarioManagerPrefab);
-                DontDestroyOnLoad(scenarioManager);
-                scenarioManager.generateScenario();
-
-                var sharedGameState = Instantiate(sharedGameStatePrefab);
-                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
-                DontDestroyOnLoad(sharedGameState);
-                sharedGameState.Spawn();
-            }
-
-            var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-        };
-        
         pilotButton.onClick.AddListener(() => {
             string ipAddress = IpAddressManager.GetIpAddress(IpAddressVersion.v4);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
@@ -52,7 +33,7 @@ public class MenuUserInterface : NetworkBehaviour
             pilotButton.gameObject.SetActive(false);
             IpAddressInfoLabel.gameObject.SetActive(true);
 
-            NetworkManager.Singleton.StartHost();
+            gameManager.InitHost();
         });
 
         instructorButton.onClick.AddListener(() => {
@@ -65,7 +46,8 @@ public class MenuUserInterface : NetworkBehaviour
         confirmationButton.onClick.AddListener(() => {
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
-            NetworkManager.Singleton.StartClient();
+
+            gameManager.InitClient();
         });
     }
 }

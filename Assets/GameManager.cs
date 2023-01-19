@@ -1,63 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Netcode;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManager : NetworkBehaviour
 {
-    private SharedGameState sharedGameState;
-    public int maxHealth = 3;
-    [HideInInspector]
-    public int currentHealthAmount;
-    
-    public delegate void HealthChanged(int newHealthValue);
-    public event HealthChanged OnHealthChanged = delegate {};
+    [SerializeField] private NetworkObject sharedGameStatePrefab;
+    [SerializeField] private ScenarioManager scenarioManagerPrefab;
 
-
-    private void Start()
+    void Start()
     {
-        currentHealthAmount = maxHealth;
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
+            // Don't do anything if the host connects to it's own server
+            if (clientIdentifier == 0)
+            {
+                return;
+            }
 
-        MinigameHandler.OnPlayerLostMinigame += (int damageAmount) =>
-        {
-            DepleteHealth(by: damageAmount);
-        };
-        
-        OverworldGoal.OnCollidedWithSpaceship += () =>
-        {
-            EndGame(gameEndedSuccessfully: true);
-        };
+            if (IsServer)
+            {
+                var scenarioManager = Instantiate(scenarioManagerPrefab);
+                DontDestroyOnLoad(scenarioManager);
+                scenarioManager.generateScenario();
 
-        Spaceship.OnCollidedWithTerrain += () => {
-            DepleteHealth(by: 1);
+                var sharedGameState = Instantiate(sharedGameStatePrefab);
+                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
+                DontDestroyOnLoad(sharedGameState);
+                sharedGameState.Spawn();
+            }
+
+            var sceneName = IsHost ? "Scenes/PilotGame" : "Scenes/InstructorGame";
+            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         };
     }
 
-    private void DepleteHealth(int by = 1)
+    public void InitHost()
     {
-        var damageAmount = by;
-        currentHealthAmount -= damageAmount;
-        OnHealthChanged(newHealthValue: currentHealthAmount);
-
-        if (currentHealthAmount <= 0)
-        {
-            EndGame(gameEndedSuccessfully: false);
-        }
+        NetworkManager.Singleton.StartHost(); 
     }
 
-    private void EndGame(bool gameEndedSuccessfully)
+    public void InitClient()
     {
-        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
-        if (gameEndedSuccessfully)
-        {
-            SceneManager.LoadScene("GameWon");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        NetworkManager.Singleton.StartClient();
     }
+
 }
