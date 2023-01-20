@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Singleton { get; private set; }
+    public ScenarioManager scenarioManager;
     [SerializeField] private NetworkObject sharedGameStatePrefab;
     [SerializeField] private ScenarioManager scenarioManagerPrefab;
 
@@ -20,6 +21,9 @@ public class GameManager : NetworkBehaviour
         }
         Singleton = this;
         DontDestroyOnLoad(this);
+
+        scenarioManager = Instantiate(scenarioManagerPrefab);
+        DontDestroyOnLoad(scenarioManager);
     }
 
     void Start()
@@ -33,8 +37,6 @@ public class GameManager : NetworkBehaviour
 
             if (IsServer)
             {
-                var scenarioManager = Instantiate(scenarioManagerPrefab);
-                DontDestroyOnLoad(scenarioManager);
                 scenarioManager.generateScenario();
 
                 var sharedGameState = Instantiate(sharedGameStatePrefab);

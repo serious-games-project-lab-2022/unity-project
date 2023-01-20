@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class ShapeMinigameBook : MinigameBook
 {
-    [SerializeField]
-    private ScenarioManager scenarioManagerPrefab;
     private Grid grid;
 
     void Start()
@@ -26,7 +24,7 @@ public class ShapeMinigameBook : MinigameBook
 
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {
-            var shapePrefab = scenarioManagerPrefab.minigameShapePrefabs[index];
+            var shapePrefab = GameManager.Singleton.scenarioManager.minigameShapePrefabs[index];
             var shapePosition = shapeMinigameSolution.relativePositions[index];
 
             var shape = Instantiate(shapePrefab, parent: grid.transform);
