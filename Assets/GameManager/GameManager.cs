@@ -7,8 +7,11 @@ using UnityEngine.SceneManagement;
 public class GameManager : NetworkBehaviour
 {
     public static GameManager Singleton { get; private set; }
+    [HideInInspector]
     public ScenarioManager scenarioManager;
-    [SerializeField] private NetworkObject sharedGameStatePrefab;
+    [HideInInspector]
+    public SharedGameState sharedGameState;
+    [SerializeField] private SharedGameState sharedGameStatePrefab;
     [SerializeField] private ScenarioManager scenarioManagerPrefab;
 
     private void Awake()
@@ -24,6 +27,10 @@ public class GameManager : NetworkBehaviour
 
         scenarioManager = Instantiate(scenarioManagerPrefab);
         DontDestroyOnLoad(scenarioManager);
+
+        SharedGameState.OnInstructorReceivedGameState += () => {
+            sharedGameState =  GameObject.FindObjectOfType<SharedGameState>();
+        };
     }
 
     void Start()
@@ -39,15 +46,21 @@ public class GameManager : NetworkBehaviour
             {
                 scenarioManager.generateScenario();
 
-                var sharedGameState = Instantiate(sharedGameStatePrefab);
-                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
+                sharedGameState = Instantiate(sharedGameStatePrefab);
+                sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
                 DontDestroyOnLoad(sharedGameState);
-                sharedGameState.Spawn();
+
+                sharedGameState.GetComponent<NetworkObject>().Spawn();
             }
 
             var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
             SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
         };
+    }
+
+    public void GoBackToMainMenu()
+    {
+        Destroy(NetworkManager.Singleton.gameObject);
     }
 
     public void InitHost()

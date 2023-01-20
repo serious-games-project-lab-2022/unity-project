@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PilotManager : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
     public int maxHealth = 3;
     [HideInInspector]
     public int currentHealthAmount;
@@ -19,7 +18,6 @@ public class PilotManager : MonoBehaviour
     private void Start()
     {
         currentHealthAmount = maxHealth;
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
 
         MinigameHandler.OnPlayerLostMinigame += (int damageAmount) =>
         {
@@ -50,7 +48,7 @@ public class PilotManager : MonoBehaviour
 
     private void EndGame(bool gameEndedSuccessfully)
     {
-        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+        GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
         if (gameEndedSuccessfully)
         {
             SceneManager.LoadScene("GameWon");

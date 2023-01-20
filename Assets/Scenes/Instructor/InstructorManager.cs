@@ -5,13 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class InstructorManager : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
-
     void Start()
     {
         SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-            sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
+            GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
                 EndGame(gameEndedSuccessfully);
             };
         };

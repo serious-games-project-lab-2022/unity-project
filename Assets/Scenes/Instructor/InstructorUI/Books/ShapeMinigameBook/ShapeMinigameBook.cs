@@ -18,9 +18,9 @@ public class ShapeMinigameBook : MinigameBook
 
     void GenerateSolutionExplanation()
     {
-        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
-        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
+        var shapeMinigameSolution = GameManager.Singleton.sharedGameState
+            .minigameSolutions.Value.shapeMinigameSolutions.solutions;
 
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {

@@ -1182,7 +1182,6 @@ MonoBehaviour:
   confirmationButton: {fileID: 724884610}
   IpAddressInfoLabel: {fileID: 809573260}
   ipAddressInput: {fileID: 1671841553}
-  gameManagerPrefab: {fileID: -7585242213345990241, guid: 3ee1a23a9993ecf47a29b7622d4fbc71, type: 3}
 --- !u!114 &1147028613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1343,6 +1342,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7585242213345990241, guid: 3ee1a23a9993ecf47a29b7622d4fbc71, type: 3}
+      propertyPath: sharedGameStatePrefab
+      value: 
+      objectReference: {fileID: 7932373952344602077, guid: fbe69fea390954826b281c250a831928, type: 3}
     - target: {fileID: -6045261424439250798, guid: 3ee1a23a9993ecf47a29b7622d4fbc71, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2161705423
