@@ -6,14 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : NetworkBehaviour
 {
+    public static GameManager Singleton { get; private set; }
     [SerializeField] private NetworkObject sharedGameStatePrefab;
     [SerializeField] private ScenarioManager scenarioManagerPrefab;
+
+    private void Awake()
+    {
+        var singletonAlreadyExists = Singleton != null && Singleton != this;
+        if (singletonAlreadyExists)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Singleton = this;
+        DontDestroyOnLoad(this);
+    }
 
     void Start()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
-            // Don't do anything if the host connects to it's own server
-            if (clientIdentifier == 0)
+            var hostConnectingToOwnServer = clientIdentifier == 0;
+            if (hostConnectingToOwnServer)
             {
                 return;
             }

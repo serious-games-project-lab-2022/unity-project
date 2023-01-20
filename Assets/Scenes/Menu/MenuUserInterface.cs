@@ -16,13 +16,9 @@ public class MenuUserInterface : NetworkBehaviour
 
     [SerializeField] private TextMeshProUGUI IpAddressInfoLabel;
     [SerializeField] private TMP_InputField ipAddressInput;
-    [SerializeField] private GameManager gameManagerPrefab;
 
     void Start()
     {
-        var gameManager = Instantiate(gameManagerPrefab);
-        DontDestroyOnLoad(gameManager);
-
         pilotButton.onClick.AddListener(() => {
             string ipAddress = IpAddressManager.GetIpAddress(IpAddressVersion.v4);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
@@ -33,7 +29,7 @@ public class MenuUserInterface : NetworkBehaviour
             pilotButton.gameObject.SetActive(false);
             IpAddressInfoLabel.gameObject.SetActive(true);
 
-            gameManager.InitHost();
+            GameManager.Singleton.InitHost();
         });
 
         instructorButton.onClick.AddListener(() => {
@@ -47,7 +43,7 @@ public class MenuUserInterface : NetworkBehaviour
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
 
-            gameManager.InitClient();
+            GameManager.Singleton.InitClient();
         });
     }
 }
