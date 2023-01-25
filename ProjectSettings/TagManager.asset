@@ -9,6 +9,7 @@ TagManager:
   - MinigameCamera
   - OverworldSpaceship
   - OverworldTerrain
+  - MinigoalCheckpoint
   layers:
   - Default
   - TransparentFX

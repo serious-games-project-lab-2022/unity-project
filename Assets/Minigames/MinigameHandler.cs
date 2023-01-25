@@ -12,6 +12,12 @@ public class MinigameHandler : MonoBehaviour
 
     void Start()
     {
+        MinigoalCheckpoint.OnCheckpointReached += SpawnMinigame;
+    }
+    
+
+    public void SpawnMinigame()
+    {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
         var shapeMinigame = Instantiate(
             shapeMinigamePrefab,
