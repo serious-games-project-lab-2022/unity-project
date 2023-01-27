@@ -7,7 +7,7 @@ public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
 
-    public delegate void PlayerLostMinigame(int damageAmount);
+    public delegate void PlayerLostMinigame(float damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     void Start()
@@ -22,7 +22,7 @@ public class MinigameHandler : MonoBehaviour
             Destroy(shapeMinigame.gameObject);
             if (!solved)
             {
-                OnPlayerLostMinigame(damageAmount: 3);
+                OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
     }
