@@ -9,6 +9,7 @@ public class ShapeMinigame : Minigame
     private ShapeMinigameSolution solution;
     private ScenarioManager scenarioManager;
     private List<MinigameShape> shapes = new List<MinigameShape>();
+    [SerializeField] private MinigameShapeController minigameShapeController;
 
     public static ShapeMinigameSolutions GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
@@ -145,6 +146,7 @@ public class ShapeMinigame : Minigame
     protected override void Start()
     {
         base.Start();
+        minigameShapeController.SetCanMoveShapes(takeInput);
         GetSolution();
         PlaceShapePrefabs();
         SetCamera();
@@ -153,6 +155,7 @@ public class ShapeMinigame : Minigame
     protected override void Update()
     {
         base.Update();
+        minigameShapeController.SetCanMoveShapes(takeInput);
     }
 
     private void SetCamera()
