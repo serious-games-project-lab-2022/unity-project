@@ -149,19 +149,12 @@ public class ShapeMinigame : Minigame
         minigameShapeController.SetCanMoveShapes(takeInput);
         GetSolution();
         PlaceShapePrefabs();
-        SetCamera();
+        FindObjectOfType<CanvasCameraSettings>().SetCamera();
     }
 
     protected override void Update()
     {
         base.Update();
         minigameShapeController.SetCanMoveShapes(takeInput);
-    }
-
-    private void SetCamera()
-    {
-        var canvas = GetComponentInChildren<Canvas>();
-        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
-        canvas.worldCamera = minigameCamera;
     }
 }

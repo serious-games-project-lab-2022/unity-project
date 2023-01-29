@@ -10,6 +10,7 @@ public class ScenarioManager : MonoBehaviour
     public void generateMinigameSolutions()
     {
         minigameSolutions.shapeMinigameSolutions = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs);
+        minigameSolutions.frequenzMinigameSolutions = FrequenzMinigame.GenerateSolutionForFrequenceMinigame();
     }
 
     public void generateScenario()

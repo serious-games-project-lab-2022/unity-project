@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
-
+    [SerializeField] private FrequenzMinigame frequenzMinigamePrefab;
     public delegate void PlayerLostMinigame(int damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
@@ -17,6 +17,8 @@ public class MinigameHandler : MonoBehaviour
             shapeMinigamePrefab,
             parent: this.transform
         );
+        var frequenzMinigame = Instantiate(frequenzMinigamePrefab, parent: this.transform);
+
         shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
         shapeMinigame.OnMinigameOver += (bool solved) => {
             Destroy(shapeMinigame.gameObject);
