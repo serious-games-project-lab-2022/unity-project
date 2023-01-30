@@ -11,14 +11,16 @@ public struct MinigameSolutions: INetworkSerializable
     {
         if (serializer.IsReader)
         {
-            shapeMinigameSolutions = new ShapeMinigameSolutions {
-                solutions = new ShapeMinigameSolution {
-                    relativePositions = new Vector2[] {},
-                    shapeIndices = new int[] {},
+            shapeMinigameSolutions = new ShapeMinigameSolutions
+            {
+                solutions = new ShapeMinigameSolution
+                {
+                    relativePositions = new Vector2[] { },
+                    shapeIndices = new int[] { },
                 }
             };
-
-            frequenzMinigameSolutions = new FrequenzMinigameSolutions
+        }
+            /*frequenzMinigameSolutions = new FrequenzMinigameSolutions
             {
                 solution = new FrequenzMinigameSolution
                 {
@@ -26,8 +28,8 @@ public struct MinigameSolutions: INetworkSerializable
                     frequence = 0.0f,
                 }
             };
-        }
+        }*/
         shapeMinigameSolutions.NetworkSerialize(serializer);
-        frequenzMinigameSolutions.NetworkSerialize(serializer);
+        //frequenzMinigameSolutions.NetworkSerialize(serializer);
     }
 }

@@ -7,20 +7,20 @@ using UnityEngine.UI;
 public class FrequenzMinigame : Minigame
 {
 
-    [SerializeField] private Slider FrequenceSlider, mplitudeSlider;
+    [SerializeField] private Slider FrequenceSlider, AmplitudeSlider;
 
     FrequenzMinigameSolution solution;
     private ScenarioManager scenarioManager;
 
 
-    public static FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame()
+    public  FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame()
     {
         print(GameObject.FindGameObjectWithTag("AmplitudeSlider"));
-        float amplitudeMinValue = GameObject.FindGameObjectWithTag("AmplitudeSlider").GetComponent<Slider>().minValue;
-        float amplitudeMaxValue = GameObject.FindGameObjectWithTag("AmplitudeSlider").GetComponent<Slider>().maxValue;
+        float amplitudeMinValue = AmplitudeSlider.minValue;
+        float amplitudeMaxValue = AmplitudeSlider.maxValue;
 
-        float frequenceMinValue = GameObject.FindGameObjectWithTag("FrequenceSlider").GetComponent<Slider>().minValue;
-        float frequenceMaxValue = GameObject.FindGameObjectWithTag("FrequenceSlider").GetComponent<Slider>().maxValue;
+        float frequenceMinValue = FrequenceSlider.minValue;
+        float frequenceMaxValue = FrequenceSlider.maxValue;
 
 
         return new FrequenzMinigameSolutions
