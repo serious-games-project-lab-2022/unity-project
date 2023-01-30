@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Minigame : MonoBehaviour
+public abstract class Minigame<MinigameSolutionType> : MonoBehaviour
 {
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
@@ -52,5 +52,15 @@ public abstract class Minigame : MonoBehaviour
         OnMinigameOver(solved);
     }
 
+    public abstract void GetSolution();
+
     public abstract void CheckSolution();
+
+    public void SetCamera()
+    {
+        var canvas = GetComponentInChildren<Canvas>();
+        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
+        canvas.worldCamera = minigameCamera;
+    }
+
 }

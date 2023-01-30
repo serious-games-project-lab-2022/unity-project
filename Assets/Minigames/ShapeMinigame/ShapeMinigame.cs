@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class ShapeMinigame : Minigame
+public class ShapeMinigame : Minigame<ShapeMinigameSolutions>
 {
     private ShapeMinigameSolution solution;
     private ScenarioManager scenarioManager;
@@ -95,7 +95,7 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    private void GetSolution()
+    public override void GetSolution()
     {
         solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
     }
@@ -158,10 +158,4 @@ public class ShapeMinigame : Minigame
         minigameShapeController.SetCanMoveShapes(takeInput);
     }
 
-    private void SetCamera()
-    {
-        var canvas = GetComponentInChildren<Canvas>();
-        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
-        canvas.worldCamera = minigameCamera;
-    }
 }
