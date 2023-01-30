@@ -19,17 +19,17 @@ public struct MinigameSolutions: INetworkSerializable
                     shapeIndices = new int[] { },
                 }
             };
-        }
-            /*frequenzMinigameSolutions = new FrequenzMinigameSolutions
+        
+        frequenzMinigameSolutions = new FrequenzMinigameSolutions
+        {
+            solution = new FrequenzMinigameSolution
             {
-                solution = new FrequenzMinigameSolution
-                {
-                    amplitude = 0.0f,
-                    frequence = 0.0f,
-                }
-            };
-        }*/
-        shapeMinigameSolutions.NetworkSerialize(serializer);
-        //frequenzMinigameSolutions.NetworkSerialize(serializer);
+                amplitude = 0.0f,
+                frequence = 0.0f,
+            }
+        };
+    }
+    shapeMinigameSolutions.NetworkSerialize(serializer);
+    frequenzMinigameSolutions.NetworkSerialize(serializer);
     }
 }

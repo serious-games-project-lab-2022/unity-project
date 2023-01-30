@@ -13,16 +13,16 @@ public class FrequenzMinigame : Minigame
     private ScenarioManager scenarioManager;
 
 
-    public  FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame()
+    public  static FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequenzMinigameSliders)
     {
-        print(GameObject.FindGameObjectWithTag("AmplitudeSlider"));
-        float amplitudeMinValue = AmplitudeSlider.minValue;
-        float amplitudeMaxValue = AmplitudeSlider.maxValue;
+        
+        float amplitudeMinValue = frequenzMinigameSliders[0].minValue;
+        float amplitudeMaxValue = frequenzMinigameSliders[0].maxValue;
 
-        float frequenceMinValue = FrequenceSlider.minValue;
-        float frequenceMaxValue = FrequenceSlider.maxValue;
+        float frequenceMinValue = frequenzMinigameSliders[1].minValue;
+        float frequenceMaxValue = frequenzMinigameSliders[1].maxValue;
 
-
+        
         return new FrequenzMinigameSolutions
         {
             solution = new FrequenzMinigameSolution
@@ -30,20 +30,22 @@ public class FrequenzMinigame : Minigame
                 // Both the lower and upper bounds are inclusive
                 amplitude = Random.Range(amplitudeMinValue, amplitudeMaxValue),
                 frequence = Random.Range(frequenceMinValue, frequenceMaxValue),
+               
             }
         };
 
 
     }
 
-    void SetSolution ()
+    void GetSolution ()
     {
+        
         solution = scenarioManager.minigameSolutions.frequenzMinigameSolutions.solution;
     }
 
     private void PlaceSinWave()
     {
-
+        // Place the Minigame
     }
 
 
@@ -62,7 +64,7 @@ public class FrequenzMinigame : Minigame
     protected override void Start()
     {
         base.Start();
-        SetSolution();
+        GetSolution();
         FindObjectOfType<CanvasCameraSettings>().SetCamera();
         FindObjectOfType<SineWaveController>().EnableSliders(takeInput);
         PlaceSinWave();
