@@ -8,22 +8,22 @@ using UnityEngine.UI;
 public class PilotManager : MonoBehaviour
 {
     private SharedGameState sharedGameState;
-    public int maxHealth = 3;
+    public float maxFuel = 3.0f;
     [HideInInspector]
-    public int currentHealthAmount;
+    public float currentFuelAmount;
     
-    public delegate void HealthChanged(int newHealthValue);
-    public event HealthChanged OnHealthChanged = delegate {};
+    public delegate void FuelChanged(float newFuelValue);
+    public event FuelChanged OnFuelChanged = delegate {};
 
 
     private void Start()
     {
-        currentHealthAmount = maxHealth;
+        currentFuelAmount = maxFuel;
         sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
 
-        MinigameHandler.OnPlayerLostMinigame += (int damageAmount) =>
+        MinigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
         {
-            DepleteHealth(by: damageAmount);
+            DepleteFuel(by: damageAmount);
         };
         
         OverworldGoal.OnCollidedWithSpaceship += () =>
@@ -32,17 +32,17 @@ public class PilotManager : MonoBehaviour
         };
 
         Spaceship.OnCollidedWithTerrain += () => {
-            DepleteHealth(by: 1);
+            DepleteFuel(by: 1.0f);
         };
     }
 
-    private void DepleteHealth(int by = 1)
+    private void DepleteFuel(float by = 1.0f)
     {
         var damageAmount = by;
-        currentHealthAmount -= damageAmount;
-        OnHealthChanged(newHealthValue: currentHealthAmount);
+        currentFuelAmount -= damageAmount;
+        OnFuelChanged(newFuelValue: currentFuelAmount);
 
-        if (currentHealthAmount <= 0)
+        if (currentFuelAmount <= 0.0f)
         {
             EndGame(gameEndedSuccessfully: false);
         }
