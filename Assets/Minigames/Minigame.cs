@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Minigame<MinigameSolutionType> : MonoBehaviour
+public abstract class Minigame : MonoBehaviour
 {
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
@@ -20,10 +20,13 @@ public abstract class Minigame<MinigameSolutionType> : MonoBehaviour
     // Start is called before the first frame update
     virtual protected void Start()
     { 
-       takeInput = true; 
-       secondsLeftToSolve = secondsToSolve;
-       // Set the timer bar to full
-       timerBar.fillAmount = 1f;
+        GetSolution();
+        SetCamera();
+
+        takeInput = true; 
+        secondsLeftToSolve = secondsToSolve;
+        // Set the timer bar to full
+        timerBar.fillAmount = 1f;
     }
 
     // Update is called once per frame
@@ -62,5 +65,4 @@ public abstract class Minigame<MinigameSolutionType> : MonoBehaviour
         var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
         canvas.worldCamera = minigameCamera;
     }
-
 }
