@@ -29,6 +29,7 @@ public class Spaceship : MonoBehaviour
         if (collision.gameObject.tag == "OverworldTerrain")
         {
             OnCollidedWithTerrain();
+            GameObject.FindObjectOfType<CameraShaker>().shake = true;
         }
     }
 }
