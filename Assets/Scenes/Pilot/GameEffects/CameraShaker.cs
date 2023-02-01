@@ -7,16 +7,16 @@ public class CameraShaker : MonoBehaviour
     public float duration = 1f;
     public bool shake = false;
     public AnimationCurve curve;
-    void Update()
+   /* void Update()
     {
         if(shake)
         {
             shake = false;
             StartCoroutine(Shaking());
         }
-    }
+    }*/
 
-    IEnumerator Shaking()
+    private IEnumerator Shaking()
     {
         Vector3 startPosition = transform.position;
         float elapsedTime = 0f;
@@ -29,5 +29,11 @@ public class CameraShaker : MonoBehaviour
             yield return null;
         }
         transform.position = startPosition;
+    }
+
+
+    public void shakePilot()
+    {
+        StartCoroutine(Shaking());
     }
 }
