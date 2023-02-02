@@ -5,40 +5,34 @@ using UnityEngine;
 using UnityEngine.U2D.IK;
 using UnityEngine.UI;
 
-public class FrequenzMinigame : Minigame
+public class FrequencyMinigame : Minigame
 {
-    FrequenzMinigameSolution solution;
+    FrequencyMinigameSolution solution;
     private ScenarioManager scenarioManager;
     private SineWaveController sineWaveController;
 
-    public  static FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequenzMinigameSliders)
+    public static FrequencyMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequencyMinigameSliders)
     {
-        
-        float amplitudeMinValue = frequenzMinigameSliders[0].minValue;
-        float amplitudeMaxValue = frequenzMinigameSliders[0].maxValue;
+        float amplitudeMinValue = frequencyMinigameSliders[0].minValue;
+        float amplitudeMaxValue = frequencyMinigameSliders[0].maxValue;
 
-        float frequenceMinValue = frequenzMinigameSliders[1].minValue;
-        float frequenceMaxValue = frequenzMinigameSliders[1].maxValue;
-
+        float frequencyMinValue = frequencyMinigameSliders[1].minValue;
+        float frequencyMaxValue = frequencyMinigameSliders[1].maxValue;
         
-        return new FrequenzMinigameSolutions
+        return new FrequencyMinigameSolutions
         {
-            solution = new FrequenzMinigameSolution
+            solution = new FrequencyMinigameSolution
             {
                 // Both the lower and upper bounds are inclusive
                 amplitude = UnityEngine.Random.Range(amplitudeMinValue, amplitudeMaxValue),
-                frequence = UnityEngine.Random.Range(frequenceMinValue, frequenceMaxValue),
-               
+                frequency = UnityEngine.Random.Range(frequencyMinValue, frequencyMaxValue),
             }
         };
-
-
     }
 
-    void GetSolution ()
+    void GetSolution()
     {
-        
-        solution = scenarioManager.minigameSolutions.frequenzMinigameSolutions.solution;
+        solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
     }
 
     private void PlaceSinWave()
@@ -55,7 +49,7 @@ public class FrequenzMinigame : Minigame
     public override void CheckSolution()
     {
         var sineWave = GameObject.FindObjectOfType<Sinewave>();
-        var solved = (nearlyEqual(solution.frequence,sineWave.frequency, float.Epsilon)) && (nearlyEqual(solution.amplitude,sineWave.amplitude, float.Epsilon));
+        var solved = (nearlyEqual(solution.frequency,sineWave.frequency, float.Epsilon)) && (nearlyEqual(solution.amplitude,sineWave.amplitude, float.Epsilon));
         EmitEndedEvent(solved);
     }
 

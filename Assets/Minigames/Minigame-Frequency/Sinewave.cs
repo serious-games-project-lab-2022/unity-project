@@ -5,13 +5,12 @@ using UnityEngine;
 public class Sinewave : MonoBehaviour
 {
     public LineRenderer lineRenderer;
-    public int points;
+    public int numberPoints;
     public float amplitude = 1.75f;
     public float frequency = 0.2f;
-    public float shift = 1;
-    public Vector2 xLimits = new Vector2(0, 1);
+    public float speed = 0;
+    public Vector2 widthLimits = new Vector2(-6.5f, 6.5f);
 
-    // Start is called before the first frame update
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -21,22 +20,22 @@ public class Sinewave : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        DrawTheLine();
+        DrawSineWave();
     }
 
-    void DrawTheLine()
+    void DrawSineWave()
     {
-        float xStart = xLimits.x;
+        float xStart = widthLimits.x;
         float Tau = 2 * Mathf.PI;
-        float xFinish = xLimits.y;
+        float xFinish = widthLimits.y;
 
-        lineRenderer.positionCount = points;
+        lineRenderer.positionCount = numberPoints;
 
-        for (int currentPoint = 0; currentPoint < points; currentPoint++)
+        for (int currentPoint = 0; currentPoint < numberPoints; currentPoint++)
         {
-            float progress = (float) currentPoint / (points-1);
+            float progress = (float) currentPoint / (numberPoints-1);
             float x = Mathf.Lerp(xStart, xFinish, progress);
-            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*shift));
+            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*speed));
             lineRenderer.SetPosition(currentPoint, new Vector3(x, y, 0));
         }
     }

@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
-    [SerializeField] private FrequenzMinigame frequenzMinigamePrefab;
+    [SerializeField] private FrequencyMinigame frequenzMinigamePrefab;
     public delegate void PlayerLostMinigame(int damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 

@@ -7,15 +7,15 @@ public class SineWaveController : MonoBehaviour
 {
     [SerializeField] private Slider frequencySlider;
     [SerializeField] private Slider amplitudeSlider;
-    [SerializeField] private Sinewave sinewave;
+    [SerializeField] private Sinewave sineWave;
 
     void Start()
     {
-        frequencySlider.onValueChanged.AddListener((v) => {
-            sinewave.frequency = (float) v;
+        frequencySlider.onValueChanged.AddListener((newFrequency) => {
+            sineWave.frequency = newFrequency;
         });
-        amplitudeSlider.onValueChanged.AddListener((v) => {
-            sinewave.amplitude = (float) v;
+        amplitudeSlider.onValueChanged.AddListener((newAmplitude) => {
+            sineWave.amplitude = newAmplitude;
         });
     }
 
