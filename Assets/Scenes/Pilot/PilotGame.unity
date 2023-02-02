@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 127518881}
   m_Layer: 5
-  m_Name: HealthBarFade
+  m_Name: FuelBarFade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 921362145}
   - component: {fileID: 921362147}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: FuelBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 921362143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215f9198ef7de44d2b0024ae9a96c0b6, type: 3}
+  m_Script: {fileID: 11500000, guid: f1cc8520a92dc0a4db8cd9862a143eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pilotManager: {fileID: 1563405149}
@@ -1375,8 +1375,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc945a7769b5764eb5c2c2bd2de4e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealthAmount: 0
+  maxFuel: 3
+  currentFuelAmount: 0
 --- !u!1 &1600300343
 GameObject:
   m_ObjectHideFlags: 0

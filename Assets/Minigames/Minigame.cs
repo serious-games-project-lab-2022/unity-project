@@ -17,10 +17,13 @@ public abstract class Minigame : MonoBehaviour
 
     virtual protected void Start()
     { 
-       takeInput = true; 
-       secondsLeftToSolve = secondsToSolve;
-       // Set the timer bar to full
-       timerBar.fillAmount = 1f;
+        GetSolution();
+        SetCamera();
+
+        takeInput = true; 
+        secondsLeftToSolve = secondsToSolve;
+        // Set the timer bar to full
+        timerBar.fillAmount = 1f;
     }
 
     // Update is called once per frame
@@ -49,5 +52,14 @@ public abstract class Minigame : MonoBehaviour
         OnMinigameOver(solved);
     }
 
+    public abstract void GetSolution();
+
     public abstract void CheckSolution();
+
+    public void SetCamera()
+    {
+        var canvas = GetComponentInChildren<Canvas>();
+        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
+        canvas.worldCamera = minigameCamera;
+    }
 }

@@ -95,7 +95,7 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    private void GetSolution()
+    public override void GetSolution()
     {
         solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
     }
@@ -147,9 +147,7 @@ public class ShapeMinigame : Minigame
     {
         base.Start();
         minigameShapeController.SetCanMoveShapes(takeInput);
-        GetSolution();
         PlaceShapePrefabs();
-        FindObjectOfType<CanvasCameraSettings>().SetCamera();
     }
 
     protected override void Update()

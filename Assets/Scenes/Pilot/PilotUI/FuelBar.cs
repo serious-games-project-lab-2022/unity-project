@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class FuelBar : MonoBehaviour
 {
     [SerializeField]
     private PilotManager pilotManager;
@@ -12,12 +12,12 @@ public class HealthBar : MonoBehaviour
     void Awake()
     {
         bar = GetComponent<Image>();
-        pilotManager.OnHealthChanged += (int newHealthValue) => {
-            UpdateHealthBar(fillAmount: ((float) newHealthValue) / pilotManager.maxHealth);
+        pilotManager.OnFuelChanged += (float newFuelValue) => {
+            UpdateFuelBar(fillAmount: ((float) newFuelValue) / pilotManager.maxFuel);
         };
     }
 
-    void UpdateHealthBar(float fillAmount)
+    void UpdateFuelBar(float fillAmount)
     {
         bar.fillAmount = fillAmount;
     }
