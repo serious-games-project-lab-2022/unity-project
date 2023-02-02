@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CanvasCameraSettings : MonoBehaviour
 {
-    
     public void SetCamera()
     {
         var canvas = GetComponent<Canvas>();

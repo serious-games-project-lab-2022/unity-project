@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class SineWaveController : MonoBehaviour
 {
-    [SerializeField] private Slider frequencySlider;
-    [SerializeField] private Slider amplitudeSlider;
-    [SerializeField] private Sinewave sineWave;
+    public Slider frequencySlider;
+    public Slider amplitudeSlider;
+    public Sinewave sineWave;
 
     void Start()
     {

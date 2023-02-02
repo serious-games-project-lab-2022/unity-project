@@ -9,6 +9,7 @@ public class FrequencyMinigame : Minigame
 {
     FrequencyMinigameSolution solution;
     private ScenarioManager scenarioManager;
+    [SerializeField]
     private SineWaveController sineWaveController;
 
     public static FrequencyMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequencyMinigameSliders)
@@ -35,12 +36,6 @@ public class FrequencyMinigame : Minigame
         solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
     }
 
-    private void PlaceSinWave()
-    {
-        // Place the Minigame
-    }
-
-
     void Awake()
     {
         scenarioManager = FindObjectOfType<ScenarioManager>();
@@ -60,8 +55,6 @@ public class FrequencyMinigame : Minigame
         FindObjectOfType<CanvasCameraSettings>().SetCamera();
         sineWaveController = FindObjectOfType<SineWaveController>();
         sineWaveController.EnableSliders(takeInput);
-        PlaceSinWave();
-
     }
 
     protected override void Update()
@@ -69,11 +62,9 @@ public class FrequencyMinigame : Minigame
         base.Update();
         sineWaveController.EnableSliders(takeInput);
     }
-
    
     private bool nearlyEqual(float solution, float result, float epsilon)
     {
-        // The Solution is always > 0.5
         double diff = Math.Abs(solution - result);
 
         if (solution.Equals(result))
@@ -81,9 +72,8 @@ public class FrequencyMinigame : Minigame
             return true;
         }
         else
-        { // use relative error
+        {
             return diff / (solution + result) < epsilon;
         }
     }
-   
 }
