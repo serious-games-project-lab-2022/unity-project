@@ -11,7 +11,7 @@ public class FrequencyMinigameBook : MinigameBook
     void Start()
     {
         Hide();
-        //sinewave = transform.Find("Sinewave").GetComponent<Sinewave>();
+        sinewave = GameObject.Find("FrequenceMinigameSolution").GetComponent<Sinewave>();
         SharedGameState.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
@@ -25,6 +25,10 @@ public class FrequencyMinigameBook : MinigameBook
 
         sinewave.amplitude = frequenzMinigameSolution.amplitude;
         sinewave.frequency = frequenzMinigameSolution.frequence;
+        print(sinewave.amplitude);
+        print(sinewave.frequency);
+
+        sinewave.DrawTheLine();
 
     }
 
@@ -37,5 +41,6 @@ public class FrequencyMinigameBook : MinigameBook
     {
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
+        Desktop.DesktopClean = true;
     }
 }

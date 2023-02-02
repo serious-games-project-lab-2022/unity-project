@@ -7,7 +7,6 @@ public class MinigameBookIcon : MonoBehaviour, IPointerUpHandler, IPointerDownHa
 {
     [SerializeField]
     private MinigameBook book;
-
     // Required for the IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -15,6 +14,15 @@ public class MinigameBookIcon : MonoBehaviour, IPointerUpHandler, IPointerDownHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        book.Display();
+        if(Desktop.DesktopClean)
+        {
+            book.Display();
+            Desktop.DesktopClean = false;
+        }
+        else
+        {
+            print("Clean the Desktop by clicking on X ! ");
+        }
+       
     }
 }

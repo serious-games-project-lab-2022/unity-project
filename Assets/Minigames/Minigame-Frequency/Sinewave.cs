@@ -26,7 +26,7 @@ public class Sinewave : MonoBehaviour
         DrawTheLine();
     }
 
-    void DrawTheLine()
+    public void DrawTheLine()
     {
         float xStart = xLimits.x;
         float Tau = 2 * Mathf.PI;
