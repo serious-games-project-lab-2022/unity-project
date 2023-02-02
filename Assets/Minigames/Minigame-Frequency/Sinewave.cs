@@ -6,13 +6,10 @@ public class Sinewave : MonoBehaviour
 {
     public LineRenderer lineRenderer;
     public int points;
-    public float amplitude = 1;
-    public float frequency = 1;
+    public float amplitude = 1.75f;
+    public float frequency = 0.2f;
     public float shift = 1;
     public Vector2 xLimits = new Vector2(0, 1);
-
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -37,8 +34,9 @@ public class Sinewave : MonoBehaviour
         for(int currentPoint = 0; currentPoint< points; currentPoint++)
         {
             float progress = (float) currentPoint / (points-1);
-            float x = Mathf.Lerp(xStart, xFinish, progress);
-            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*shift));
+            float x = Mathf.Lerp(xStart, xFinish, progress) + transform.position.x;
+            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*shift))
+                + transform.position.y;
             lineRenderer.SetPosition(currentPoint, new Vector3(x, y, 0));
         }
     }

@@ -7,22 +7,17 @@ public class SineWaveController : MonoBehaviour
 {
     [SerializeField] private Slider frequencySlider;
     [SerializeField] private Slider amplitudeSlider;
+    [SerializeField] private Sinewave sinewave;
 
-    // Start is called before the first frame update
     void Start()
     {
-        var sineWave = GameObject.FindObjectOfType<Sinewave>();
-        print(sineWave == null);
-        frequencySlider.onValueChanged.AddListener((v) =>
-        {
-            sineWave.frequency = (float)v;
+        frequencySlider.onValueChanged.AddListener((v) => {
+            sinewave.frequency = (float) v;
         });
-        amplitudeSlider.onValueChanged.AddListener((v) =>
-        {
-            sineWave.amplitude = (float)v;
+        amplitudeSlider.onValueChanged.AddListener((v) => {
+            sinewave.amplitude = (float) v;
         });
     }
-
 
     public void EnableSliders(bool input)
     {
