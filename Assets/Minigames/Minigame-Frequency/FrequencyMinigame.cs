@@ -11,6 +11,7 @@ public class FrequencyMinigame : Minigame
     private ScenarioManager scenarioManager;
     [SerializeField]
     private SineWaveController sineWaveController;
+    public float solutionTolerance = 0.5f;
 
     public static FrequencyMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequencyMinigameSliders)
     {
@@ -31,9 +32,11 @@ public class FrequencyMinigame : Minigame
         };
     }
 
-    void GetSolution()
+    public override void GetSolution()
     {
         solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
+        Debug.Log(solution.amplitude);
+        Debug.Log(solution.frequency);
     }
 
     void Awake()
@@ -43,8 +46,11 @@ public class FrequencyMinigame : Minigame
 
     public override void CheckSolution()
     {
-        var sineWave = GameObject.FindObjectOfType<Sinewave>();
-        var solved = (nearlyEqual(solution.frequency,sineWave.frequency, float.Epsilon)) && (nearlyEqual(solution.amplitude,sineWave.amplitude, float.Epsilon));
+        var sineWave = sineWaveController.sineWave;
+        var solved = (
+            nearlyEqual(sineWave.frequency, solution.frequency, solutionTolerance)
+            && nearlyEqual(sineWave.amplitude, solution.amplitude, solutionTolerance)
+        );
         EmitEndedEvent(solved);
     }
 
@@ -63,17 +69,8 @@ public class FrequencyMinigame : Minigame
         sineWaveController.EnableSliders(takeInput);
     }
    
-    private bool nearlyEqual(float solution, float result, float epsilon)
+    private bool nearlyEqual(float observed, float expected, float tolerance)
     {
-        double diff = Math.Abs(solution - result);
-
-        if (solution.Equals(result))
-        {
-            return true;
-        }
-        else
-        {
-            return diff / (solution + result) < epsilon;
-        }
+        return Math.Abs(observed - expected) <= tolerance;
     }
 }
