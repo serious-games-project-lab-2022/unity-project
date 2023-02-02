@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,12 +7,9 @@ using UnityEngine.UI;
 
 public class FrequenzMinigame : Minigame
 {
-
-    [SerializeField] private Slider FrequenceSlider, AmplitudeSlider;
-
     FrequenzMinigameSolution solution;
     private ScenarioManager scenarioManager;
-
+    private SineWaveController sineWaveController;
 
     public  static FrequenzMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequenzMinigameSliders)
     {
@@ -28,8 +26,8 @@ public class FrequenzMinigame : Minigame
             solution = new FrequenzMinigameSolution
             {
                 // Both the lower and upper bounds are inclusive
-                amplitude = Random.Range(amplitudeMinValue, amplitudeMaxValue),
-                frequence = Random.Range(frequenceMinValue, frequenceMaxValue),
+                amplitude = UnityEngine.Random.Range(amplitudeMinValue, amplitudeMaxValue),
+                frequence = UnityEngine.Random.Range(frequenceMinValue, frequenceMaxValue),
                
             }
         };
@@ -57,7 +55,7 @@ public class FrequenzMinigame : Minigame
     public override void CheckSolution()
     {
         var sineWave = GameObject.FindObjectOfType<Sinewave>();
-        var solved = (sineWave.frequency == solution.frequence) && (sineWave.amplitude == solution.amplitude);
+        var solved = (nearlyEqual(solution.frequence,sineWave.frequency, float.Epsilon)) && (nearlyEqual(solution.amplitude,sineWave.amplitude, float.Epsilon));
         EmitEndedEvent(solved);
     }
 
@@ -66,7 +64,8 @@ public class FrequenzMinigame : Minigame
         base.Start();
         GetSolution();
         FindObjectOfType<CanvasCameraSettings>().SetCamera();
-        FindObjectOfType<SineWaveController>().EnableSliders(takeInput);
+        sineWaveController = FindObjectOfType<SineWaveController>();
+        sineWaveController.EnableSliders(takeInput);
         PlaceSinWave();
 
     }
@@ -74,10 +73,23 @@ public class FrequenzMinigame : Minigame
     protected override void Update()
     {
         base.Update();
-        FindObjectOfType<SineWaveController>().EnableSliders(takeInput);
+        sineWaveController.EnableSliders(takeInput);
     }
 
    
+    private bool nearlyEqual(float solution, float result, float epsilon)
+    {
+        // The Solution is always > 0.5
+        double diff = Math.Abs(solution - result);
 
+        if (solution.Equals(result))
+        {
+            return true;
+        }
+        else
+        { // use relative error
+            return diff / (solution + result) < epsilon;
+        }
+    }
    
 }
