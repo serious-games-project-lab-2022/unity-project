@@ -15,6 +15,7 @@ public class Sinewave : MonoBehaviour
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.material.color = Color.white;
     }
 
     // Update is called once per frame
@@ -31,12 +32,11 @@ public class Sinewave : MonoBehaviour
 
         lineRenderer.positionCount = points;
 
-        for(int currentPoint = 0; currentPoint< points; currentPoint++)
+        for (int currentPoint = 0; currentPoint < points; currentPoint++)
         {
             float progress = (float) currentPoint / (points-1);
-            float x = Mathf.Lerp(xStart, xFinish, progress) + transform.position.x;
-            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*shift))
-                + transform.position.y;
+            float x = Mathf.Lerp(xStart, xFinish, progress);
+            float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*shift));
             lineRenderer.SetPosition(currentPoint, new Vector3(x, y, 0));
         }
     }
