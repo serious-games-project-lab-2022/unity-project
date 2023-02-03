@@ -248,7 +248,7 @@ Transform:
   - {fileID: 1605500891}
   - {fileID: 736375682}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &127518880
 GameObject:
@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 127518881}
   m_Layer: 5
-  m_Name: HealthBarFade
+  m_Name: FuelBarFade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -423,7 +423,7 @@ Transform:
   - {fileID: 225204003}
   - {fileID: 1430509593}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &437238611
 GameObject:
@@ -509,7 +509,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &437238615
 MonoBehaviour:
@@ -591,7 +591,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &564840822
 MonoBehaviour:
@@ -770,7 +770,7 @@ GameObject:
   - component: {fileID: 921362145}
   - component: {fileID: 921362147}
   m_Layer: 5
-  m_Name: HealthBar
+  m_Name: FuelBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -843,56 +843,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 921362143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 215f9198ef7de44d2b0024ae9a96c0b6, type: 3}
+  m_Script: {fileID: 11500000, guid: f1cc8520a92dc0a4db8cd9862a143eaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pilotManager: {fileID: 1563405149}
---- !u!1 &1068180337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1068180338}
-  - component: {fileID: 1068180339}
-  m_Layer: 0
-  m_Name: InputService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1068180338
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068180337}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1068180339
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1068180337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d3ea523a2b414991a0718fef603482e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnDirection: 0
-  steeringWheel: {fileID: 0}
 --- !u!1 &1079450831
 GameObject:
   m_ObjectHideFlags: 0
@@ -924,7 +878,7 @@ Transform:
   m_Children:
   - {fileID: 1467157509}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1079450834
 MonoBehaviour:
@@ -938,7 +892,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4043a55d7c3554cac8ad3730b25d40b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shapeMinigamePrefab: {fileID: 2282977799741602004, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
+  shapeMinigamePrefab: {fileID: 1731881944157096351, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
+  frequencyMinigamePrefab: {fileID: 2280067278419404233, guid: 742bd3f22c77b51448067a6e5c5184ec, type: 3}
 --- !u!4 &1391155464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3938891389343538573, guid: 2e64068b0e28743dcbce181b95d6bfd4, type: 3}
@@ -1360,7 +1315,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1563405149
 MonoBehaviour:
@@ -1374,8 +1329,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddc945a7769b5764eb5c2c2bd2de4e32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 3
-  currentHealthAmount: 0
+  maxFuel: 3
+  currentFuelAmount: 0
 --- !u!1 &1600300343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1733,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1712793884
 MonoBehaviour:

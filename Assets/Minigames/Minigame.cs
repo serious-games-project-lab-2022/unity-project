@@ -7,25 +7,23 @@ public abstract class Minigame : MonoBehaviour
 {
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
-    
-    [SerializeField] protected Image timerBar;
+    public bool takeInput = true;  
 
-    // TODO: this should get refactored
-    [SerializeField] protected MinigameShapeController minigameShapeController;
+    [SerializeField] protected Image timerBar;
 
     public delegate void MinigameOver(bool solved);
     public event MinigameOver OnMinigameOver = delegate { };
 
 
-
-
-    // Start is called before the first frame update
     virtual protected void Start()
     { 
-       minigameShapeController.SetCanMoveShapes(true);
-       secondsLeftToSolve = secondsToSolve;
-       // Set the timer bar to full
-       timerBar.fillAmount = 1f;
+        GetSolution();
+        SetCamera();
+
+        takeInput = true; 
+        secondsLeftToSolve = secondsToSolve;
+        // Set the timer bar to full
+        timerBar.fillAmount = 1f;
     }
 
     // Update is called once per frame
@@ -37,7 +35,7 @@ public abstract class Minigame : MonoBehaviour
             if (secondsLeftToSolve < 0)
             {
                 CheckSolution();
-                minigameShapeController.SetCanMoveShapes(false);
+                takeInput = false; 
                 secondsLeftToSolve = 0;
             }
         }
@@ -54,5 +52,14 @@ public abstract class Minigame : MonoBehaviour
         OnMinigameOver(solved);
     }
 
+    public abstract void GetSolution();
+
     public abstract void CheckSolution();
+
+    public void SetCamera()
+    {
+        var canvas = GetComponentInChildren<Canvas>();
+        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
+        canvas.worldCamera = minigameCamera;
+    }
 }

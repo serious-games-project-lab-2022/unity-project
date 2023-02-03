@@ -9,6 +9,8 @@ TagManager:
   - MinigameCamera
   - OverworldSpaceship
   - OverworldTerrain
+  - AmplitudeSlider
+  - FrequenceSlider
   layers:
   - Default
   - TransparentFX
