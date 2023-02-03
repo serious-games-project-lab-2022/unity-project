@@ -58,7 +58,6 @@ public class FrequencyMinigame : Minigame
     {
         base.Start();
         GetSolution();
-        FindObjectOfType<CanvasCameraSettings>().SetCamera();
         sineWaveController = FindObjectOfType<SineWaveController>();
         sineWaveController.EnableSliders(takeInput);
     }

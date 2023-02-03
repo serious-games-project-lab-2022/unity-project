@@ -36,7 +36,7 @@ public class Sinewave : MonoBehaviour
             float progress = (float) currentPoint / (numberPoints-1);
             float x = Mathf.Lerp(xStart, xFinish, progress);
             float y = amplitude * Mathf.Sin((Tau * x * frequency) + (Time.timeSinceLevelLoad*speed));
-            lineRenderer.SetPosition(currentPoint, new Vector3(x, y, 0));
+            lineRenderer.SetPosition(currentPoint, new Vector3(x, y, -3));
         }
     }
 }
