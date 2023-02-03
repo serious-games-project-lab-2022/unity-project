@@ -126,7 +126,7 @@ MonoBehaviour:
   secondsToSolve: 30
   takeInput: 1
   timerBar: {fileID: 8770382352513242686}
-  sineWaveController: {fileID: 0}
+  sineWaveController: {fileID: 731139902771367592}
   solutionTolerance: 0.5
 --- !u!1 &2111853178267457478
 GameObject:
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2111853178267457472}
-  numberPoints: 0
+  numberPoints: 600
   amplitude: 1.75
   frequency: 0.2
   speed: 0
@@ -290,7 +290,6 @@ GameObject:
   - component: {fileID: 1484452695706651751}
   - component: {fileID: 7741232037706645706}
   - component: {fileID: 6453027489923905901}
-  - component: {fileID: 1818783839525231672}
   - component: {fileID: 731139902771367592}
   m_Layer: 0
   m_Name: Canvas
@@ -384,18 +383,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1818783839525231672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7324739045299412180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4d05a01ebfce5042883c0ec11379d69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &731139902771367592
 MonoBehaviour:
   m_ObjectHideFlags: 0
