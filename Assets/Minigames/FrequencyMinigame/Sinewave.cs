@@ -6,8 +6,10 @@ public class Sinewave : MonoBehaviour
 {
     public LineRenderer lineRenderer;
     public int numberPoints;
-    public float amplitude = 1.75f; // please make sure that the value is in the amplitude limit [0.5 , 3]
-    public float frequency = 0.2f; // please make sure that the value is in the frequence limit [0.2 , 0.4]
+
+    [Range(0.5f, 3f)] public float amplitude = 1.75f; 
+
+    [Range(0.2f, 0.4f)] public float frequency = 0.2f;
     public float speed = 0;
     public Vector2 widthLimits = new Vector2(-6.5f, 6.5f);
 
@@ -16,12 +18,12 @@ public class Sinewave : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.material.color = Color.white;
-        DrawSineWave(amplitude, frequency);
+        DrawSineWave();
     }
 
 
 
-    public void DrawSineWave(float amplitude , float frequency)
+    public void DrawSineWave()
     {
         float xStart = widthLimits.x;
         float Tau = 2 * Mathf.PI;

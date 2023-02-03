@@ -13,11 +13,11 @@ public class SineWaveController : MonoBehaviour
     {
         frequencySlider.onValueChanged.AddListener((newFrequency) => {
             sineWave.frequency = newFrequency;
-            sineWave.DrawSineWave(amplitudeSlider.value, newFrequency);
+            sineWave.DrawSineWave();
         });
         amplitudeSlider.onValueChanged.AddListener((newAmplitude) => {
             sineWave.amplitude = newAmplitude;
-            sineWave.DrawSineWave(newAmplitude, frequencySlider.value);
+            sineWave.DrawSineWave();
         });
     }
 
