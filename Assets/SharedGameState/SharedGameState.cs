@@ -18,8 +18,6 @@ public class SharedGameState : NetworkBehaviour
         get { return !IsHost; }
     }
 
-    public delegate void InstructorReceivedGameState();
-    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
     public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
@@ -30,7 +28,8 @@ public class SharedGameState : NetworkBehaviour
         if (IsInstructor)
         {
             DontDestroyOnLoad(this);
-            OnInstructorReceivedGameState();
+            GameManager.Singleton.sharedGameState = this;
+            GameObject.FindObjectOfType<InstructorManager>().OnReceivedGameState();
             InstructorReadyServerRpc();
         }
     }

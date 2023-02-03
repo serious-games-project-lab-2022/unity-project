@@ -27,10 +27,6 @@ public class GameManager : NetworkBehaviour
 
         scenarioManager = Instantiate(scenarioManagerPrefab);
         DontDestroyOnLoad(scenarioManager);
-
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState =  GameObject.FindObjectOfType<SharedGameState>();
-        };
     }
 
     void Start()

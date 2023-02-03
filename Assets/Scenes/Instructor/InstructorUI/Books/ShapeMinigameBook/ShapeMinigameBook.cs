@@ -11,7 +11,8 @@ public class ShapeMinigameBook : MinigameBook
     {
         Hide();
         grid = transform.Find("Grid").GetComponent<Grid>();
-        SharedGameState.OnInstructorReceivedGameState += () => {
+        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+        instructorManager.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
     }

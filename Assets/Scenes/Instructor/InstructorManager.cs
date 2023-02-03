@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class InstructorManager : MonoBehaviour
 {
-    void Start()
+    public delegate void InstructorReceivedGameState();
+    public event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
+
+    public void OnReceivedGameState()
     {
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
-                EndGame(gameEndedSuccessfully);
-            };
+        GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
+            EndGame(gameEndedSuccessfully);
         };
+        OnInstructorReceivedGameState();
     }
 
     void EndGame(bool gameEndedSuccessfully)
