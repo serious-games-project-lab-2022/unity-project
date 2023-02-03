@@ -18,13 +18,6 @@ public class InstructorManager : MonoBehaviour
 
     void EndGame(bool gameEndedSuccessfully)
     {
-        if (gameEndedSuccessfully)
-        {
-            SceneManager.LoadScene("GameWon");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        SceneManager.LoadScene("GameOver");
     }
 }
