@@ -5,7 +5,7 @@ using UnityEngine;
 public class OverworldGoal : MonoBehaviour
 {
     public delegate void CollidedWithSpaceship();
-    public static event CollidedWithSpaceship OnCollidedWithSpaceship;
+    public event CollidedWithSpaceship OnCollidedWithSpaceship;
 
     void Start()
     {

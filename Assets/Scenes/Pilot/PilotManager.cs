@@ -10,8 +10,12 @@ public class PilotManager : MonoBehaviour
     public float maxFuel = 3.0f;
     [HideInInspector]
     public float currentFuelAmount;
+
     [SerializeField]
     private MinigameHandler minigameHandler;
+
+    [SerializeField]
+    private OverworldGoal overworldGoal;
     
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -26,7 +30,7 @@ public class PilotManager : MonoBehaviour
             DepleteFuel(by: damageAmount);
         };
         
-        OverworldGoal.OnCollidedWithSpaceship += () =>
+        overworldGoal.OnCollidedWithSpaceship += () =>
         {
             EndGame(gameEndedSuccessfully: true);
         };
