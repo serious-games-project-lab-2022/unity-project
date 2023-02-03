@@ -1333,6 +1333,7 @@ MonoBehaviour:
   currentFuelAmount: 0
   minigameHandler: {fileID: 1079450834}
   overworldGoal: {fileID: 1605500892}
+  spaceship: {fileID: 1676648632}
 --- !u!1 &1600300343
 GameObject:
   m_ObjectHideFlags: 0

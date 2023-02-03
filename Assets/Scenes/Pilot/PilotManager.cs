@@ -16,6 +16,9 @@ public class PilotManager : MonoBehaviour
 
     [SerializeField]
     private OverworldGoal overworldGoal;
+
+    [SerializeField]
+    private Spaceship spaceship;
     
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -35,7 +38,7 @@ public class PilotManager : MonoBehaviour
             EndGame(gameEndedSuccessfully: true);
         };
 
-        Spaceship.OnCollidedWithTerrain += () => {
+        spaceship.OnCollidedWithTerrain += () => {
             DepleteFuel(by: 1.0f);
         };
     }

@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class Spaceship : MonoBehaviour
 {
     public delegate void CollidedWithTerrain();
-    public static event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
+    public event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
 
 
     void Update()
