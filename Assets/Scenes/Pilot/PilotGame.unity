@@ -1331,6 +1331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFuel: 3
   currentFuelAmount: 0
+  minigameHandler: {fileID: 1079450834}
 --- !u!1 &1600300343
 GameObject:
   m_ObjectHideFlags: 0

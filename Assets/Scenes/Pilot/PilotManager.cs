@@ -10,6 +10,8 @@ public class PilotManager : MonoBehaviour
     public float maxFuel = 3.0f;
     [HideInInspector]
     public float currentFuelAmount;
+    [SerializeField]
+    private MinigameHandler minigameHandler;
     
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -19,7 +21,7 @@ public class PilotManager : MonoBehaviour
     {
         currentFuelAmount = maxFuel;
 
-        MinigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
+        minigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
         {
             DepleteFuel(by: damageAmount);
         };
