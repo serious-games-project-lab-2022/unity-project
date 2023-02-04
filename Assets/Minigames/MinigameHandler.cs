@@ -7,6 +7,7 @@ public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
     [SerializeField] private FrequencyMinigame frequencyMinigamePrefab;
+    [SerializeField] private SymbolMinigame symbolMinigamePrefab;
     public delegate void PlayerLostMinigame(float damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
@@ -37,5 +38,9 @@ public class MinigameHandler : MonoBehaviour
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
+
+
+        // SymbolMinigame 
+        // go over 9 Buttons and assign corresponding pilotIndices and sameSymbolsIndices the textures
     }
 }
