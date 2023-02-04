@@ -40,5 +40,6 @@ public struct MinigameSolutions: INetworkSerializable
 
         shapeMinigameSolutions.NetworkSerialize(serializer);
         frequencyMinigameSolutions.NetworkSerialize(serializer);
+        symbolMinigameSolutions.NetworkSerialize(serializer);
     }
 }

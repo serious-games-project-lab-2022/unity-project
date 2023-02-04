@@ -10,6 +10,8 @@ public class SymbolMinigame : Minigame
 {
     SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
+    [SerializeField] private List<SymbolMinigame> symbolMinigames;
+    [SerializeField] private List<Texture> textures;
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
         // Range [0, 18] 
@@ -82,4 +84,10 @@ public class SymbolMinigame : Minigame
     {
         base.Update();
     }
+
+    private void changeButtonBackground()
+    {
+        
+    }
+
 }
