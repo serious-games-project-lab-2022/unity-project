@@ -10,8 +10,7 @@ public class SymbolMinigame : Minigame
 {
     SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
-    [SerializeField] private List<SymbolMinigame> symbolMinigames;
-    [SerializeField] private List<Texture> textures;
+    bool solved;
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
         // Range [0, 18] 
@@ -35,7 +34,7 @@ public class SymbolMinigame : Minigame
         }
 
 
-       // for (int i = 0; i < allIndices.Length; i++) print(allIndices[i]);
+        for (int i = 0; i < allIndices.Length; i++) print(allIndices[i]);
 
         int[] sameIndices = new int[6];
         int[] pilotIndices = new int[3];
@@ -60,7 +59,8 @@ public class SymbolMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
+        solution = GenerateSolutionForSymbolMinigame(new System.Random(), 24).solution; //scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
+
     }
     void Awake()
     {
@@ -70,12 +70,13 @@ public class SymbolMinigame : Minigame
     public override void CheckSolution()
     {
 
-        throw new NotImplementedException();
+        //EmitEndedEvent(solved);
     }
 
     // Start is called before the first frame update
     protected override void Start()
     {
+        solved = false;
         base.Start();
     }
 
@@ -85,9 +86,8 @@ public class SymbolMinigame : Minigame
         base.Update();
     }
 
-    private void changeButtonBackground()
+    public SymbolMinigameSolution getSolutionOfMinigame()
     {
-        
+        return solution;
     }
-
 }

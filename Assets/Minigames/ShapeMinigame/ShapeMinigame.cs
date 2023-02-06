@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class ShapeMinigame : Minigame
 {
-    private ShapeMinigameSolution solution;
+    ShapeMinigameSolution solution;
     private ScenarioManager scenarioManager;
     private List<MinigameShape> shapes = new List<MinigameShape>();
     [SerializeField] private MinigameShapeController minigameShapeController;
