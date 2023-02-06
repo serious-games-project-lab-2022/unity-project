@@ -12,7 +12,7 @@ public class SymbolMinigame : Minigame
     private ScenarioManager scenarioManager;
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
-        // Range [0, 18] 
+        // Range [0, numberOfIndices] 
         //ALG
         // Randomly sort the list of numbers
         // choose the first 6 for the sameSymbolsIndices and the rest 6 for pilotSymbolIndices / instructorSymbolIndices
