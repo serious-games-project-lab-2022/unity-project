@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class SymbolMinigameShape : MonoBehaviour
 {
     [SerializeField] private Button button;
+    public Sprite texture;
     // Start is called before the first frame update
     void Start()
     {
@@ -13,9 +14,10 @@ public class SymbolMinigameShape : MonoBehaviour
             // change the background
             //
             button.GetComponent<Image>().color = Color.red;
+            this.GetComponent<SpriteRenderer>().sprite = texture;
         });
 
-
+        
     }
 
 }
