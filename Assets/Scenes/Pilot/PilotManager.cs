@@ -60,4 +60,9 @@ public class PilotManager : MonoBehaviour
             SceneManager.LoadScene("GameOver");
         }
     }
+
+     private void FixedUpdate()
+    {
+        DepleteFuel(0.00007f);
+    }
 }
