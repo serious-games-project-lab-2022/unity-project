@@ -10,9 +10,15 @@ public class SymbolMinigameBook : MinigameBook
     // Start is called before the first frame update
     void Start()
     {
-       
+        SharedGameState.OnInstructorReceivedGameState += () => {
+            GenerateSolutionExplanation();
+        };
     }
 
+    void GenerateSolutionExplanation()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {
