@@ -18,12 +18,6 @@ public class SymbolMinigame : Minigame
     private static List<Symbol> choosenSymbols; 
     
 
-   
-
-
-
-    
-
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
         // Range [0, numberOfIndices] 

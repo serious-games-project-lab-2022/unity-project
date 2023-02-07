@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class MinigameBookIcon : MonoBehaviour, IPointerUpHandler, IPointerDownHandler
 {
     [SerializeField]
-    private ShapeMinigameBook book;
+    private SymbolMinigameBook book;
 
     // Required for the IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
