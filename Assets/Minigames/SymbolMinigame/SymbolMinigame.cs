@@ -8,14 +8,14 @@ using Random = System.Random;
 
 public class SymbolMinigame : Minigame
 {
-    [SerializeField] private List<Select> symbols;
+    [SerializeField] private List<Symbol> symbols;
     [SerializeField] private List<Sprite> textures;
 
 
     private SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
 
-    private static List<Select> choosenSymbols; 
+    private static List<Symbol> choosenSymbols; 
     
 
    
@@ -96,7 +96,7 @@ public class SymbolMinigame : Minigame
             }
             else
             {
-                foreach (Select selectedSymbols in choosenSymbols)
+                foreach (Symbol selectedSymbols in choosenSymbols)
                 {
                     value = value && selectedSymbols.isChoosenPilotTextureCorrect();
                 }
@@ -111,7 +111,7 @@ public class SymbolMinigame : Minigame
     protected override void Start()
     {
         
-        choosenSymbols = new List<Select>();
+        choosenSymbols = new List<Symbol>();
         //base.Start();
         GetSolution(); // for the test purposes, delete the line, once the base.Start functions 
         mapTheTexturesToTheSymbols(solution.pilotSymbolIndices, solution.sameSymbolsIndices);
@@ -142,13 +142,13 @@ public class SymbolMinigame : Minigame
         }
     }
 
-    public static void addASymbol(Select selectedSymbol)
+    public static void addASymbol(Symbol selectedSymbol)
     {
         choosenSymbols.Add(selectedSymbol);
     }
 
 
-    public static void deleteASymbol(Select unselectedSymbol)
+    public static void deleteASymbol(Symbol unselectedSymbol)
     {
         choosenSymbols.Remove(unselectedSymbol);
     }
