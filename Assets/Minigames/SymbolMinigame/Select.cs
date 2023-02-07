@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Select : MonoBehaviour
 {
-
+    private bool pilotIndices = false; 
     [SerializeField] private GameObject selectionPrefab;
 
     private GameObject newSelection;
@@ -23,13 +23,30 @@ public class Select : MonoBehaviour
 
         if(isSelected)
         {
-            // let SymbolController know about it
+            // let SymbolMinigame know about it
+            SymbolMinigame.addASymbol(this);
             newSelection.SetActive(true);
         }
         else
         {
-            // let SymbolController know about it
+            // let SymbolMinigame know about it
+            SymbolMinigame.deleteASymbol(this);
             newSelection.SetActive(false);
         }
     }
+
+
+    // set the pilotTexture as true ( according to the solution )
+    public void isPilotTexture(bool value)
+    {
+        pilotIndices = value;
+    }
+
+
+    // return pilotIndices and indicate whether the choosen texture was correct
+    public bool isChoosenPilotTextureCorrect()
+    {
+        return pilotIndices;
+    }
 }
+
