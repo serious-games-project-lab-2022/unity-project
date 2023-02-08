@@ -1,18 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-public class ShapeMinigameBook : MinigameBook
+public class FrequencyMinigameBook : MinigameBook
 {
     [SerializeField]
     private ScenarioManager scenarioManagerPrefab;
-    private Grid grid;
+    private Sinewave sinewave;
 
     void Start()
     {
         Hide();
-        grid = transform.Find("Grid").GetComponent<Grid>();
+        sinewave = GetComponent<Sinewave>();
         SharedGameState.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
@@ -22,16 +21,14 @@ public class ShapeMinigameBook : MinigameBook
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
-        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
+        var frequenzMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
 
-        foreach (var index in shapeMinigameSolution.shapeIndices)
-        {
-            var shapePrefab = scenarioManagerPrefab.minigameShapePrefabs[index];
-            var shapePosition = shapeMinigameSolution.relativePositions[index];
+        sinewave.amplitude = frequenzMinigameSolution.amplitude;
+        sinewave.frequency = frequenzMinigameSolution.frequency;
+        print(sinewave.amplitude);
+        print(sinewave.frequency);
+        sinewave.DrawSineWave();
 
-            var shape = Instantiate(shapePrefab, parent: grid.transform);
-            shape.transform.localPosition = shapePosition;
-        }
     }
 
     public override void Display()
