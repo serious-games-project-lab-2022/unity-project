@@ -21,13 +21,13 @@ public class FrequencyMinigameBook : MinigameBook
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
-        var frequenzMinigameSolution = sharedGameState.minigameSolutions.Value.frequenzMinigameSolutions.solution;
+        var frequenzMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
 
         sinewave.amplitude = frequenzMinigameSolution.amplitude;
-        sinewave.frequency = frequenzMinigameSolution.frequence;
+        sinewave.frequency = frequenzMinigameSolution.frequency;
         print(sinewave.amplitude);
         print(sinewave.frequency);
-        sinewave.DrawTheLine();
+        sinewave.DrawSineWave();
 
     }
 

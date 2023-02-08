@@ -37,14 +37,5 @@ public class MinigameHandler : MonoBehaviour
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
-
-        var frequenzMinigame = Instantiate(frequenzMinigamePrefab, parent: this.transform);
-        frequenzMinigame.OnMinigameOver += (bool solved) => {
-            Destroy(shapeMinigame.gameObject);
-            if (!solved)
-            {
-                OnPlayerLostMinigame(damageAmount: 3);
-            }
-        };
     }
 }

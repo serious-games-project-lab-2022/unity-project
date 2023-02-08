@@ -2116,15 +2116,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1975665369}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73758bda4ed24564b8a66f1db08de95d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3706e3c5ce660dc40adcdf75d31d7971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 1975665375}
-  points: 600
+  numberPoints: 600
   amplitude: 1
   frequency: 1
-  shift: 0
-  xLimits: {x: -3, y: 3}
+  speed: 0
+  widthLimits: {x: -3, y: 3}
 --- !u!1 &2015303466
 GameObject:
   m_ObjectHideFlags: 0
