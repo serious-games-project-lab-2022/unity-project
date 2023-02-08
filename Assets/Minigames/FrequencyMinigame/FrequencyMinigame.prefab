@@ -328,8 +328,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 2111853178267457472}
   numberPoints: 600
-  amplitude: 1.75
-  frequency: 0.2
+  amplitude: 1.19
+  frequency: 0.2702
   speed: 0
   widthLimits: {x: -6, y: 6}
 --- !u!1 &7324739045299412180
@@ -572,7 +572,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 2431902780370436936}
         m_TargetAssemblyTypeName: FrequencyMinigame, Assembly-CSharp
         m_MethodName: CheckSolution
         m_Mode: 1
