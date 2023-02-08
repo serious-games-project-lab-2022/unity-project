@@ -6,24 +6,35 @@ using UnityEngine.EventSystems;
 public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
-    [SerializeField] private FrequenzMinigame frequenzMinigamePrefab;
-    public delegate void PlayerLostMinigame(int damageAmount);
+    [SerializeField] private FrequencyMinigame frequencyMinigamePrefab;
+    public delegate void PlayerLostMinigame(float damageAmount);
     public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     void Start()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        var shapeMinigame = Instantiate(
-            shapeMinigamePrefab,
-            parent: this.transform
-        );
+        // var shapeMinigame = Instantiate(
+        //     shapeMinigamePrefab,
+        //     parent: this.transform
+        // );
    
-        shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        shapeMinigame.OnMinigameOver += (bool solved) => {
-            Destroy(shapeMinigame.gameObject);
+        // shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
+        // shapeMinigame.OnMinigameOver += (bool solved) => {
+        //     Destroy(shapeMinigame.gameObject);
+        //     if (!solved)
+        //     {
+        //         OnPlayerLostMinigame(damageAmount: 3);
+        //     }
+        // };
+
+        var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
+        
+        frequencyMinigame.transform.localPosition = new Vector3(8, 0, 0);
+        frequencyMinigame.OnMinigameOver += (bool solved) => {
+            Destroy(frequencyMinigame.gameObject);
             if (!solved)
             {
-                OnPlayerLostMinigame(damageAmount: 3);
+                OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
 
