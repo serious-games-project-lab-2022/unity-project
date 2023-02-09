@@ -112,7 +112,7 @@ public class SymbolMinigame : Minigame
     {
         
         choosenSymbols = new List<Symbol>();
-        //base.Start();
+        base.Start();
         GetSolution(); // for the test purposes, delete the line, once the base.Start functions 
         mapTheTexturesToTheSymbols(solution.pilotSymbolIndices, solution.sameSymbolsIndices);
     }
@@ -120,7 +120,7 @@ public class SymbolMinigame : Minigame
     // Update is called once per frame
     protected override void Update()
     {
-        //base.Update();
+        base.Update();
         
     }
 
