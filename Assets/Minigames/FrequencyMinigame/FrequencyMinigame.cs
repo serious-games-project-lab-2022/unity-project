@@ -34,7 +34,7 @@ public class FrequencyMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
+        solution = GenerateSolutionForFrequenceMinigame(new List<Slider>() { sineWaveController.amplitudeSlider, sineWaveController.frequencySlider}).solution;//scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
         Debug.Log(solution.amplitude);
         Debug.Log(solution.frequency);
     }

@@ -16,14 +16,7 @@ public class SymbolMinigame : Minigame
     private ScenarioManager scenarioManager;
 
     private static List<Symbol> choosenSymbols; 
-    
-
-   
-
-
-
-    
-
+  
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
         // Range [0, numberOfIndices] 
@@ -57,7 +50,7 @@ public class SymbolMinigame : Minigame
         for (int i = 0; i < pilotIndices.Length; i++) pilotIndices[i] = allIndices[6+i];
         for (int i = 0; i < instructorIndices.Length; i++) instructorIndices[i] = allIndices[9+i];
 
-        for (int i = 0; i < pilotIndices.Length; i++) print(pilotIndices[i]); // for the test purposes
+        //for (int i = 0; i < pilotIndices.Length; i++) print(pilotIndices[i]); // for the test purposes
         return new SymbolMinigameSolutions
         {
             solution = new SymbolMinigameSolution
@@ -72,7 +65,7 @@ public class SymbolMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = GenerateSolutionForSymbolMinigame(new System.Random(), 24).solution; //scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
+        solution = scenarioManager.minigameSolutions.symbolMinigameSolutions.solution; //GenerateSolutionForSymbolMinigame(new Random(), 24).solution; 
 
     }
     void Awake()
@@ -104,7 +97,7 @@ public class SymbolMinigame : Minigame
             
         }
         print(value);
-        //EmitEndedEvent(solved);
+        EmitEndedEvent(value);
     }
 
     // Start is called before the first frame update
@@ -113,7 +106,6 @@ public class SymbolMinigame : Minigame
         
         choosenSymbols = new List<Symbol>();
         base.Start();
-        GetSolution(); // for the test purposes, delete the line, once the base.Start functions 
         mapTheTexturesToTheSymbols(solution.pilotSymbolIndices, solution.sameSymbolsIndices);
     }
 

@@ -28,7 +28,7 @@ public class MinigameHandler : MonoBehaviour
         //     }
         // };
 
-        var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
+        /*var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
         
         frequencyMinigame.transform.localPosition = new Vector3(8, 0, 0);
         frequencyMinigame.OnMinigameOver += (bool solved) => {
@@ -37,10 +37,19 @@ public class MinigameHandler : MonoBehaviour
             {
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
-        };
+        };*/
 
 
         // SymbolMinigame 
-        // go over 9 Buttons and assign corresponding pilotIndices and sameSymbolsIndices the textures
+        var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
+
+        symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
+        symbolMinigame.OnMinigameOver += (bool solved) => {
+            Destroy(symbolMinigame.gameObject);
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 3.0f);
+            }
+        };
     }
 }
