@@ -9,6 +9,7 @@ public class PilotManager : MonoBehaviour
 {
     private SharedGameState sharedGameState;
     public float maxFuel = 3.0f;
+    private float fuelLoss;
     [HideInInspector]
     public float currentFuelAmount;
     
@@ -61,8 +62,9 @@ public class PilotManager : MonoBehaviour
         }
     }
 
-     private void FixedUpdate()
+    private void FixedUpdate()
     {
+        fuelLoss = 0.00007f * Time.fixedDeltaTime;
         DepleteFuel(0.00007f);
     }
 }
