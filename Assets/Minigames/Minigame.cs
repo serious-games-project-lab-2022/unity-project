@@ -63,4 +63,6 @@ public abstract class Minigame : MonoBehaviour
         var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
         canvas.worldCamera = minigameCamera;
     }
+
+    
 }
