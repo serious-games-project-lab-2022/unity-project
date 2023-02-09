@@ -17,6 +17,7 @@ public abstract class Minigame : MonoBehaviour
 
     virtual protected void Start()
     { 
+
         GetSolution();
         SetCamera();
 
