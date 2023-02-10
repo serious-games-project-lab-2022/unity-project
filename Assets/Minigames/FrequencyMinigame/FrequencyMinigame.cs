@@ -13,7 +13,7 @@ public class FrequencyMinigame : Minigame
     private SineWaveController sineWaveController;
     public float solutionTolerance = 0.5f;
 
-    public static FrequencyMinigameSolutions GenerateSolutionForFrequenceMinigame(List<Slider> frequencyMinigameSliders)
+    public static FrequencyMinigameSolutions GenerateSolutionForFrequencyMinigame(List<Slider> frequencyMinigameSliders)
     {
         float amplitudeMinValue = frequencyMinigameSliders[0].minValue;
         float amplitudeMaxValue = frequencyMinigameSliders[0].maxValue;
@@ -34,7 +34,7 @@ public class FrequencyMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = GenerateSolutionForFrequenceMinigame(new List<Slider>() { sineWaveController.amplitudeSlider, sineWaveController.frequencySlider}).solution;//scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
+        solution = GenerateSolutionForFrequencyMinigame(new List<Slider>() { sineWaveController.amplitudeSlider, sineWaveController.frequencySlider}).solution;
         Debug.Log(solution.amplitude);
         Debug.Log(solution.frequency);
     }
