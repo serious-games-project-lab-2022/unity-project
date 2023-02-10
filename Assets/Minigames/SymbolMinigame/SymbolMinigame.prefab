@@ -267,7 +267,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsToSolve: 30
   takeInput: 1
-  timerBar: {fileID: 0}
+  timerBar: {fileID: 630978639257295847}
   symbols:
   - {fileID: 7174002714141804438}
   - {fileID: 7174002714211344117}
