@@ -21,8 +21,6 @@ public class Sinewave : MonoBehaviour
         DrawSineWave();
     }
 
-
-
     public void DrawSineWave()
     {
         float xStart = widthLimits.x;
