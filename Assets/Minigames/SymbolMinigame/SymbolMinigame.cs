@@ -10,12 +10,9 @@ public class SymbolMinigame : Minigame
 {
     [SerializeField] private List<Symbol> symbols;
     [SerializeField] private List<Sprite> textures;
-
-
     private SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
-
-    private static List<Symbol> choosenSymbols; 
+    private static List<Symbol> chosenSymbols; 
   
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
@@ -66,7 +63,6 @@ public class SymbolMinigame : Minigame
     public override void GetSolution()
     {
         solution = scenarioManager.minigameSolutions.symbolMinigameSolutions.solution; //GenerateSolutionForSymbolMinigame(new Random(), 24).solution; 
-
     }
     void Awake()
     {
@@ -77,21 +73,21 @@ public class SymbolMinigame : Minigame
     {
         bool value = true;
 
-        if(choosenSymbols.Count == 0)
+        if(chosenSymbols.Count == 0)
         {
             value = false;
         }
         else
         { 
-            if(choosenSymbols.Count > 3 || choosenSymbols.Count < 3)
+            if(chosenSymbols.Count > 3 || chosenSymbols.Count < 3)
             {
                 value = false;
             }
             else
             {
-                foreach (Symbol selectedSymbols in choosenSymbols)
+                foreach (Symbol selectedSymbols in chosenSymbols)
                 {
-                    value = value && selectedSymbols.isChoosenPilotTextureCorrect();
+                    value = value && selectedSymbols.isChosenPilotTextureCorrect();
                 }
             }
             
@@ -103,8 +99,7 @@ public class SymbolMinigame : Minigame
     // Start is called before the first frame update
     protected override void Start()
     {
-        
-        choosenSymbols = new List<Symbol>();
+        chosenSymbols = new List<Symbol>();
         base.Start();
         mapTheTexturesToTheSymbols(solution.pilotSymbolIndices, solution.sameSymbolsIndices);
     }
@@ -113,11 +108,8 @@ public class SymbolMinigame : Minigame
     protected override void Update()
     {
         base.Update();
-        
     }
 
-    
-    
     private void mapTheTexturesToTheSymbols(int[] pilotIndices, int[] similarIndices)
     {
        
@@ -136,12 +128,11 @@ public class SymbolMinigame : Minigame
 
     public static void addASymbol(Symbol selectedSymbol)
     {
-        choosenSymbols.Add(selectedSymbol);
+        chosenSymbols.Add(selectedSymbol);
     }
-
 
     public static void deleteASymbol(Symbol unselectedSymbol)
     {
-        choosenSymbols.Remove(unselectedSymbol);
+        chosenSymbols.Remove(unselectedSymbol);
     }
 }

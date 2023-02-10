@@ -6,9 +6,7 @@ public class Symbol : MonoBehaviour
 {
     private bool pilotIndices = false; 
     [SerializeField] private GameObject selectionPrefab;
-
     private GameObject newSelection;
-
     public bool isSelected;
 
     private void OnMouseDown()
@@ -43,8 +41,8 @@ public class Symbol : MonoBehaviour
     }
 
 
-    // return pilotIndices and indicate whether the choosen texture was correct
-    public bool isChoosenPilotTextureCorrect()
+    // return pilotIndices and indicate whether the chosen texture was correct
+    public bool isChosenPilotTextureCorrect()
     {
         return pilotIndices;
     }
