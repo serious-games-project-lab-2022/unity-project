@@ -508,8 +508,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: FrequencyMinigame, Assembly-CSharp
+      - m_Target: {fileID: 6459793091596911685}
+        m_TargetAssemblyTypeName: SymbolMinigame, Assembly-CSharp
         m_MethodName: CheckSolution
         m_Mode: 1
         m_Arguments:
