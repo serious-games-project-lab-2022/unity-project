@@ -6,9 +6,7 @@ public class Symbol : MonoBehaviour
 {
     private bool pilotIndices = false; 
     [SerializeField] private GameObject selectionPrefab;
-
     private GameObject newSelection;
-
     public bool isSelected;
 
     private void OnMouseDown()

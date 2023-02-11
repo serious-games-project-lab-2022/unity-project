@@ -10,11 +10,8 @@ public class SymbolMinigame : Minigame
 {
     [SerializeField] private List<Symbol> symbols;
     [SerializeField] private List<Sprite> textures;
-
-
     private SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
-
     private static List<Symbol> choosenSymbols; 
     
 

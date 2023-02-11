@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class SymbolMinigameBook : MinigameBook
 {
-    [SerializeField]
-    private ScenarioManager scenarioManagerPrefab;
+    [SerializeField] private ScenarioManager scenarioManagerPrefab;
+    [SerializeField] private List<Symbol> symbols;
+    [SerializeField] private List<Sprite> textures;
 
     // Start is called before the first frame update
     void Start()
     {
+        Hide();
         SharedGameState.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
@@ -17,26 +19,24 @@ public class SymbolMinigameBook : MinigameBook
 
     void GenerateSolutionExplanation()
     {
+        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        // TODO: this should not be hard coded
+        var symbolMinigameSolution = sharedGameState.minigameSolutions.Value.symbolMinigameSolutions.solution;
         
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
+        mapTheTexturesToTheSymbols(symbolMinigameSolution.instructorSymbolIndices, symbolMinigameSolution.sameSymbolsIndices);
     }
 
-
-
-    // I guess we could let the Functions for the Beta Version be implemented in the parent class
-    // in the future we need to improve them
-    public override void Display()
-    {
-        transform.localPosition = Vector3.zero;
-    }
-
-    public override void Hide()
-    {
-        // I'm sorry for this but this is really the simplest solution
-        transform.localPosition = new Vector3(1000, 1000, 1000);
+    private void mapTheTexturesToTheSymbols(int[] instructorIndices, int[] similarIndices)
+    {     
+        // [0, 3)
+        for (int i = 0; i < instructorIndices.Length; i++)
+        {
+            symbols[i].GetComponent<SpriteRenderer>().sprite = textures[instructorIndices[i]];
+        }
+        // [3,9)
+        for (int i = 0; i < similarIndices.Length; i++)
+        {
+            symbols[i + 3].GetComponent<SpriteRenderer>().sprite = textures[similarIndices[i]];
+        }
     }
 }
