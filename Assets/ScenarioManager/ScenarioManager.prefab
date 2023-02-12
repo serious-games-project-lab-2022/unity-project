@@ -49,6 +49,6 @@ MonoBehaviour:
   - {fileID: 2194127374664954548, guid: 277195ba183854288aac94dc0018411b, type: 3}
   - {fileID: 5543872975221790184, guid: 1f896aec9abc84156aefc62c10f92466, type: 3}
   - {fileID: 5757344182948819027, guid: 75f877af6d91643bc9f5452d60a6d1f8, type: 3}
-  frequenzMinigameSliders:
+  frequencyMinigameSliders:
   - {fileID: 608474639139044742, guid: 22410b05c9da7924dae23826e674620b, type: 3}
   - {fileID: 89829925697799879, guid: 78803a39a770da34bb5919bb18231263, type: 3}

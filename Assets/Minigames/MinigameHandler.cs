@@ -29,9 +29,10 @@ public class MinigameHandler : MonoBehaviour
         };*/
 
         /*var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
-        
+
         frequencyMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        frequencyMinigame.OnMinigameOver += (bool solved) => {
+        frequencyMinigame.OnMinigameOver += (bool solved) =>
+        {
             Destroy(frequencyMinigame.gameObject);
             if (!solved)
             {
@@ -44,7 +45,8 @@ public class MinigameHandler : MonoBehaviour
         var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
 
         symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        symbolMinigame.OnMinigameOver += (bool solved) => {
+        symbolMinigame.OnMinigameOver += (bool solved) =>
+        {
             Destroy(symbolMinigame.gameObject);
             if (!solved)
             {

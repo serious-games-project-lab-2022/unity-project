@@ -11,7 +11,7 @@ public class FrequencyMinigameBook : MinigameBook
     void Start()
     {
         Hide();
-        sinewave = GetComponent<Sinewave>();
+        sinewave = GameObject.FindObjectOfType<Sinewave>();
         SharedGameState.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
