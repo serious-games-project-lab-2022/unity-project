@@ -10,9 +10,7 @@ public class InstructorManager : MonoBehaviour
 
     public void OnReceivedGameState()
     {
-        GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
-            EndGame(gameEndedSuccessfully);
-        };
+        GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += EndGame;
         OnInstructorReceivedGameState();
     }
 

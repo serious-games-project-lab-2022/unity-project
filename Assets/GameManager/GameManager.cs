@@ -31,7 +31,8 @@ public class GameManager : NetworkBehaviour
 
     void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
+        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) =>
+        {
             var hostConnectingToOwnServer = clientIdentifier == 0;
             if (hostConnectingToOwnServer)
             {
@@ -40,18 +41,28 @@ public class GameManager : NetworkBehaviour
 
             if (IsServer)
             {
-                scenarioManager.generateScenario();
-
-                sharedGameState = Instantiate(sharedGameStatePrefab);
-                sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
-                DontDestroyOnLoad(sharedGameState);
-
-                sharedGameState.GetComponent<NetworkObject>().Spawn();
+                InitiateSharedGameState();
             }
 
-            var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            TransitionToGameScene();
         };
+    }
+
+    public void TransitionToGameScene()
+    {
+        var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    private void InitiateSharedGameState()
+    {
+        scenarioManager.generateScenario();
+
+        sharedGameState = Instantiate(sharedGameStatePrefab);
+        sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
+        DontDestroyOnLoad(sharedGameState);
+
+        sharedGameState.GetComponent<NetworkObject>().Spawn();
     }
 
     public void GoBackToMainMenu()

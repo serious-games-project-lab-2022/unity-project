@@ -10,6 +10,8 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<Vector2> overworldGoalPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
 
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+    public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
 
     private bool IsPilot {
         get { return IsHost; }
@@ -25,6 +27,12 @@ public class SharedGameState : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (IsPilot)
+        {
+            instructorInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+            pilotInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+        }
+
         if (IsInstructor)
         {
             DontDestroyOnLoad(this);
@@ -34,9 +42,32 @@ public class SharedGameState : NetworkBehaviour
         }
     }
 
+    private void RetryGameIfBothPlayersInvitedEachOther(bool _previousInvitationStatus, bool _currentInvitationStatus)
+    {
+        if (!IsPilot)
+        {
+            return;
+        }
+
+        if (instructorInvitedToRetry.Value && pilotInvitedToRetry.Value)
+        {
+            instructorInvitedToRetry.Value = false;
+            pilotInvitedToRetry.Value = false;
+
+            RetryGameForInstructorClientRpc();
+            GameManager.Singleton.TransitionToGameScene();
+        }
+    }
+
     [ServerRpc(RequireOwnership = false)]
     public void InstructorReadyServerRpc()
     {
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorInvitePilotToNewGameServerRpc()
+    {
+        instructorInvitedToRetry.Value = true;
     }
 
     [ClientRpc]
@@ -44,4 +75,23 @@ public class SharedGameState : NetworkBehaviour
     {
         OnInstructorReceivedGameEndedRpc(gameEndedSuccessfully);
     }
+
+    public void InviteToRetry()
+    {
+        if (IsInstructor)
+        {
+            InstructorInvitePilotToNewGameServerRpc();
+        }
+        if (IsPilot)
+        {
+            pilotInvitedToRetry.Value = true;
+        }
+    }
+
+    [ClientRpc]
+    public void RetryGameForInstructorClientRpc()
+    {
+        GameManager.Singleton.TransitionToGameScene();
+    }
+
 }

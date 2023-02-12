@@ -12,6 +12,11 @@ public class EndSceneManager : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void InviteToRetry()
+    {
+        GameManager.Singleton.sharedGameState.InviteToRetry();
+    }
+
     private void DestroyAllPermanentObjects()
     {
         Destroy(GameManager.Singleton.sharedGameState.gameObject);
