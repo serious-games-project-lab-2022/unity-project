@@ -893,7 +893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeMinigamePrefab: {fileID: 1731881944157096351, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
-  frequencyMinigamePrefab: {fileID: 2280067278419404233, guid: 742bd3f22c77b51448067a6e5c5184ec, type: 3}
+  frequencyMinigamePrefab: {fileID: 2431902780370436936, guid: 9c79714f4fe2821418687d5957972197, type: 3}
 --- !u!4 &1391155464 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3938891389343538573, guid: 2e64068b0e28743dcbce181b95d6bfd4, type: 3}

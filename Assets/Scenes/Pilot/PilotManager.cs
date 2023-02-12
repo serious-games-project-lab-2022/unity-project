@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class PilotManager : MonoBehaviour
 {
     public float maxFuel = 3.0f;
+    private float fuelLoss;
     [HideInInspector]
     public float currentFuelAmount;
 
@@ -59,5 +60,11 @@ public class PilotManager : MonoBehaviour
     {
         GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
         SceneManager.LoadScene("GameOver");
+    }
+
+    private void FixedUpdate()
+    {
+        fuelLoss = 0.00007f * Time.fixedDeltaTime;
+        DepleteFuel(fuelLoss);
     }
 }

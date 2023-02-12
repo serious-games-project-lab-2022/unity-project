@@ -57,7 +57,6 @@ public class FrequencyMinigame : Minigame
     protected override void Start()
     {
         base.Start();
-        GetSolution();
         sineWaveController = FindObjectOfType<SineWaveController>();
         sineWaveController.EnableSliders(takeInput);
     }
