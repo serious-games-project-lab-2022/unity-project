@@ -62,7 +62,7 @@ public class SymbolMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = GenerateSolutionForSymbolMinigame(new Random(), 24).solution; //scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
+        solution = scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
     }
     void Awake()
     {
