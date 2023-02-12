@@ -5,7 +5,7 @@ using UnityEngine;
 public class SymbolMinigameBook : MinigameBook
 {
     [SerializeField] private ScenarioManager scenarioManagerPrefab;
-    [SerializeField] private List<Symbol> symbols;
+    [SerializeField] private List<GameObject> symbols;
     [SerializeField] private List<Sprite> textures;
 
     // Start is called before the first frame update
