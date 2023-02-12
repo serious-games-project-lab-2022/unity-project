@@ -11,7 +11,7 @@ public class FrequencyMinigameBook : MinigameBook
     void Start()
     {
         Hide();
-        sinewave = GameObject.FindObjectOfType<Sinewave>();
+        sinewave = FindObjectOfType<Sinewave>();
         SharedGameState.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
@@ -21,10 +21,10 @@ public class FrequencyMinigameBook : MinigameBook
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
-        var frequenzMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
+        var frequencyMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
 
-        sinewave.amplitude = frequenzMinigameSolution.amplitude;
-        sinewave.frequency = frequenzMinigameSolution.frequency;
+        sinewave.amplitude = frequencyMinigameSolution.amplitude;
+        sinewave.frequency = frequencyMinigameSolution.frequency;
         print(sinewave.amplitude);
         print(sinewave.frequency);
         sinewave.DrawSineWave();
