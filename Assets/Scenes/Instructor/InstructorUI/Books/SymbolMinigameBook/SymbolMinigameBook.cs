@@ -39,4 +39,15 @@ public class SymbolMinigameBook : MinigameBook
             symbols[i + 3].GetComponent<SpriteRenderer>().sprite = textures[similarIndices[i]];
         }
     }
+
+    public override void Display()
+    {
+        transform.localPosition = Vector3.zero;
+    }
+
+    public override void Hide()
+    {
+        // I'm sorry for this but this is really the simplest solution
+        transform.localPosition = new Vector3(1000, 1000, 1000);
+    }
 }

@@ -4,14 +4,7 @@ using UnityEngine;
 
 public abstract class MinigameBook: MonoBehaviour
 {
-    public void Display()
-    {
-        transform.localPosition = Vector3.zero;
-    }
+    abstract public void Display();
 
-    public void Hide()
-    {
-        // I'm sorry for this but this is really the simplest solution
-        transform.localPosition = new Vector3(1000, 1000, 1000);
-    }
+    abstract public void Hide();
 }
