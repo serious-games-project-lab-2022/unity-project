@@ -53,6 +53,7 @@ public class SharedGameState : NetworkBehaviour
             instructorInvitedToRetry.Value = false;
             pilotInvitedToRetry.Value = false;
 
+            GameManager.Singleton.GenerateScenario();
             RetryGameForInstructorClientRpc();
             GameManager.Singleton.TransitionToGameScene();
         }

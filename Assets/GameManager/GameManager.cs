@@ -46,6 +46,9 @@ public class GameManager : NetworkBehaviour
 
             TransitionToGameScene();
         };
+        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) => {
+            SceneManager.LoadScene("Menu");
+        };
     }
 
     public void TransitionToGameScene()
@@ -56,13 +59,18 @@ public class GameManager : NetworkBehaviour
 
     private void InitiateSharedGameState()
     {
-        scenarioManager.generateScenario();
 
         sharedGameState = Instantiate(sharedGameStatePrefab);
-        sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
+        GenerateScenario();
         DontDestroyOnLoad(sharedGameState);
 
         sharedGameState.GetComponent<NetworkObject>().Spawn();
+    }
+
+    public void GenerateScenario()
+    {
+        scenarioManager.generateScenario();
+        sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
     }
 
     public void GoBackToMainMenu()

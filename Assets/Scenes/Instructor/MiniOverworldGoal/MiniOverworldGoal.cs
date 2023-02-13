@@ -6,6 +6,12 @@ public class MiniOverworldGoal : MonoBehaviour
 {
     void Start()
     {
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            transform.localPosition = (
+                GameManager.Singleton.sharedGameState.overworldGoalPosition.Value / 16f
+            );
+        }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
         instructorManager.OnInstructorReceivedGameState += () => {
             GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged +=
