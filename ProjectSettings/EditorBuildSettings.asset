@@ -23,4 +23,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/End/GameWon.unity
     guid: 58391c80a4bce974aa549d27f56d1991
+  - enabled: 1
+    path: Assets/Scenes/InitialScene/PilotInitialScene.unity
+    guid: ed7230e00944aca4baf01f8bee2d1a3c
+  - enabled: 1
+    path: Assets/Scenes/InitialScene/InstructorInitialScene.unity
+    guid: cc57d1cb3b59dd94086763e9c5865ea8
   m_configObjects: {}
