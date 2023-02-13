@@ -124,6 +124,7 @@ public class SymbolMinigame : Minigame
         {
             symbols[i + 3].GetComponent<SpriteRenderer>().sprite = textures[similarIndices[i]];
         }
+        randomiseTheList(symbols, new Random());
     }
 
     public static void addASymbol(Symbol selectedSymbol)
@@ -134,5 +135,18 @@ public class SymbolMinigame : Minigame
     public static void deleteASymbol(Symbol unselectedSymbol)
     {
         chosenSymbols.Remove(unselectedSymbol);
+    }
+
+    private void randomiseTheList(IList<Symbol> list, Random rng)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Vector3 value = list[k].transform.position;
+            list[k].transform.position = list[n].transform.position;
+            list[n].transform.position = value;
+        }
     }
 }
