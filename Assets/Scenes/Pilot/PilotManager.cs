@@ -11,16 +11,12 @@ public class PilotManager : MonoBehaviour
     private float fuelLoss;
     [HideInInspector]
     public float currentFuelAmount;
-
     [SerializeField]
     private MinigameHandler minigameHandler;
-
     [SerializeField]
     private OverworldGoal overworldGoal;
-
     [SerializeField]
     private Spaceship spaceship;
-    
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
 
