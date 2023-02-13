@@ -32,6 +32,7 @@ public class SymbolMinigameBook : MinigameBook
         for (int i = 0; i < instructorIndices.Length; i++)
         {
             symbols[i].GetComponent<SpriteRenderer>().sprite = textures[instructorIndices[i]];
+            print(instructorIndices[i]);
         }
         // [3,9)
         for (int i = 0; i < similarIndices.Length; i++)
@@ -49,5 +50,6 @@ public class SymbolMinigameBook : MinigameBook
     {
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
+        Desktop.DesktopClean = true;
     }
 }
