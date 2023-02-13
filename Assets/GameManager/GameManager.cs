@@ -89,7 +89,7 @@ public class GameManager : NetworkBehaviour
     {
         NetworkManager.Singleton.StartClient();
     }
-    public void BreackHost()
+    public void BreakHost()
     {
         NetworkManager.Singleton.Shutdown();
     }
