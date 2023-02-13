@@ -55,7 +55,7 @@ public class PilotManager : MonoBehaviour
     private void EndGame(bool gameEndedSuccessfully)
     {
         GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("EndScreen");
     }
 
     private void FixedUpdate()

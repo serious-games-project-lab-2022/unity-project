@@ -16,6 +16,6 @@ public class InstructorManager : MonoBehaviour
 
     void EndGame(bool gameEndedSuccessfully)
     {
-        SceneManager.LoadScene("GameOver");
+        SceneManager.LoadScene("EndScreen");
     }
 }
