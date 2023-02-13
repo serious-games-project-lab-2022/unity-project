@@ -1332,6 +1332,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxFuel: 3
   currentFuelAmount: 0
+  minigameHandler: {fileID: 1079450834}
+  overworldGoal: {fileID: 1605500892}
+  spaceship: {fileID: 1676648632}
 --- !u!1 &1600300343
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,11 +1424,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 33146211682271188, guid: c85777563bc89aa418ba14613ed5370c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.1
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 33146211682271188, guid: c85777563bc89aa418ba14613ed5370c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 126.9
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 33146211682271188, guid: c85777563bc89aa418ba14613ed5370c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1470,6 +1473,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 33146211682271188, guid: c85777563bc89aa418ba14613ed5370c, type: 3}
   m_PrefabInstance: {fileID: 1605500890}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1605500892 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4894232894641205867, guid: c85777563bc89aa418ba14613ed5370c, type: 3}
+  m_PrefabInstance: {fileID: 1605500890}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a0d37895ad0dca4c9e348f6c5e81a6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1676648627
 GameObject:
   m_ObjectHideFlags: 0

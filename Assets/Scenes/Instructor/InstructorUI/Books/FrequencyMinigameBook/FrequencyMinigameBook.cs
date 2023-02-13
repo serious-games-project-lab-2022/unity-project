@@ -12,7 +12,13 @@ public class FrequencyMinigameBook : MinigameBook
     {
         Hide();
         sinewave = FindObjectOfType<Sinewave>();
-        SharedGameState.OnInstructorReceivedGameState += () => {
+
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            GenerateSolutionExplanation();
+        }
+        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+        instructorManager.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
     }
