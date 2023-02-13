@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FrequencyMinigameBook : MinigameBook
 {
-    [SerializeField]
-    private ScenarioManager scenarioManagerPrefab;
+    
     private Sinewave sinewave;
 
     void Start()
@@ -18,6 +17,7 @@ public class FrequencyMinigameBook : MinigameBook
             GenerateSolutionExplanation();
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+
         instructorManager.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
