@@ -64,7 +64,8 @@ public class PilotManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        fuelLoss = 0.00007f * Time.fixedDeltaTime;
+        fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
+        //0.00007f
     }
 }

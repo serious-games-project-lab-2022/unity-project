@@ -42,7 +42,8 @@ public class MenuUserInterface : NetworkBehaviour
         confirmationButton.onClick.AddListener(() => {
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
-
+            transport.MaxConnectAttempts = 2;
+            //print(transport.MaxConnectAttempts);
             GameManager.Singleton.InitClient();
         });
     }

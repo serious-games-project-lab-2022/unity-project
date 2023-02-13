@@ -10,20 +10,10 @@ public class SymbolMinigame : Minigame
 {
     [SerializeField] private List<Symbol> symbols;
     [SerializeField] private List<Sprite> textures;
-
-
     private SymbolMinigameSolution solution;
     private ScenarioManager scenarioManager;
-
-    private static List<Symbol> choosenSymbols; 
-    
-
-   
-
-
-
-    
-
+    private static List<Symbol> chosenSymbols; 
+  
     public static SymbolMinigameSolutions GenerateSolutionForSymbolMinigame(Random random, int numberOfIndices)
     {
         // Range [0, numberOfIndices] 
@@ -57,7 +47,7 @@ public class SymbolMinigame : Minigame
         for (int i = 0; i < pilotIndices.Length; i++) pilotIndices[i] = allIndices[6+i];
         for (int i = 0; i < instructorIndices.Length; i++) instructorIndices[i] = allIndices[9+i];
 
-        for (int i = 0; i < pilotIndices.Length; i++) print(pilotIndices[i]); // for the test purposes
+        //for (int i = 0; i < pilotIndices.Length; i++) print(pilotIndices[i]); // for the test purposes
         return new SymbolMinigameSolutions
         {
             solution = new SymbolMinigameSolution
@@ -72,8 +62,7 @@ public class SymbolMinigame : Minigame
 
     public override void GetSolution()
     {
-        solution = GenerateSolutionForSymbolMinigame(new System.Random(), 24).solution; //scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
-
+        solution = scenarioManager.minigameSolutions.symbolMinigameSolutions.solution;
     }
     void Awake()
     {
@@ -84,36 +73,34 @@ public class SymbolMinigame : Minigame
     {
         bool value = true;
 
-        if(choosenSymbols.Count == 0)
+        if(chosenSymbols.Count == 0)
         {
             value = false;
         }
         else
         { 
-            if(choosenSymbols.Count > 3 || choosenSymbols.Count < 3)
+            if(chosenSymbols.Count > 3 || chosenSymbols.Count < 3)
             {
                 value = false;
             }
             else
             {
-                foreach (Symbol selectedSymbols in choosenSymbols)
+                foreach (Symbol selectedSymbols in chosenSymbols)
                 {
-                    value = value && selectedSymbols.isChoosenPilotTextureCorrect();
+                    value = value && selectedSymbols.isChosenPilotTextureCorrect();
                 }
             }
             
         }
         print(value);
-        //EmitEndedEvent(solved);
+        EmitEndedEvent(value);
     }
 
     // Start is called before the first frame update
     protected override void Start()
     {
-        
-        choosenSymbols = new List<Symbol>();
+        chosenSymbols = new List<Symbol>();
         base.Start();
-        GetSolution(); // for the test purposes, delete the line, once the base.Start functions 
         mapTheTexturesToTheSymbols(solution.pilotSymbolIndices, solution.sameSymbolsIndices);
     }
 
@@ -121,11 +108,8 @@ public class SymbolMinigame : Minigame
     protected override void Update()
     {
         base.Update();
-        
     }
 
-    
-    
     private void mapTheTexturesToTheSymbols(int[] pilotIndices, int[] similarIndices)
     {
        
@@ -140,16 +124,29 @@ public class SymbolMinigame : Minigame
         {
             symbols[i + 3].GetComponent<SpriteRenderer>().sprite = textures[similarIndices[i]];
         }
+        randomiseTheList(symbols, new Random());
     }
 
     public static void addASymbol(Symbol selectedSymbol)
     {
-        choosenSymbols.Add(selectedSymbol);
+        chosenSymbols.Add(selectedSymbol);
     }
-
 
     public static void deleteASymbol(Symbol unselectedSymbol)
     {
-        choosenSymbols.Remove(unselectedSymbol);
+        chosenSymbols.Remove(unselectedSymbol);
+    }
+
+    private void randomiseTheList(IList<Symbol> list, Random rng)
+    {
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Vector3 value = list[k].transform.position;
+            list[k].transform.position = list[n].transform.position;
+            list[n].transform.position = value;
+        }
     }
 }

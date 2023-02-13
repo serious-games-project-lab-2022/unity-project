@@ -8,11 +8,11 @@ public class ScenarioManager : MonoBehaviour
     public List<MinigameShape> minigameShapePrefabs;
     public MinigameSolutions minigameSolutions;
 
-    public List<Slider> frequenzMinigameSliders;
+    public List<Slider> frequencyMinigameSliders;
     public void generateMinigameSolutions()
     {
         minigameSolutions.shapeMinigameSolutions = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs);
-        minigameSolutions.frequencyMinigameSolutions = FrequencyMinigame.GenerateSolutionForFrequenceMinigame(frequenzMinigameSliders);
+        minigameSolutions.frequencyMinigameSolutions = FrequencyMinigame.GenerateSolutionForFrequencyMinigame(frequencyMinigameSliders);
         minigameSolutions.symbolMinigameSolutions = SymbolMinigame.GenerateSolutionForSymbolMinigame(new System.Random(), 24);
 
     }

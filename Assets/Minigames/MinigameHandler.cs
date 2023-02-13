@@ -13,25 +13,26 @@ public class MinigameHandler : MonoBehaviour
 
     void Start()
     {
-        var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        // var shapeMinigame = Instantiate(
-        //     shapeMinigamePrefab,
-        //     parent: this.transform
-        // );
+        /*var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
+        var shapeMinigame = Instantiate(
+            shapeMinigamePrefab,
+            parent: this.transform
+        );
    
-        // shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        // shapeMinigame.OnMinigameOver += (bool solved) => {
-        //     Destroy(shapeMinigame.gameObject);
-        //     if (!solved)
-        //     {
-        //         OnPlayerLostMinigame(damageAmount: 3);
-        //     }
-        // };
+        shapeMinigame.transform.localPosition = new Vector3(8, 0, 0);
+        shapeMinigame.OnMinigameOver += (bool solved) => {
+            Destroy(shapeMinigame.gameObject);
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 3);
+            }
+        };*/
 
         var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
-        
+
         frequencyMinigame.transform.localPosition = new Vector3(8, 0, 0);
-        frequencyMinigame.OnMinigameOver += (bool solved) => {
+        frequencyMinigame.OnMinigameOver += (bool solved) =>
+        {
             Destroy(frequencyMinigame.gameObject);
             if (!solved)
             {
@@ -41,6 +42,16 @@ public class MinigameHandler : MonoBehaviour
 
 
         // SymbolMinigame 
-        // go over 9 Buttons and assign corresponding pilotIndices and sameSymbolsIndices the textures
+        /*var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
+
+        symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
+        symbolMinigame.OnMinigameOver += (bool solved) =>
+        {
+            Destroy(symbolMinigame.gameObject);
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 3.0f);
+            }
+        };*/
     }
 }
