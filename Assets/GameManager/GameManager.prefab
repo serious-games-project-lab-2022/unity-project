@@ -45,7 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36d26ea786a07ae419202509f2f2500b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedGameStatePrefab: {fileID: 7932373952344602076, guid: fbe69fea390954826b281c250a831928, type: 3}
+  scenarioManager: {fileID: 0}
+  sharedGameState: {fileID: 0}
+  sharedGameStatePrefab: {fileID: 7932373952344602077, guid: fbe69fea390954826b281c250a831928, type: 3}
   scenarioManagerPrefab: {fileID: 7292520879181180112, guid: cb10cf85146304c0bbdd0afc9cd3cbbf, type: 3}
 --- !u!114 &-6045261424439250798
 MonoBehaviour:

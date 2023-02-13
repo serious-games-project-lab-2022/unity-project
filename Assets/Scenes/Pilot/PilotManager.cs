@@ -7,11 +7,19 @@ using UnityEngine.UI;
 
 public class PilotManager : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
     public float maxFuel = 3.0f;
     private float fuelLoss;
     [HideInInspector]
     public float currentFuelAmount;
+
+    [SerializeField]
+    private MinigameHandler minigameHandler;
+
+    [SerializeField]
+    private OverworldGoal overworldGoal;
+
+    [SerializeField]
+    private Spaceship spaceship;
     
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -20,19 +28,18 @@ public class PilotManager : MonoBehaviour
     private void Start()
     {
         currentFuelAmount = maxFuel;
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
 
-        MinigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
+        minigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
         {
             DepleteFuel(by: damageAmount);
         };
         
-        OverworldGoal.OnCollidedWithSpaceship += () =>
+        overworldGoal.OnCollidedWithSpaceship += () =>
         {
             EndGame(gameEndedSuccessfully: true);
         };
 
-        Spaceship.OnCollidedWithTerrain += () => {
+        spaceship.OnCollidedWithTerrain += () => {
             DepleteFuel(by: 1.0f);
         };
     }
@@ -51,15 +58,8 @@ public class PilotManager : MonoBehaviour
 
     private void EndGame(bool gameEndedSuccessfully)
     {
-        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
-        if (gameEndedSuccessfully)
-        {
-            SceneManager.LoadScene("GameWon");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+        SceneManager.LoadScene("GameOver");
     }
 
     private void FixedUpdate()

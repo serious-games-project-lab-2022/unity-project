@@ -9,7 +9,7 @@ public class MinigameHandler : MonoBehaviour
     [SerializeField] private FrequencyMinigame frequencyMinigamePrefab;
     [SerializeField] private SymbolMinigame symbolMinigamePrefab;
     public delegate void PlayerLostMinigame(float damageAmount);
-    public static event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+    public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     void Start()
     {

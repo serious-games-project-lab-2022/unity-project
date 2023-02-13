@@ -12,7 +12,12 @@ public class SymbolMinigameBook : MinigameBook
     void Start()
     {
         Hide();
-        SharedGameState.OnInstructorReceivedGameState += () => {
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            GenerateSolutionExplanation();
+        }
+        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+        instructorManager.OnInstructorReceivedGameState += () => {
             GenerateSolutionExplanation();
         };
     }

@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class MiniOverworldGoal : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
-
     void Start()
     {
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-
-            sharedGameState.overworldGoalPosition.OnValueChanged += (Vector2 preValue, Vector2 newValue) => {
-                transform.localPosition = newValue / 16f;
-            };
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            transform.localPosition = (
+                GameManager.Singleton.sharedGameState.overworldGoalPosition.Value / 16f
+            );
+        }
+        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+        instructorManager.OnInstructorReceivedGameState += () => {
+            GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged +=
+                (Vector2 preValue, Vector2 newValue) => {
+                    transform.localPosition = newValue / 16f;
+                };
         };
     }
 }
