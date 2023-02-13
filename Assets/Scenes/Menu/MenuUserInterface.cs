@@ -15,9 +15,10 @@ public class MenuUserInterface : NetworkBehaviour
     [SerializeField] private Button confirmationButton;
     [SerializeField] private Button goBackPilotButton;
     [SerializeField] private Button goBackInstructorButton;
+    [SerializeField] private TextMeshProUGUI gameTitle;
+    [SerializeField] private TextMeshProUGUI gameDescription;
     [SerializeField] private TextMeshProUGUI connectionMessage;
-
-    [SerializeField] private TextMeshProUGUI IpAddressInfoLabel;
+    [SerializeField] private TextMeshProUGUI ipAddressInfoLabel;
     [SerializeField] private TMP_InputField ipAddressInput;
 
     void Start()
@@ -26,11 +27,13 @@ public class MenuUserInterface : NetworkBehaviour
             string ipAddress = IpAddressManager.GetIpAddress(IpAddressVersion.v4);
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddress, 7778);
-            IpAddressInfoLabel.text = $"Your IP address is {ipAddress}\n waiting for the client...";
+            ipAddressInfoLabel.text = $"Your IP address is {ipAddress}\n waiting for the client...";
 
             instructorButton.gameObject.SetActive(false);
             pilotButton.gameObject.SetActive(false);
-            IpAddressInfoLabel.gameObject.SetActive(true);
+            gameTitle.gameObject.SetActive(false);
+            gameDescription.gameObject.SetActive(false);
+            ipAddressInfoLabel.gameObject.SetActive(true);
             goBackPilotButton.gameObject.SetActive(true);
             GameManager.Singleton.InitHost();
         });
@@ -38,6 +41,8 @@ public class MenuUserInterface : NetworkBehaviour
         instructorButton.onClick.AddListener(() => {
             instructorButton.gameObject.SetActive(false);
             pilotButton.gameObject.SetActive(false);
+            gameTitle.gameObject.SetActive(false);
+            gameDescription.gameObject.SetActive(false);
             ipAddressInput.gameObject.SetActive(true);
             confirmationButton.gameObject.SetActive(true);
             goBackInstructorButton.gameObject.SetActive(true);
@@ -71,7 +76,9 @@ public class MenuUserInterface : NetworkBehaviour
             print("host was broken");
             instructorButton.gameObject.SetActive(true);
             pilotButton.gameObject.SetActive(true);
-            IpAddressInfoLabel.gameObject.SetActive(false);
+            gameTitle.gameObject.SetActive(true);
+            gameDescription.gameObject.SetActive(true);
+            ipAddressInfoLabel.gameObject.SetActive(false);
             goBackPilotButton.gameObject.SetActive(false);
         });
 
@@ -79,6 +86,8 @@ public class MenuUserInterface : NetworkBehaviour
         {
             instructorButton.gameObject.SetActive(true);
             pilotButton.gameObject.SetActive(true);
+            gameTitle.gameObject.SetActive(true);
+            gameDescription.gameObject.SetActive(true);
             ipAddressInput.gameObject.SetActive(false);
             confirmationButton.gameObject.SetActive(false);
             goBackInstructorButton.gameObject.SetActive(false);
