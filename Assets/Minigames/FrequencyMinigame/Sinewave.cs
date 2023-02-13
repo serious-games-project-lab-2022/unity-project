@@ -16,8 +16,14 @@ public class Sinewave : MonoBehaviour
    
     void Start()
     {
+        /* var block = new MaterialPropertyBlock();
+         block.SetColor("_BaseColor", Color.white);
+         lineRenderer.SetPropertyBlock(block);
+ */
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.material.color = Color.white;
+        Color white = new Color(1, 1, 1, 1);
+        print("got material");
+        lineRenderer.material.color = white;
         DrawSineWave();
     }
 
