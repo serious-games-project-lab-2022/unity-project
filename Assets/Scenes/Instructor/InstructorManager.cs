@@ -5,27 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class InstructorManager : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
+    public delegate void InstructorReceivedGameState();
+    public event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
 
-    void Start()
+    public void OnReceivedGameState()
     {
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-            sharedGameState.OnInstructorReceivedGameEndedRpc += (bool gameEndedSuccessfully) => {
-                EndGame(gameEndedSuccessfully);
-            };
-        };
+        GameManager.Singleton.sharedGameState.OnInstructorReceivedGameEndedRpc += EndGame;
+        OnInstructorReceivedGameState();
     }
 
     void EndGame(bool gameEndedSuccessfully)
     {
-        if (gameEndedSuccessfully)
-        {
-            SceneManager.LoadScene("GameWon");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-        }
+        SceneManager.LoadScene("EndScreen");
     }
 }

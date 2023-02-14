@@ -8,8 +8,11 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
     public NetworkVariable<Vector2> overworldGoalPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
-
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+    public NetworkVariable<bool> instructorIsReady = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
 
     private bool IsPilot {
         get { return IsHost; }
@@ -18,8 +21,6 @@ public class SharedGameState : NetworkBehaviour
         get { return !IsHost; }
     }
 
-    public delegate void InstructorReceivedGameState();
-    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
     public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
@@ -27,11 +28,36 @@ public class SharedGameState : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (IsPilot)
+        {
+            instructorInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+            pilotInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+        }
+
         if (IsInstructor)
         {
             DontDestroyOnLoad(this);
-            OnInstructorReceivedGameState();
+            GameManager.Singleton.sharedGameState = this;
+            GameObject.FindObjectOfType<InstructorManager>().OnReceivedGameState();
             InstructorReadyServerRpc();
+        }
+    }
+
+    private void RetryGameIfBothPlayersInvitedEachOther(bool _previousInvitationStatus, bool _currentInvitationStatus)
+    {
+        if (!IsPilot)
+        {
+            return;
+        }
+
+        if (instructorInvitedToRetry.Value && pilotInvitedToRetry.Value)
+        {
+            instructorInvitedToRetry.Value = false;
+            pilotInvitedToRetry.Value = false;
+
+            GameManager.Singleton.GenerateScenario();
+            RetryGameForInstructorClientRpc();
+            GameManager.Singleton.TransitionToGameScene();
         }
     }
 
@@ -40,9 +66,34 @@ public class SharedGameState : NetworkBehaviour
     {
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorInvitePilotToNewGameServerRpc()
+    {
+        instructorInvitedToRetry.Value = true;
+    }
+
     [ClientRpc]
     public void GameEndedClientRpc(bool gameEndedSuccessfully)
     {
         OnInstructorReceivedGameEndedRpc(gameEndedSuccessfully);
     }
+
+    public void InviteToRetry()
+    {
+        if (IsInstructor)
+        {
+            InstructorInvitePilotToNewGameServerRpc();
+        }
+        if (IsPilot)
+        {
+            pilotInvitedToRetry.Value = true;
+        }
+    }
+
+    [ClientRpc]
+    public void RetryGameForInstructorClientRpc()
+    {
+        GameManager.Singleton.TransitionToGameScene();
+    }
+
 }

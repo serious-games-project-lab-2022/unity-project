@@ -7,8 +7,8 @@ using UnityEngine.Tilemaps;
 public class ShapeMinigame : Minigame
 {
     private ShapeMinigameSolution solution;
-    private ScenarioManager scenarioManager;
     private List<MinigameShape> shapes = new List<MinigameShape>();
+    [SerializeField] private MinigameShapeController minigameShapeController;
 
     public static ShapeMinigameSolutions GenerateConfiguration(List<MinigameShape> shapePrefabs)
     {
@@ -94,9 +94,9 @@ public class ShapeMinigame : Minigame
         }
     }
 
-    private void GetSolution()
+    public override void GetSolution()
     {
-        solution = scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
+        solution = GameManager.Singleton.scenarioManager.minigameSolutions.shapeMinigameSolutions.solutions;
     }
 
     public override void CheckSolution()
@@ -123,7 +123,7 @@ public class ShapeMinigame : Minigame
         var cumulativeOffset = 0;
         foreach (var index in solution.shapeIndices)
         {
-            var shapePrefab = scenarioManager.minigameShapePrefabs[index];
+            var shapePrefab = GameManager.Singleton.scenarioManager.minigameShapePrefabs[index];
             var shape = Instantiate(shapePrefab, parent: minigameShapeController.transform);
             shape.transform.localPosition = new Vector3(cumulativeOffset, 0, 0);
             shapes.Add(shape);
@@ -137,28 +137,16 @@ public class ShapeMinigame : Minigame
         minigameShapeController.SetShapes(shapes);
     }
 
-    void Awake()
-    {
-        scenarioManager = FindObjectOfType<ScenarioManager>();
-    }
-
     protected override void Start()
     {
         base.Start();
-        GetSolution();
+        minigameShapeController.SetCanMoveShapes(takeInput);
         PlaceShapePrefabs();
-        SetCamera();
     }
 
     protected override void Update()
     {
         base.Update();
-    }
-
-    private void SetCamera()
-    {
-        var canvas = GetComponentInChildren<Canvas>();
-        var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
-        canvas.worldCamera = minigameCamera;
+        minigameShapeController.SetCanMoveShapes(takeInput);
     }
 }

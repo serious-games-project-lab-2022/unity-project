@@ -5,18 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class Spaceship : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
-
     public delegate void CollidedWithTerrain();
-    public static event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
+    public event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
 
-    void Start()
-    {
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-    }
 
     void Update()
     {
+        var sharedGameState = GameManager.Singleton.sharedGameState;
         if (sharedGameState != null)
         {
             sharedGameState.spaceshipPosition.Value = new Vector2(transform.localPosition.x, transform.localPosition.y);

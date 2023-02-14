@@ -8,17 +8,9 @@ using UnityEngine.XR;
 
 public class MiniatureSpaceship : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
-
-    void Start()
-    {
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        };
-    }
-
     void FixedUpdate()
     {
+        var sharedGameState = GameManager.Singleton.sharedGameState;
         if (sharedGameState == null)
         {
             return;

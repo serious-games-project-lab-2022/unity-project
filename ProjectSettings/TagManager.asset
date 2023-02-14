@@ -10,6 +10,8 @@ TagManager:
   - OverworldSpaceship
   - OverworldTerrain
   - MinigoalCheckpoint
+  - AmplitudeSlider
+  - FrequenceSlider
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - StartScreen
   - 
   - 
   - 

@@ -3,36 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System;
 
 public class GameManager : NetworkBehaviour
 {
-    [SerializeField] private NetworkObject sharedGameStatePrefab;
+    public static GameManager Singleton { get; private set; }
+    [HideInInspector]
+    public ScenarioManager scenarioManager;
+    [HideInInspector]
+    public SharedGameState sharedGameState;
+    [SerializeField] private SharedGameState sharedGameStatePrefab;
     [SerializeField] private ScenarioManager scenarioManagerPrefab;
+
+    private void Awake()
+    {
+        var singletonAlreadyExists = Singleton != null && Singleton != this;
+        if (singletonAlreadyExists)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+        Singleton = this;
+        DontDestroyOnLoad(this);
+
+        scenarioManager = Instantiate(scenarioManagerPrefab);
+        DontDestroyOnLoad(scenarioManager);
+    }
 
     void Start()
     {
-        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) => {
-            // Don't do anything if the host connects to it's own server
-            if (clientIdentifier == 0)
+        NetworkManager.Singleton.OnClientConnectedCallback += (ulong clientIdentifier) =>
+        {
+            var hostConnectingToOwnServer = clientIdentifier == 0;
+            if (hostConnectingToOwnServer)
             {
                 return;
             }
 
             if (IsServer)
             {
-                var scenarioManager = Instantiate(scenarioManagerPrefab);
-                DontDestroyOnLoad(scenarioManager);
-                scenarioManager.generateScenario();
-
-                var sharedGameState = Instantiate(sharedGameStatePrefab);
-                sharedGameState.GetComponent<SharedGameState>().minigameSolutions.Value = scenarioManager.minigameSolutions;
-                DontDestroyOnLoad(sharedGameState);
-                sharedGameState.Spawn();
+                InitiateSharedGameState();
             }
 
-            var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
-            SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+            TransitionToGameScene();
         };
+        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) => {
+            SceneManager.LoadScene("Menu");
+        };
+    }
+
+    public void TransitionToGameScene()
+    {
+        var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
+        SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    private void InitiateSharedGameState()
+    {
+
+        sharedGameState = Instantiate(sharedGameStatePrefab);
+        GenerateScenario();
+        DontDestroyOnLoad(sharedGameState);
+
+        sharedGameState.GetComponent<NetworkObject>().Spawn();
+    }
+
+    public void GenerateScenario()
+    {
+        scenarioManager.generateScenario();
+        sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
+    }
+
+    public void GoBackToMainMenu()
+    {
+        Destroy(NetworkManager.Singleton.gameObject);
     }
 
     public void InitHost()
@@ -43,6 +88,10 @@ public class GameManager : NetworkBehaviour
     public void InitClient()
     {
         NetworkManager.Singleton.StartClient();
+    }
+    public void BreakHost()
+    {
+        NetworkManager.Singleton.Shutdown();
     }
 
 }
