@@ -14,7 +14,7 @@ public class MinigameCheckpointSpawnPositions : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         this.SpawnCheckpoint();
         //spawn new checkpoint once last one was reached
         //MinigoalCheckpoint.OnCheckpointReached += SpawnCheckpoint;
@@ -23,18 +23,28 @@ public class MinigameCheckpointSpawnPositions : MonoBehaviour
 
     public void SpawnCheckpoint()
     {
+           
         if(count <= CheckpointsNumber)
         {
             spaceshipPos = spaceship.transform;
             Debug.Log(spaceshipPos.position);
-            //spaceship as center of the radius 10, spwan one checkpoint randomly
-            var randomPos = new Vector3(Random.Range(-6f, 6f) + spaceshipPos.position.x,
-            Random.Range(-6f, 6f) + spaceshipPos.position.y, 0);
+            //spaceship as center of the radius 6, spwan one checkpoint randomly
+            Vector2 randomPos = new Vector2(2 + count+spaceshipPos.position.x, 2 + count + spaceshipPos.position.y);
             Debug.Log(randomPos);
             GameObject.Instantiate(myPrefab, randomPos, Quaternion.identity);
             count++;
+
+            var sharedGameState = GameManager.Singleton.sharedGameState;
+       
+            if (sharedGameState != null)
+            {
+                sharedGameState.checkpointPosition.Value = randomPos;
+                Debug.Log("randomPos"+randomPos);
+                 Debug.Log("sharedGameState"+sharedGameState.checkpointPosition.Value);
+            }
         } //else
         //SpawnOverworldGoal();
+            
         
     }
     /*
