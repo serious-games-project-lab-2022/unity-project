@@ -15,6 +15,7 @@ public class MinigameHandler : MonoBehaviour
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
+    /*
     void Start()
     {
         minigoalCheckpoint.OnCheckpointReached += () =>
@@ -22,7 +23,7 @@ public class MinigameHandler : MonoBehaviour
             SpawnMinigame();
         };
     }
-
+    */
     public void SpawnMinigame()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
@@ -71,7 +72,7 @@ public class MinigameHandler : MonoBehaviour
         };*/
 
 
-        // SymbolMinigame 
+        /* SymbolMinigame 
         var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
 
         symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
@@ -83,5 +84,6 @@ public class MinigameHandler : MonoBehaviour
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
+        */
     }
 }

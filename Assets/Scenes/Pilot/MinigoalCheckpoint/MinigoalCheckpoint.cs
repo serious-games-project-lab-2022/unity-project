@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class MinigoalCheckpoint : MonoBehaviour
 {
-    public delegate void CheckpointReached();
-    public event CheckpointReached OnCheckpointReached;
+    //public delegate void CheckpointReached();
+    //public event CheckpointReached OnCheckpointReached;
 
     void Start()
     {
@@ -21,10 +21,13 @@ public class MinigoalCheckpoint : MonoBehaviour
     {   
         var minigameHandler = GameObject.FindObjectOfType<MinigameHandler>();
         print(minigameHandler == null);
+        var minigameCheckpointSpawnPositions = GameObject.FindObjectOfType<MinigameCheckpointSpawnPositions>();
 
         if(other.tag == "OverworldSpaceship"){
             minigameHandler.SpawnMinigame();
+            
             Destroy(gameObject);
+            minigameCheckpointSpawnPositions.SpawnCheckpoint();
         }
     }
 }
