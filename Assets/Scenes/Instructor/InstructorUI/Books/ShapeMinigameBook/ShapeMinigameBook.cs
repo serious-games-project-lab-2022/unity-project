@@ -25,9 +25,8 @@ public class ShapeMinigameBook : MinigameBook
     void GenerateSolutionExplanation()
     {
         // TODO: this should not be hard coded
-        var shapeMinigameSolution = GameManager.Singleton.sharedGameState
-            .minigameSolutions.Value.shapeMinigameSolutions.solutions;
-
+        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {
             var shapePrefab = GameManager.Singleton.scenarioManager.minigameShapePrefabs[index];
