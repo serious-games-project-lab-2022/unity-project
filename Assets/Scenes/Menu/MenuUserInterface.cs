@@ -51,23 +51,10 @@ public class MenuUserInterface : NetworkBehaviour
         confirmationButton.onClick.AddListener(() => {
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
-            transport.MaxConnectAttempts = 5;
+            transport.MaxConnectAttempts = 1;
             GameManager.Singleton.InitClient();
 
-
-            // the code below will only run if the connection failed
-            if (connectionMessage.gameObject.activeSelf)
-            {
-                connectionMessage.gameObject.SetActive(false);
-                Invoke("SetActiveWithDelay", 0.5f);
-            }
-            
-            else
-            {
-                connectionMessage.gameObject.SetActive(true);
-            }
-            
-
+            StartCoroutine(ShowErroMessage());
         });
 
         goBackPilotButton.onClick.AddListener(() =>
@@ -97,8 +84,9 @@ public class MenuUserInterface : NetworkBehaviour
 
     }
 
-    private void SetActiveWithDelay()
+    private IEnumerator ShowErroMessage()
     {
+        yield return new WaitForSeconds(0.4f);
         connectionMessage.gameObject.SetActive(true);
     }
 }
