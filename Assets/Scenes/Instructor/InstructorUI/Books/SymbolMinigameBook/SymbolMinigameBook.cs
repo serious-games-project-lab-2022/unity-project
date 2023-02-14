@@ -8,24 +8,26 @@ public class SymbolMinigameBook : MinigameBook
     [SerializeField] private List<GameObject> symbols;
     [SerializeField] private List<Sprite> textures;
 
+    
     // Start is called before the first frame update
     void Start()
     {
         Hide();
         if (GameManager.Singleton.sharedGameState != null)
         {
-            GenerateSolutionExplanation();
+            StartCoroutine(GenerateSolutionExplanation());
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
         instructorManager.OnInstructorReceivedGameState += () => {
-            GenerateSolutionExplanation();
+            StartCoroutine(GenerateSolutionExplanation());
         };
     }
 
-    void GenerateSolutionExplanation()
+    IEnumerator GenerateSolutionExplanation()
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
+        yield return new WaitForSeconds(0.5f);
         var symbolMinigameSolution = sharedGameState.minigameSolutions.Value.symbolMinigameSolutions.solution;
         
         mapTheTexturesToTheSymbols(symbolMinigameSolution.instructorSymbolIndices, symbolMinigameSolution.sameSymbolsIndices);
@@ -37,7 +39,7 @@ public class SymbolMinigameBook : MinigameBook
         for (int i = 0; i < instructorIndices.Length; i++)
         {
             symbols[i].GetComponent<SpriteRenderer>().sprite = textures[instructorIndices[i]];
-            print(instructorIndices[i]);
+          //  print(instructorIndices[i]);
         }
         // [3,9)
         for (int i = 0; i < similarIndices.Length; i++)

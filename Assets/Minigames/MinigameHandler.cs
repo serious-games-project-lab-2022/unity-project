@@ -72,7 +72,7 @@ public class MinigameHandler : MonoBehaviour
 
 
         // SymbolMinigame 
-        /*var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
+        var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
 
         symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
         symbolMinigame.OnMinigameOver += (bool solved) =>
@@ -82,6 +82,6 @@ public class MinigameHandler : MonoBehaviour
             {
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
-        };*/
+        };
     }
 }

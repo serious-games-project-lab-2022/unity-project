@@ -34,6 +34,7 @@ public class FrequencyMinigame : Minigame
 
     public override void GetSolution()
     {
+        print("Pilot");
         solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
         Debug.Log(solution.amplitude);
         Debug.Log(solution.frequency);

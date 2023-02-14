@@ -73,6 +73,7 @@ public class GameManager : NetworkBehaviour
     {
         scenarioManager.generateScenario();
         sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
+
     }
 
     public void GoBackToMainMenu()

@@ -22,7 +22,7 @@ public class Sinewave : MonoBehaviour
  */
         lineRenderer = GetComponent<LineRenderer>();
         Color white = new Color(1, 1, 1, 1);
-        print("got material");
+        //print("got material");
         lineRenderer.material.color = white;
         DrawSineWave();
     }

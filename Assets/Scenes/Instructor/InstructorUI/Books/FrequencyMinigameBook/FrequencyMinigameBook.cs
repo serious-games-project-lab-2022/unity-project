@@ -14,25 +14,29 @@ public class FrequencyMinigameBook : MinigameBook
 
         if (GameManager.Singleton.sharedGameState != null)
         {
-            GenerateSolutionExplanation();
+            StartCoroutine( GenerateSolutionExplanation());
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
 
         instructorManager.OnInstructorReceivedGameState += () => {
-            GenerateSolutionExplanation();
+            StartCoroutine(GenerateSolutionExplanation());
         };
     }
 
-    void GenerateSolutionExplanation()
+    IEnumerator GenerateSolutionExplanation()
     {
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
+        yield return new WaitForSeconds(0.5f);
         var frequencyMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
-
         sinewave.amplitude = frequencyMinigameSolution.amplitude;
         sinewave.frequency = frequencyMinigameSolution.frequency;
+
+        // test
+        print("instructor");
         print(sinewave.amplitude);
         print(sinewave.frequency);
+
         sinewave.DrawSineWave();
 
     }
