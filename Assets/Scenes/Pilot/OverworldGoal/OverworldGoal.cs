@@ -21,6 +21,7 @@ public class OverworldGoal : MonoBehaviour
     {
         if(other.tag == "OverworldSpaceship"){
             OnCollidedWithSpaceship();
+            Destroy(gameObject);
         }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - MinigameCamera
   - OverworldSpaceship
   - OverworldTerrain
+  - MinigoalCheckpoint
   - AmplitudeSlider
   - FrequenceSlider
   layers:
