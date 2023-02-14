@@ -14,7 +14,7 @@ public class MinigameHandler : MonoBehaviour
     void Start()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
-        var shapeMinigame = Instantiate(
+        /*var shapeMinigame = Instantiate(
             shapeMinigamePrefab,
             parent: this.transform
         );
@@ -27,7 +27,7 @@ public class MinigameHandler : MonoBehaviour
             {
                 OnPlayerLostMinigame(damageAmount: 3);
             }
-        };
+        };*/
 
         /*var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
 
@@ -43,7 +43,7 @@ public class MinigameHandler : MonoBehaviour
 
 
         // SymbolMinigame 
-        /*var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
+        var symbolMinigame = Instantiate(symbolMinigamePrefab, parent: transform);
 
         symbolMinigame.transform.localPosition = new Vector3(8, 0, 0);
         symbolMinigame.OnMinigameOver += (bool solved) =>
@@ -53,6 +53,6 @@ public class MinigameHandler : MonoBehaviour
             {
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
-        };*/
+        };
     }
 }

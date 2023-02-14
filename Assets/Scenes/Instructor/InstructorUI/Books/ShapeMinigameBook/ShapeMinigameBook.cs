@@ -4,7 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 public class ShapeMinigameBook : MinigameBook
+
 {
+  
     private Grid grid;
 
     void Start()
@@ -14,18 +16,19 @@ public class ShapeMinigameBook : MinigameBook
 
         if (GameManager.Singleton.sharedGameState != null)
         {
-            GenerateSolutionExplanation();
+            StartCoroutine(GenerateSolutionExplanation());
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
         instructorManager.OnInstructorReceivedGameState += () => {
-            GenerateSolutionExplanation();
+            StartCoroutine(GenerateSolutionExplanation());
         };
     }
 
-    void GenerateSolutionExplanation()
+    IEnumerator GenerateSolutionExplanation()
     {
         // TODO: this should not be hard coded
         var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        yield return new WaitForSeconds(0.5f);
         var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {
