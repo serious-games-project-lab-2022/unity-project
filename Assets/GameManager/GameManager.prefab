@@ -49,6 +49,7 @@ MonoBehaviour:
   sharedGameState: {fileID: 0}
   sharedGameStatePrefab: {fileID: 7932373952344602077, guid: fbe69fea390954826b281c250a831928, type: 3}
   scenarioManagerPrefab: {fileID: 7292520879181180112, guid: cb10cf85146304c0bbdd0afc9cd3cbbf, type: 3}
+  sceneLoader: {fileID: 1267161115766152029, guid: a87de9815051d9b40b46c8458e8ec6f2, type: 3}
 --- !u!114 &-6045261424439250798
 MonoBehaviour:
   m_ObjectHideFlags: 0

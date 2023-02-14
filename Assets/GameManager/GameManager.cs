@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
+using System;
 
 public class GameManager : NetworkBehaviour
 {
@@ -86,6 +88,10 @@ public class GameManager : NetworkBehaviour
     public void InitClient()
     {
         NetworkManager.Singleton.StartClient();
+    }
+    public void BreakHost()
+    {
+        NetworkManager.Singleton.Shutdown();
     }
 
 }

@@ -9,6 +9,8 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
     public NetworkVariable<Vector2> overworldGoalPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+    public NetworkVariable<bool> instructorIsReady = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
 
