@@ -17,6 +17,10 @@ public class EndSceneManager : MonoBehaviour
         GameManager.Singleton.sharedGameState.InviteToRetry();
     }
 
+    public void Exit()
+    {
+        Application.Quit();
+    }
     private void DestroyAllPermanentObjects()
     {
         Destroy(GameManager.Singleton.sharedGameState.gameObject);
