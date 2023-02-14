@@ -2,24 +2,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Random = System.Random;
 
 public class MinigameHandler : MonoBehaviour
 {
+    [SerializeField] private List<Minigame> minigamePrefabs;
+    private int minigameIndex = 0;
     [SerializeField] private ShapeMinigame shapeMinigamePrefab;
     [SerializeField] private FrequencyMinigame frequencyMinigamePrefab;
     [SerializeField] private SymbolMinigame symbolMinigamePrefab;
+    [SerializeField] private MinigoalCheckpoint minigoalCheckpoint;
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     void Start()
     {
-        MinigoalCheckpoint.OnCheckpointReached += SpawnMinigame;
+        minigoalCheckpoint.OnCheckpointReached += () =>
+        {
+            SpawnMinigame();
+        };
     }
-    
 
     public void SpawnMinigame()
     {
         var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
+        var minigame = Instantiate(
+            minigamePrefabs[minigameIndex],
+            parent: this.transform
+        );
+
+        minigame.transform.localPosition = new Vector3(8, 0, 0);
+        minigame.OnMinigameOver += (bool solved) =>
+        {
+            Destroy(minigame.gameObject);
+            ++minigameIndex;
+            if (!solved)
+            {
+                OnPlayerLostMinigame(damageAmount: 3.0f);
+            }
+        };
+
+        /*var scenarioManager = GameObject.FindObjectOfType<ScenarioManager>();
         var shapeMinigame = Instantiate(
             shapeMinigamePrefab,
             parent: this.transform
@@ -31,9 +54,9 @@ public class MinigameHandler : MonoBehaviour
             Destroy(shapeMinigame.gameObject);
             if (!solved)
             {
-                OnPlayerLostMinigame(damageAmount: 3);
+                OnPlayerLostMinigame(damageAmount: 3.0f);
             }
-        };
+        };*/
 
         /*var frequencyMinigame = Instantiate(frequencyMinigamePrefab, parent: transform);
 
