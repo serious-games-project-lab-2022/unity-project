@@ -36,7 +36,11 @@ public class MinigameHandler : MonoBehaviour
         minigame.OnMinigameOver += (bool solved) =>
         {
             Destroy(minigame.gameObject);
-            ++minigameIndex;
+            if(minigameIndex <= 2) 
+            {
+                ++minigameIndex;
+            }
+           
             if (!solved)
             {
                 OnPlayerLostMinigame(damageAmount: 3.0f);
