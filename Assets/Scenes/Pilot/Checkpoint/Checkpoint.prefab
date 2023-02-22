@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4872005665319868315}
   - component: {fileID: 6281456969225206896}
   m_Layer: 0
-  m_Name: MinigoalCheckpoint
+  m_Name: Checkpoint
   m_TagString: MinigoalCheckpoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
