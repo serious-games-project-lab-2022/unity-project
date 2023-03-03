@@ -15,7 +15,7 @@ public class OverworldMapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+       this.GenerateOverworldMap(5); 
     }
 
     // Update is called once per frame
@@ -35,40 +35,18 @@ public class OverworldMapGenerator : MonoBehaviour
         for(int i = 0; i < numberOfCheckpoints; i++){
            checkpointList.Add(new Vector3Int(Random.Range(outerWallThickness+1,mapWidth-outerWallThickness),Random.Range(Random.Range(outerWallThickness+1,mapHeight-outerWallThickness),0))); 
         }
+        //remove duplicate checkpoints
+        checkpointList = new List<Vector3Int>(new HashSet<Vector3Int>(checkpointList));
+
         //TODO remove debug.log
-         Debug.Log(checkpointList);
-
-         /*
-
-
-         List<Vector3> nearestCheckpointList =  new List<Vector3>();
-         nearestCheckpointList.Clear();
+        Debug.Log("Checkpoints:");
+         foreach (Vector3Int v in checkpointList)
+         {
+            Debug.Log(v);
+         }
+         
 
         
-        //Failed Venture: just computing the closest neighbor doesn't give you a nice graph. at some point the edges has to be between further away points
-        
-        foreach (Vector3Int checkpoint in checkpointList)
-        {
-            nearestCheckpointList.Add(new Vector3(0.0f,0.0f,Mathf.Sqrt(Math.Pow(mapWidth)+Math.Pow(mapHeight))));
-            foreach (Vector3Int checkpointneighbor in checkpointList)
-            {
-                
-                if(checkpoint==checkpointneighbor)
-                {
-                    continue;
-                }else
-                {
-                    float distanceToPoint = Vector3.Distance(checkpoint,checkpointneighbor);
-                    if(distanceToPoint<nearestCheckpointList[^1].z)
-                    {
-                        nearestCheckpointList[^1]= new Vector3(checkpointneighbor.x,checkpointneighbor.y,distanceToPoint);
-
-
-                    }
-                }
-            }
-
-        */
         float[,] distances = new float[checkpointList.Count,checkpointList.Count];
         // Iterate through list of checkpoints
         for (int i = 0; i < checkpointList.Count; i++)
@@ -89,6 +67,22 @@ public class OverworldMapGenerator : MonoBehaviour
             }
         }
 
+        // Set diagonal of distance to max value (Can't have a edge between a point and itself)
+        for (int i = 0; i < checkpointList.Count; i++)
+        {
+            distances[i,i] = float.MaxValue;
+        }
+
+
+
+
+        //TODO remove debug.log
+        Debug.Log("Distance Table:");
+         foreach (float f in distances)
+         {
+            Debug.Log(f);
+         }
+
         // This HashSet contains all checkpoints that are connected via the edges
 
         HashSet<int> checkpointsAdded = new HashSet<int>();
@@ -105,12 +99,17 @@ public class OverworldMapGenerator : MonoBehaviour
             for (int j = 0; j < distances.GetLength(1); j++)
             {
                 if (distances[i, j] < minDistance)
+                {                
                     minDistance = distances[i, j];
                     point1 = i;
                     point2 = j;
+                }
             }
         }
         // Adds first edge to the edge list
+        Debug.Log("Distance of first Edge:" +minDistance );
+        Debug.Log("point1:" +point1 );
+        Debug.Log("point2:" +point2 );
 
         edgesBetweenCheckpoints.Add((checkpointList[point1],checkpointList[point2]));
 
@@ -141,25 +140,16 @@ public class OverworldMapGenerator : MonoBehaviour
                 for (int j = 0; j < distances.GetLength(1); j++)
                 {
                     if (distances[i, j] < minDistance)
+                    {                    
                         minDistance = distances[i, j];
                         point1 = i;
                         point2 = j;
+                    }
                 }
             }
 
 
-            //
-
-            for (int i = 0; i < distances.GetLength(0); i++)
-            {
-                for (int j = 0; j < distances.GetLength(1); j++)
-                {
-                    if (distances[i, j] < minDistance)
-                        minDistance = distances[i, j];
-                        point1 = i;
-                        point2 = j;
-                }
-            }
+            
             
 
 
@@ -168,6 +158,8 @@ public class OverworldMapGenerator : MonoBehaviour
 
             edgesBetweenCheckpoints.Add((checkpointList[point1],checkpointList[point2]));
 
+            
+
             // set distance to infinite to edges(distances) that can't be considered any further
             
             if(!checkpointsAdded.Contains(point1))
@@ -175,7 +167,7 @@ public class OverworldMapGenerator : MonoBehaviour
                 foreach (int i in checkpointsAdded)
                 {
                     distances[i,point1]=float.MaxValue;
-                    distances[point1,1]=float.MaxValue;
+                    distances[point1,i]=float.MaxValue;
                 }
             }
             if(!checkpointsAdded.Contains(point2))
@@ -183,7 +175,7 @@ public class OverworldMapGenerator : MonoBehaviour
                 foreach (int i in checkpointsAdded)
                 {
                     distances[i,point2]=float.MaxValue;
-                    distances[point2,1]=float.MaxValue;
+                    distances[point2,i]=float.MaxValue;
                 }
             }
                       
@@ -196,6 +188,25 @@ public class OverworldMapGenerator : MonoBehaviour
 
         }
 
+        //TODO remove debug.log
+
+        Debug.Log("---End of Algo:---");
+        Debug.Log("Distance Table:");
+         foreach (float f in distances)
+         {
+            Debug.Log(f);
+         }
+        Debug.Log("Checkpoints added:");
+        foreach (int i in checkpointsAdded)
+        {
+            Debug.Log(i);
+        }
+        Debug.Log("Edges:");
+         foreach ((Vector3Int,Vector3Int) e in edgesBetweenCheckpoints)
+         {
+            Debug.Log(e);
+         }
+        
         //Lists of Checkpoints and Edges are complete
         //TODO Make circle around checkpoints and make connecting path for edges (compute  x and y distance and draw a path where it is longer)
 
