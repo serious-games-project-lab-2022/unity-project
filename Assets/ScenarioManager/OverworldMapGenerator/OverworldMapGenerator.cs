@@ -6,6 +6,9 @@ public class OverworldMapGenerator : MonoBehaviour
 {
     private static int mapWidth = 20;
     private static int mapHeight = 20;
+
+    //Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
+    private static int outerWallThickness = 3;
     private int[,] mapArray = new int [mapHeight,mapWidth];
 
     private List<Vector3Int> checkpointList =  new List<Vector3Int>();
@@ -15,7 +18,9 @@ public class OverworldMapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       this.GenerateOverworldMap(5); 
+       this.GenerateCheckpointsAndEdges(5);
+       this.GenerateOverworldMap();
+       this.widenPaths(1);
     }
 
     // Update is called once per frame
@@ -24,11 +29,10 @@ public class OverworldMapGenerator : MonoBehaviour
         
     }
 
-    // GenerateOverworldMap is called to create a list of checkpoints and a list of tileslocations that are the overworldmap
-    void GenerateOverworldMap(int numberOfCheckpoints)
+    // GenerateCheckpointsAndEdges is called to create a list of checkpoints and a list of edges between those checkpoints
+    void GenerateCheckpointsAndEdges(int numberOfCheckpoints)
     {
-        //Change this parameter to spawn checkpoints closer to the edges of the map or further in
-        int outerWallThickness = 3;
+       
         checkpointList.Clear();
         edgesBetweenCheckpoints.Clear();
         
@@ -207,10 +211,133 @@ public class OverworldMapGenerator : MonoBehaviour
             Debug.Log(e);
          }
         
-        //Lists of Checkpoints and Edges are complete
-        //TODO Make circle around checkpoints and make connecting path for edges (compute  x and y distance and draw a path where it is longer)
+        
+    }
+
+    //GenerateOverworldMap is called to create a list of tileslocations that are the overworldmap from the list of checkpoint and edges
+    void GenerateOverworldMap()
+    {
+    //Lists of Checkpoints and Edges are complete
+    //TODO Make circle around checkpoints and make connecting path for edges (compute  x and y distance and draw a path where it is longer)
+
+        foreach (Vector3Int c in checkpointList)
+        {
+            //Mark checkpoint
+            mapArray[c.x,c.y]= 1;
+            //Mark surrounding tiles
+            mapArray[c.x-1,c.y-1]= 1;
+            mapArray[c.x-1,c.y]= 1;
+            mapArray[c.x-1,c.y+1]= 1;
+            mapArray[c.x,c.y-1]= 1;
+            mapArray[c.x,c.y+1]= 1;
+            mapArray[c.x+1,c.y-1]= 1;
+            mapArray[c.x+1,c.y]= 1;
+            mapArray[c.x+1,c.y+1]= 1;
+        }
+
+
+
+        //Mark edges between checkpoints
+        foreach ((Vector3Int,Vector3Int) e in edgesBetweenCheckpoints)
+        {
+            Vector3Int currentDrillLocation = e.Item1;
+            Vector3Int targetDrillLocation = e.Item2;
+            int xDistance = currentDrillLocation.x-targetDrillLocation.x;
+            int yDistance = currentDrillLocation.y-targetDrillLocation.y;
+            
+            //drill the path alongside a edge
+            while(xDistance != 0 && yDistance != 0)
+            {
+                mapArray[targetDrillLocation.x+xDistance,targetDrillLocation.y+yDistance]=1;
+                
+                if(Mathf.Abs(xDistance)>Mathf.Abs(yDistance))
+                {
+                    xDistance -=(int)Mathf.Sign(xDistance);
+
+                }else
+                {
+                    yDistance -=(int)Mathf.Sign(yDistance);
+                }
+
+                
+            }
+        }
+
+
+        //TODO Remove Debug Log
+        Debug.Log(edgesBetweenCheckpoints[0].Item1);
+        Debug.Log(edgesBetweenCheckpoints[0].Item2);
+        
+        //TODO Remove Debug Log
+        Debug.Log(mapArray[0,0]);
+        Debug.Log(mapArray[1,1]);
+        Debug.Log(mapArray[2,2]);
+        Debug.Log(mapArray[3,3]);
+        Debug.Log(mapArray[4,4]);
+        Debug.Log(mapArray[5,5]);
+        Debug.Log(mapArray[6,6]);
+        Debug.Log(mapArray[7,7]);
+        Debug.Log(mapArray[8,8]);
+        Debug.Log(mapArray[9,9]);
+        
+
+
+
 
 
 
     }
+
+    //widenPaths makes the playable area larger by moving back the walls. It takes the an integer, which will be looked for in the mapArray and only those "walls" will be widened.
+    //The wideningInteger should be 1 in the first call of this method, since the generateOverworldMap method places a 1 at the location of checkpoints and paths between checkpoints.
+    //The outerWall of the Map won't be narrowed down by more than 1 regardless of the iteration.
+    //This only removes walls (zeros) from the array. It does not overwrite existing paths.
+    void widenPaths(int wideningInteger)
+    {
+        for (int k = outerWallThickness; k < mapArray.GetLength(0)-outerWallThickness; k++)
+        {
+            for (int m = outerWallThickness; m < mapArray.GetLength(1)-outerWallThickness; m++)
+            {
+                if(mapArray[k,m]==wideningInteger)
+                {
+                    //Logic to widen walls here
+                    if(mapArray[k-1,m-1]!=0)
+                    {
+                        mapArray[k-1,m-1]=wideningInteger;
+                    }
+                    if(mapArray[k-1,m]!=0)
+                    {
+                        mapArray[k-1,m]=wideningInteger;
+                    }
+                    if(mapArray[k-1,m+1]!=0)
+                    {
+                        mapArray[k-1,m+1]=wideningInteger;
+                    }
+                    if(mapArray[k,m-1]!=0)
+                    {
+                        mapArray[k,m-1]=wideningInteger;
+                    }
+                    if(mapArray[k,m+1]!=0)
+                    {
+                        mapArray[k,m+1]=wideningInteger;
+                    }
+                    if(mapArray[k+1,m-1]!=0)
+                    {
+                        mapArray[k+1,m-1]=wideningInteger;
+                    }
+                    if(mapArray[k+1,m]!=0)
+                    {
+                        mapArray[k+1,m]=wideningInteger;
+                    }
+                    if(mapArray[k+1,m+1]!=0)
+                    {
+                        mapArray[k+1,m+1]=wideningInteger;
+                    }
+                    
+                }
+            }
+        }
+    }
+
+
 }
