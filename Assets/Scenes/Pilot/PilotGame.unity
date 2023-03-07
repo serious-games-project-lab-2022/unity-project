@@ -1279,6 +1279,7 @@ MonoBehaviour:
   - {fileID: 170367074}
   - {fileID: 594996980}
   checkpointPrefab: {fileID: 6281456969225206896, guid: d76c699337810894caffe48298f10308, type: 3}
+  worldOrigin: {fileID: 53362766}
 --- !u!1 &1093079583
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,16 +8,23 @@ public class MiniCheckpoint : MonoBehaviour
     {
         if (GameManager.Singleton.sharedGameState != null)
         {
-            transform.localPosition = (
-                GameManager.Singleton.sharedGameState.checkpointPosition.Value / 16f
-            );
+            SubscribeToPositionChange();
         }
-        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
-        instructorManager.OnInstructorReceivedGameState += () => {
-            GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged +=
-                (Vector2 preValue, Vector2 newValue) => {
-                    transform.localPosition = newValue / 16f;
-                };
-        };
+        else
+        {
+            var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+            instructorManager.OnInstructorReceivedGameState += SubscribeToPositionChange;
+        }
+    }
+
+    void SubscribeToPositionChange()
+    {
+        transform.localPosition = (
+            GameManager.Singleton.sharedGameState.checkpointPosition.Value / 16f
+        );
+        GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged +=
+            (Vector2 preValue, Vector2 newValue) => {
+                transform.localPosition = newValue / 16f;
+            };
     }
 }

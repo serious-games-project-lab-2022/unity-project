@@ -11,13 +11,14 @@ public class MinigameHandler : MonoBehaviour
     private int checkpointIndex = 0;
     private int minigameIndex = 0;
     [SerializeField] private Checkpoint checkpointPrefab;
+    [SerializeField] private Transform worldOrigin;
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
     
     void Start()
     {
-        SpawnCheckpoint(checkpointPositions[checkpointIndex].transform.position + new Vector3(0, 18, 0));
+        SpawnCheckpoint(checkpointPositions[checkpointIndex].transform.position);
         ++checkpointIndex;
     }
 
@@ -42,7 +43,7 @@ public class MinigameHandler : MonoBehaviour
             {
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
-            SpawnCheckpoint(checkpointPositions[checkpointIndex].transform.position + new Vector3(0, 18, 0));
+            SpawnCheckpoint(checkpointPositions[checkpointIndex].transform.position);
             if(checkpointIndex <= 2) 
             {
                 ++checkpointIndex;
@@ -53,15 +54,9 @@ public class MinigameHandler : MonoBehaviour
     public void SpawnCheckpoint(Vector3 newPosition) 
     {
         var checkpoint = Instantiate(
-            checkpointPrefab, parent: this.transform
+            checkpointPrefab,
+            parent: worldOrigin.transform
         );
-
-        checkpoint.transform.localPosition = newPosition;
-        var sharedGameState = GameManager.Singleton.sharedGameState;
-       
-        if (sharedGameState != null)
-        {
-            sharedGameState.checkpointPosition.Value = newPosition;
-        }
+        checkpoint.transform.localPosition = newPosition - worldOrigin.transform.position;
     }
 }

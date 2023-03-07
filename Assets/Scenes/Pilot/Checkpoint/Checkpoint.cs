@@ -9,6 +9,12 @@ public class Checkpoint : MonoBehaviour
 
     void Start()
     {
+        var sharedGameState = GameManager.Singleton.sharedGameState;
+       
+        if (sharedGameState != null)
+        {
+            sharedGameState.checkpointPosition.Value = new Vector2(transform.localPosition.x, transform.localPosition.y);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
