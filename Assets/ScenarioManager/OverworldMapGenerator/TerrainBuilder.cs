@@ -5,14 +5,13 @@ using UnityEngine.Tilemaps;
 
 public class TerrainBuilder : MonoBehaviour
 {
-    public Tile redSquare;
+    public Tile wallSquare;
 
     public Tilemap overworldTilemap;
 
-    public Terrain compressedTerrainList;
+    public Terrain compressedTerrain;
 
-    // This array has a 0 when there should be a wall and other integers that indicate empty space and in what iteration that empty space was generated
-    private int[,] mapArray = new int [200,200];
+    
     
     // Start is called before the first frame update
     void Start()
@@ -25,17 +24,16 @@ public class TerrainBuilder : MonoBehaviour
     {
         
     }
-    // expandCompressionToFullArray takes the information sent via the network and expands it to a full array with the original information
-    // This way
-    void ExpandCompressionToFullArray()
+ 
+    //TODO How can we make sure the Terrain Object is already given to this class before calling this call?
+    void DrawTilemap()    
     {
-        foreach(Vector3Int pos in compressedTerrainList.EmptySpaceList)
+        // This array has a 0 when there should be a wall and other integers that indicate empty space and the numbers says in what iteration that empty space was generated
+    int[,] mapArray = new int [compressedTerrain.MapHeight,compressedTerrain.MapWidth];
+    foreach(Vector3Int pos in compressedTerrain.EmptySpaceList)
         {
             mapArray[pos.x,pos.y]=pos.z;
         }
-    }
-    void DrawTilemap()    
-    {
     Vector3Int drawingPosition = new Vector3Int();
         for (int k = 0; k < mapArray.GetLength(0); k++)
         {
@@ -45,7 +43,7 @@ public class TerrainBuilder : MonoBehaviour
                 {
                     drawingPosition.x = k;
                     drawingPosition.y = m;
-                    overworldTilemap.SetTile(drawingPosition,redSquare);
+                    overworldTilemap.SetTile(drawingPosition,wallSquare);
                 }
             }
         }

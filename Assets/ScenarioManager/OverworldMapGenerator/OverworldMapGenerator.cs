@@ -19,11 +19,7 @@ public class OverworldMapGenerator : MonoBehaviour
     private static int mapWidth = 200;
     private static int mapHeight = 200;
 
-    public Tile redSquare;
-
-    public Tilemap overworldTilemap;
-
-
+   
 
     // Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
     private static int outerWallThickness = 5;
@@ -37,22 +33,7 @@ public class OverworldMapGenerator : MonoBehaviour
 
     private List<(Vector3Int,Vector3Int)> edgesBetweenCheckpoints = new List<(Vector3Int,Vector3Int)>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       this.GenerateCheckpointsAndEdges(50);
-       this.GenerateOverworldMap();
-       this.WidenPaths(1);
-       this.WidenPaths(2);
-       this.WidenPaths(3);
-       //this.DrawTilemap();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+      
 
     // GenerateCheckpointsAndEdges is called to create a list of checkpoints and a list of edges between those checkpoints
     void GenerateCheckpointsAndEdges(int numberOfCheckpoints)
@@ -246,7 +227,7 @@ public class OverworldMapGenerator : MonoBehaviour
     }
 
     //GenerateOverworldMap is called to create a list of tileslocations that are the overworldmap from the list of checkpoint and edges
-    void GenerateOverworldMap()
+    void GenerateArrayMap()
     {
     //Lists of Checkpoints and Edges are complete
     //TODO Make circle around checkpoints and make connecting path for edges (compute  x and y distance and draw a path where it is longer)
@@ -319,8 +300,8 @@ public class OverworldMapGenerator : MonoBehaviour
 
     }
 
-    //widenPaths makes the playable area larger by moving back the walls. It takes the an integer, which will be looked for in the mapArray and only those "walls" will be widened.
-    //The wideningInteger should be 1 in the first call of this method, since the generateOverworldMap method places a 1 at the location of checkpoints and paths between checkpoints.
+    //widenPaths makes the playable area larger by moving the walls back. It takes the an integer, which will be looked for in the mapArray and only those "walls" will be widened.
+    //The wideningInteger should be 1 in the first call of this method, since the generateArrayMap method places a 1 at the location of checkpoints and paths between checkpoints.
     //The outerWall of the Map won't be narrowed down by more than 1 regardless of the iteration.
     //This only removes walls (zeros) from the array. It does not overwrite existing paths.
     void WidenPaths(int wideningInteger)
@@ -372,8 +353,7 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
     void ComputeCompressedList()
-    // rename CreateOtherArray()
-    {
+        {
     Vector3Int drawingPosition = new Vector3Int();
         for (int k = 0; k < mapArray.GetLength(0); k++)
         {
@@ -394,9 +374,15 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
     // GenerateTerrain() generates a instance of the Terrain class
-    Terrain GenerateTerrain()
+    public Terrain GenerateTerrain()
     {
-        return new Terrain(emptySpaceList,checkpointList);
+        this.GenerateCheckpointsAndEdges(50);
+        this.GenerateArrayMap();
+        this.WidenPaths(1);
+        this.WidenPaths(2);
+        this.WidenPaths(3);
+        this.ComputeCompressedList();
+        return new Terrain(emptySpaceList,checkpointList,mapHeight,mapWidth);
     }
     
 }

@@ -7,10 +7,11 @@ public class ScenarioManager : MonoBehaviour
 {
     public List<MinigameShape> minigameShapePrefabs;
     public MinigameSolutions minigameSolutions;
-    // public Terrain
-    // new class Terrain.cs
-    //      public secondArray
-    //      public listOfCheckpoints 
+
+    public OverworldMapGenerator overworldMapGenerator;
+    
+    public Terrain terrain;
+    
 
     public List<Slider> frequencyMinigameSliders;
     public void generateMinigameSolutions()
@@ -18,12 +19,13 @@ public class ScenarioManager : MonoBehaviour
         minigameSolutions.shapeMinigameSolutions = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs);
         minigameSolutions.frequencyMinigameSolutions = FrequencyMinigame.GenerateSolutionForFrequencyMinigame(frequencyMinigameSliders);
         minigameSolutions.symbolMinigameSolutions = SymbolMinigame.GenerateSolutionForSymbolMinigame(new System.Random(), 24);
-
+        
     }
 
     public void generateScenario()
     {
+        terrain = overworldMapGenerator.GenerateTerrain();
         generateMinigameSolutions();
-        // generateTerrain();
+        
     }
 }
