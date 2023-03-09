@@ -25,11 +25,14 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
 
-    //Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
+    // Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
     private static int outerWallThickness = 5;
+    // This array has a 0 when there should be a wall and other integers that indicate empty space and in what iteration that empty space was generated
     private int[,] mapArray = new int [mapHeight,mapWidth];
-    // second List with vectors where there is nothing
+    // A compressed list with vectors that point to empty space
+    private List<Vector3Int> emptySpaceList =  new List<Vector3Int>();
 
+    // A list of possible positions that a checkpoint or the spaceship could spawn at
     private List<Vector3Int> checkpointList =  new List<Vector3Int>();
 
     private List<(Vector3Int,Vector3Int)> edgesBetweenCheckpoints = new List<(Vector3Int,Vector3Int)>();
@@ -39,10 +42,10 @@ public class OverworldMapGenerator : MonoBehaviour
     {
        this.GenerateCheckpointsAndEdges(50);
        this.GenerateOverworldMap();
-       this.widenPaths(1);
-       this.widenPaths(2);
-       this.widenPaths(3);
-       this.drawTilemap();
+       this.WidenPaths(1);
+       this.WidenPaths(2);
+       this.WidenPaths(3);
+       //this.DrawTilemap();
     }
 
     // Update is called once per frame
@@ -320,7 +323,7 @@ public class OverworldMapGenerator : MonoBehaviour
     //The wideningInteger should be 1 in the first call of this method, since the generateOverworldMap method places a 1 at the location of checkpoints and paths between checkpoints.
     //The outerWall of the Map won't be narrowed down by more than 1 regardless of the iteration.
     //This only removes walls (zeros) from the array. It does not overwrite existing paths.
-    void widenPaths(int wideningInteger)
+    void WidenPaths(int wideningInteger)
     {
         for (int k = 1; k < mapArray.GetLength(0)-1; k++)
         {
@@ -368,7 +371,7 @@ public class OverworldMapGenerator : MonoBehaviour
     }
 
 
-    void drawTilemap()
+    void ComputeCompressedList()
     // rename CreateOtherArray()
     {
     Vector3Int drawingPosition = new Vector3Int();
@@ -376,11 +379,13 @@ public class OverworldMapGenerator : MonoBehaviour
         {
             for (int m = 0; m < mapArray.GetLength(1); m++)
             {
-                if(mapArray[k,m]==0)
+                if(mapArray[k,m]!=0)
                 {
                     drawingPosition.x = k;
                     drawingPosition.y = m;
-                    overworldTilemap.SetTile(drawingPosition,redSquare);
+                    //abusing the z koordinate for additional information
+                    emptySpaceList.Add(new Vector3Int(k,m,mapArray[k,m]));
+                    //overworldTilemap.SetTile(drawingPosition,redSquare);
                 }
             }
         }
@@ -388,8 +393,10 @@ public class OverworldMapGenerator : MonoBehaviour
     }
 
 
-    // Terrain GenerateTerrain()
-    // {
-
-    // }
+    // GenerateTerrain() generates a instance of the Terrain class
+    Terrain GenerateTerrain()
+    {
+        return new Terrain(emptySpaceList,checkpointList);
+    }
+    
 }
