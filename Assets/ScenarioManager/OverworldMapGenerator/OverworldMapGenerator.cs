@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class OverworldMapGenerator : MonoBehaviour
+// should not be a gameobject in the pilot scene
+// in pilot scene should have a gameobject called OverworldTerrainBuilder
+
+
+//
+// ScenarioManager calls OverworldMapGenerator.GenerateTerrain()
+// .    returns Terrain
+// .    Terrain can be send over the Network SharedGameState
+// .    Terrain Builder => Generates actual Tilemap for Instructor and Pilot (already implemented, needs to be outsourced)
+//
+//
 {
     private static int mapWidth = 200;
     private static int mapHeight = 200;
@@ -17,6 +28,7 @@ public class OverworldMapGenerator : MonoBehaviour
     //Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
     private static int outerWallThickness = 5;
     private int[,] mapArray = new int [mapHeight,mapWidth];
+    // second List with vectors where there is nothing
 
     private List<Vector3Int> checkpointList =  new List<Vector3Int>();
 
@@ -357,6 +369,7 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
     void drawTilemap()
+    // rename CreateOtherArray()
     {
     Vector3Int drawingPosition = new Vector3Int();
         for (int k = 0; k < mapArray.GetLength(0); k++)
@@ -373,4 +386,10 @@ public class OverworldMapGenerator : MonoBehaviour
         }
         
     }
+
+
+    // Terrain GenerateTerrain()
+    // {
+
+    // }
 }

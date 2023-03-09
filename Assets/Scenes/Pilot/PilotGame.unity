@@ -3430,6 +3430,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 53362766}
     m_Modifications:
+    - target: {fileID: 3938891387795628926, guid: 2e64068b0e28743dcbce181b95d6bfd4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3938891389343538563, guid: 2e64068b0e28743dcbce181b95d6bfd4, type: 3}
       propertyPath: m_Name
       value: TerrainGrid

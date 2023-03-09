@@ -7,6 +7,10 @@ public class ScenarioManager : MonoBehaviour
 {
     public List<MinigameShape> minigameShapePrefabs;
     public MinigameSolutions minigameSolutions;
+    // public Terrain
+    // new class Terrain.cs
+    //      public secondArray
+    //      public listOfCheckpoints 
 
     public List<Slider> frequencyMinigameSliders;
     public void generateMinigameSolutions()
@@ -20,5 +24,6 @@ public class ScenarioManager : MonoBehaviour
     public void generateScenario()
     {
         generateMinigameSolutions();
+        // generateTerrain();
     }
 }
