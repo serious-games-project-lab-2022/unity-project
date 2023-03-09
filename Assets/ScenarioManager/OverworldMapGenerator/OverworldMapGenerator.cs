@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class OverworldMapGenerator : MonoBehaviour
 {
-    private static int mapWidth = 20;
-    private static int mapHeight = 20;
+    private static int mapWidth = 200;
+    private static int mapHeight = 200;
+
+    public Tile redSquare;
+
+    public Tilemap overworldTilemap;
+
+
 
     //Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
-    private static int outerWallThickness = 3;
+    private static int outerWallThickness = 5;
     private int[,] mapArray = new int [mapHeight,mapWidth];
 
     private List<Vector3Int> checkpointList =  new List<Vector3Int>();
@@ -18,9 +25,12 @@ public class OverworldMapGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       this.GenerateCheckpointsAndEdges(5);
+       this.GenerateCheckpointsAndEdges(50);
        this.GenerateOverworldMap();
        this.widenPaths(1);
+       this.widenPaths(2);
+       this.widenPaths(3);
+       this.drawTilemap();
     }
 
     // Update is called once per frame
@@ -32,12 +42,18 @@ public class OverworldMapGenerator : MonoBehaviour
     // GenerateCheckpointsAndEdges is called to create a list of checkpoints and a list of edges between those checkpoints
     void GenerateCheckpointsAndEdges(int numberOfCheckpoints)
     {
-       
+       //TODO remove debug.log
+       Debug.Log("Limits");
+       Debug.Log(outerWallThickness+1);
+       Debug.Log(mapWidth-outerWallThickness);
+       Debug.Log(mapHeight-outerWallThickness);
+
+
         checkpointList.Clear();
         edgesBetweenCheckpoints.Clear();
         
         for(int i = 0; i < numberOfCheckpoints; i++){
-           checkpointList.Add(new Vector3Int(Random.Range(outerWallThickness+1,mapWidth-outerWallThickness),Random.Range(Random.Range(outerWallThickness+1,mapHeight-outerWallThickness),0))); 
+           checkpointList.Add(new Vector3Int(Random.Range(outerWallThickness+1,mapWidth-outerWallThickness),Random.Range(outerWallThickness+1,mapHeight-outerWallThickness),0)); 
         }
         //remove duplicate checkpoints
         checkpointList = new List<Vector3Int>(new HashSet<Vector3Int>(checkpointList));
@@ -246,7 +262,7 @@ public class OverworldMapGenerator : MonoBehaviour
             int yDistance = currentDrillLocation.y-targetDrillLocation.y;
             
             //drill the path alongside a edge
-            while(xDistance != 0 && yDistance != 0)
+            while(xDistance != 0 || yDistance != 0)
             {
                 mapArray[targetDrillLocation.x+xDistance,targetDrillLocation.y+yDistance]=1;
                 
@@ -294,44 +310,44 @@ public class OverworldMapGenerator : MonoBehaviour
     //This only removes walls (zeros) from the array. It does not overwrite existing paths.
     void widenPaths(int wideningInteger)
     {
-        for (int k = outerWallThickness; k < mapArray.GetLength(0)-outerWallThickness; k++)
+        for (int k = 1; k < mapArray.GetLength(0)-1; k++)
         {
-            for (int m = outerWallThickness; m < mapArray.GetLength(1)-outerWallThickness; m++)
+            for (int m = 1; m < mapArray.GetLength(1)-1; m++)
             {
                 if(mapArray[k,m]==wideningInteger)
                 {
                     //Logic to widen walls here
-                    if(mapArray[k-1,m-1]!=0)
+                    if(mapArray[k-1,m-1]==0)
                     {
-                        mapArray[k-1,m-1]=wideningInteger;
+                        mapArray[k-1,m-1]=wideningInteger+1;
                     }
-                    if(mapArray[k-1,m]!=0)
+                    if(mapArray[k-1,m]==0)
                     {
-                        mapArray[k-1,m]=wideningInteger;
+                        mapArray[k-1,m]=wideningInteger+1;
                     }
-                    if(mapArray[k-1,m+1]!=0)
+                    if(mapArray[k-1,m+1]==0)
                     {
-                        mapArray[k-1,m+1]=wideningInteger;
+                        mapArray[k-1,m+1]=wideningInteger+1;
                     }
-                    if(mapArray[k,m-1]!=0)
+                    if(mapArray[k,m-1]==0)
                     {
-                        mapArray[k,m-1]=wideningInteger;
+                        mapArray[k,m-1]=wideningInteger+1;
                     }
-                    if(mapArray[k,m+1]!=0)
+                    if(mapArray[k,m+1]==0)
                     {
-                        mapArray[k,m+1]=wideningInteger;
+                        mapArray[k,m+1]=wideningInteger+1;
                     }
-                    if(mapArray[k+1,m-1]!=0)
+                    if(mapArray[k+1,m-1]==0)
                     {
-                        mapArray[k+1,m-1]=wideningInteger;
+                        mapArray[k+1,m-1]=wideningInteger+1;
                     }
-                    if(mapArray[k+1,m]!=0)
+                    if(mapArray[k+1,m]==0)
                     {
-                        mapArray[k+1,m]=wideningInteger;
+                        mapArray[k+1,m]=wideningInteger+1;
                     }
-                    if(mapArray[k+1,m+1]!=0)
+                    if(mapArray[k+1,m+1]==0)
                     {
-                        mapArray[k+1,m+1]=wideningInteger;
+                        mapArray[k+1,m+1]=wideningInteger+1;
                     }
                     
                 }
@@ -340,4 +356,21 @@ public class OverworldMapGenerator : MonoBehaviour
     }
 
 
+    void drawTilemap()
+    {
+    Vector3Int drawingPosition = new Vector3Int();
+        for (int k = 0; k < mapArray.GetLength(0); k++)
+        {
+            for (int m = 0; m < mapArray.GetLength(1); m++)
+            {
+                if(mapArray[k,m]==0)
+                {
+                    drawingPosition.x = k;
+                    drawingPosition.y = m;
+                    overworldTilemap.SetTile(drawingPosition,redSquare);
+                }
+            }
+        }
+        
+    }
 }
