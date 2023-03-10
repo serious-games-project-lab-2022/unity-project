@@ -29,9 +29,11 @@ public class PilotManager : MonoBehaviour
         var terrainBuilder = GetComponent<TerrainBuilder>();
         terrainBuilder.DrawTilemap(terrain);
         var firstCheckpoint = terrain.CheckpointList[0];
-        spaceship.transform.position = new Vector2(
+      
+        spaceship.transform.localPosition = new Vector3(
             firstCheckpoint.x,
-            firstCheckpoint.y
+            firstCheckpoint.y,
+            0
         );
 
         minigameHandler.OnPlayerLostMinigame += (float damageAmount) =>

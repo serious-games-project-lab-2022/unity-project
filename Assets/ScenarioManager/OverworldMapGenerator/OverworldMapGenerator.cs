@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class OverworldMapGenerator : MonoBehaviour
+public class OverworldMapGenerator
 // should not be a gameobject in the pilot scene
 // in pilot scene should have a gameobject called OverworldTerrainBuilder
 
@@ -22,7 +22,7 @@ public class OverworldMapGenerator : MonoBehaviour
    
 
     // Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
-    private static int outerWallThickness = 5;
+    private static int outerWallThickness = 7;
     // This array has a 0 when there should be a wall and other integers that indicate empty space and in what iteration that empty space was generated
     private int[,] mapArray = new int [mapHeight,mapWidth];
     // A compressed list with vectors that point to empty space
@@ -93,11 +93,14 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
         //TODO remove debug.log
-        Debug.Log("Distance Table:");
+       /* Debug.Log("Distance Table:");
          foreach (float f in distances)
          {
             Debug.Log(f);
          }
+
+        */
+
 
         // This HashSet contains all checkpoints that are connected via the edges
 
@@ -249,6 +252,8 @@ public class OverworldMapGenerator : MonoBehaviour
 
 
 
+
+
         //Mark edges between checkpoints
         foreach ((Vector3Int,Vector3Int) e in edgesBetweenCheckpoints)
         {
@@ -377,6 +382,16 @@ public class OverworldMapGenerator : MonoBehaviour
     public Terrain GenerateTerrain()
     {
         this.GenerateCheckpointsAndEdges(50);
+        // Empty the area around the initial space ship spawn position
+        mapArray[checkpointList[0].x,checkpointList[0].y]=42;
+        this.WidenPaths(42);
+        this.WidenPaths(43);
+        this.WidenPaths(44);
+        this.WidenPaths(45);
+        this.WidenPaths(46);
+        this.WidenPaths(47);
+        this.WidenPaths(48);
+
         this.GenerateArrayMap();
         this.WidenPaths(1);
         this.WidenPaths(2);
