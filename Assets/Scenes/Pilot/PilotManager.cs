@@ -4,6 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class PilotManager : MonoBehaviour
 {
@@ -19,7 +20,8 @@ public class PilotManager : MonoBehaviour
     private Spaceship spaceship;
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
-
+    public TextMeshProUGUI scoreText;
+    public float score = 0;
 
     private void Start()
     {
@@ -41,11 +43,6 @@ public class PilotManager : MonoBehaviour
             DepleteFuel(by: damageAmount);
         };
         
-        //overworldGoal.OnCollidedWithSpaceship += () =>
-        //{
-        //    EndGame(gameEndedSuccessfully: true);
-        //};
-
         spaceship.OnCollidedWithTerrain += () => {
             DepleteFuel(by: 1.0f);
         };
@@ -65,12 +62,18 @@ public class PilotManager : MonoBehaviour
 
     public void EndGame(bool gameEndedSuccessfully)
     {
+        if (gameEndedSuccessfully) 
+        {
+            score += currentFuelAmount*100;
+        }
+ 
         GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
         SceneManager.LoadScene("EndScreen");
     }
 
     private void FixedUpdate()
     {
+        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score*10));
         fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
         //0.00007f
