@@ -7,9 +7,10 @@ using Random = System.Random;
 public class MinigameHandler : MonoBehaviour
 {
     [SerializeField] private List<Minigame> minigamePrefabs;
-    [SerializeField] private List<GameObject> checkpointPositions;
+    private List<Vector3Int> checkpointPositions;
     private int currentMinigameIndex = 0;
     [SerializeField] private Checkpoint checkpointPrefab;
+    [SerializeField] private OverworldGoal goalPrefab;
     [SerializeField] private Transform worldOrigin;
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
@@ -17,8 +18,9 @@ public class MinigameHandler : MonoBehaviour
     
     void Start()
     {
-        Debug.Assert(minigamePrefabs.Count == checkpointPositions.Count);
-        SpawnCheckpoint(checkpointPositions[currentMinigameIndex].transform.position);
+        //Debug.Assert(minigamePrefabs.Count == checkpointPositions.Count);
+        checkpointPositions = GameManager.Singleton.scenarioManager.terrain.CheckpointList;
+        SpawnCheckpoint(checkpointPositions[currentMinigameIndex + 1]);
     }
 
     public void SpawnMinigame()
@@ -28,7 +30,7 @@ public class MinigameHandler : MonoBehaviour
             minigamePrefabs[currentMinigameIndex],
             parent: this.transform
         );
-        minigame.transform.localPosition = new Vector3(8, 0, 0);
+        minigame.transform.localPosition = new Vector3Int(8, 0, 0);
 
         minigame.OnMinigameOver += (bool solved) =>
         {
@@ -41,17 +43,32 @@ public class MinigameHandler : MonoBehaviour
 
         currentMinigameIndex++;
         if (currentMinigameIndex < minigamePrefabs.Count) {
-            SpawnCheckpoint(checkpointPositions[currentMinigameIndex].transform.position);
+            SpawnCheckpoint(checkpointPositions[currentMinigameIndex + 1]);
+        } else {
+            SpawnGoal(checkpointPositions[currentMinigameIndex + 1]);
         }
     }
 
-    public void SpawnCheckpoint(Vector3 newPosition) 
+    public void SpawnCheckpoint(Vector3Int newPosition) 
     {
         var checkpoint = Instantiate(
             checkpointPrefab,
             parent: worldOrigin.transform
         );
-        checkpoint.transform.localPosition = newPosition - worldOrigin.transform.position;
+        checkpoint.transform.localPosition = newPosition;
         checkpoint.OnCheckpointReached += SpawnMinigame;
+    }
+
+        public void SpawnGoal(Vector3Int newPosition) 
+    {
+        var goal = Instantiate(
+            goalPrefab,
+            parent: worldOrigin.transform
+        );
+        goal.transform.localPosition = newPosition;
+        goal.OnCollidedWithSpaceship += () =>
+        {
+            GameObject.FindObjectOfType<PilotManager>().EndGame(gameEndedSuccessfully: true);
+        };
     }
 }
