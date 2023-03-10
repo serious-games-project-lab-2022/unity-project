@@ -25,6 +25,17 @@ public class PilotManager : MonoBehaviour
     {
         currentFuelAmount = maxFuel;
 
+        var terrain = GameManager.Singleton.scenarioManager.terrain;
+        var terrainBuilder = GetComponent<TerrainBuilder>();
+        terrainBuilder.DrawTilemap(terrain);
+        var firstCheckpoint = terrain.CheckpointList[0];
+      
+        spaceship.transform.localPosition = new Vector3(
+            firstCheckpoint.x,
+            firstCheckpoint.y,
+            0
+        );
+
         minigameHandler.OnPlayerLostMinigame += (float damageAmount) =>
         {
             DepleteFuel(by: damageAmount);

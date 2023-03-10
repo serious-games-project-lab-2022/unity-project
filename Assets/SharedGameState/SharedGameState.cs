@@ -14,6 +14,11 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
+    
+    //TODO Unclear if this works:? How to serialize the Terrain Class?
+    //public NetworkVariable<Terrain> terrain = new NetworkVariable<Terrain>(0,0);
+
+
 
     private bool IsPilot {
         get { return IsHost; }
