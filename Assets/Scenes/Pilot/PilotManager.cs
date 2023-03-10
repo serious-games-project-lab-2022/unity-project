@@ -41,10 +41,10 @@ public class PilotManager : MonoBehaviour
             DepleteFuel(by: damageAmount);
         };
         
-        overworldGoal.OnCollidedWithSpaceship += () =>
-        {
-            EndGame(gameEndedSuccessfully: true);
-        };
+        //overworldGoal.OnCollidedWithSpaceship += () =>
+        //{
+        //    EndGame(gameEndedSuccessfully: true);
+        //};
 
         spaceship.OnCollidedWithTerrain += () => {
             DepleteFuel(by: 1.0f);
@@ -63,7 +63,7 @@ public class PilotManager : MonoBehaviour
         }
     }
 
-    private void EndGame(bool gameEndedSuccessfully)
+    public void EndGame(bool gameEndedSuccessfully)
     {
         GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
         SceneManager.LoadScene("EndScreen");
