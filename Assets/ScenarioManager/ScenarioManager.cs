@@ -24,6 +24,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void generateScenario()
     {
+        overworldMapGenerator = new OverworldMapGenerator();
         terrain = overworldMapGenerator.GenerateTerrain();
         generateMinigameSolutions();
         
