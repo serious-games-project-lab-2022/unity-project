@@ -6,7 +6,6 @@ using UnityEngine;
 public class ShapeMinigameBook : MinigameBook
 
 {
-  
     private Grid grid;
 
     void Start()

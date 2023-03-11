@@ -73,7 +73,7 @@ public class GameManager : NetworkBehaviour
     {
         scenarioManager.generateScenario();
         sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
-
+        sharedGameState.terrain.Value = scenarioManager.terrain;
     }
 
     public void GoBackToMainMenu()
@@ -90,9 +90,9 @@ public class GameManager : NetworkBehaviour
     {
         NetworkManager.Singleton.StartClient();
     }
+
     public void BreakHost()
     {
         NetworkManager.Singleton.Shutdown();
     }
-
 }

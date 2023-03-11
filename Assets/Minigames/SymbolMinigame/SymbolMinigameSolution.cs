@@ -11,12 +11,11 @@ public class SymbolMinigameSolution : INetworkSerializable
 
     public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
     {
-        
         if (serializer.IsReader)
         {
             sameSymbolsIndices = new int[6];
-            pilotSymbolIndices = new int[3]; instructorSymbolIndices = new int[3];
-            
+            pilotSymbolIndices = new int[3];
+            instructorSymbolIndices = new int[3];
         }
 
         for (int index = 0; index < sameSymbolsIndices.Length; index++)
@@ -29,7 +28,6 @@ public class SymbolMinigameSolution : INetworkSerializable
             serializer.SerializeValue(ref pilotSymbolIndices[index]);
             serializer.SerializeValue(ref instructorSymbolIndices[index]);
         }
-
     }
 
 }

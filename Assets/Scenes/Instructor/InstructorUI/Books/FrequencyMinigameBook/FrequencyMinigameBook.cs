@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FrequencyMinigameBook : MinigameBook
 {
-    
     private Sinewave sinewave;
 
     void Start()

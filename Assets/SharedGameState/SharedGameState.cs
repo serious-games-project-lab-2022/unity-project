@@ -10,23 +10,23 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<Vector2> checkpointPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<Vector2> overworldGoalPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+    public NetworkVariable<Terrain> terrain = new NetworkVariable<Terrain>(new Terrain(
+        new List<Vector3Int>(),
+        new List<Vector3Int>(),
+        0,
+        0
+    ));
     public NetworkVariable<bool> instructorIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
     
-    //TODO Unclear if this works:? How to serialize the Terrain Class?
-    //public NetworkVariable<Terrain> terrain = new NetworkVariable<Terrain>(0,0);
-
-
-
     private bool IsPilot {
         get { return IsHost; }
     }
     private bool IsInstructor {
         get { return !IsHost; }
     }
-
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
     public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};

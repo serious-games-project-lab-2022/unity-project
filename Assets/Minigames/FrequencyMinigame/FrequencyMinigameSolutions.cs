@@ -4,7 +4,6 @@ using Unity.Netcode;
 using UnityEngine;
 
 public class FrequencyMinigameSolutions : INetworkSerializable
-    
 {
     public FrequencyMinigameSolution solution;
 

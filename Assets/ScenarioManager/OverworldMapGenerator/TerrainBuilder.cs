@@ -8,13 +8,12 @@ public class TerrainBuilder : MonoBehaviour
     public Tile wallSquare;
 
     public Tilemap overworldTilemap;
- 
-    //TODO How can we make sure the Terrain Object is already given to this class before calling this call?
-    public void DrawTilemap(Terrain compressedTerrain)    
+
+    public void DrawTilemap(Terrain compressedTerrain)
     {
         // This array has a 0 when there should be a wall and other integers that indicate empty space and the numbers says in what iteration that empty space was generated
-        int[,] mapArray = new int [compressedTerrain.MapHeight, compressedTerrain.MapWidth];
-        foreach(Vector3Int position in compressedTerrain.EmptySpaceList)
+        int[,] mapArray = new int[compressedTerrain.mapHeight, compressedTerrain.mapWidth];
+        foreach (Vector3Int position in compressedTerrain.emptySpaceList)
         {
             mapArray[position.x, position.y] = position.z;
         }
@@ -32,5 +31,10 @@ public class TerrainBuilder : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ClearTilemap()
+    {
+        overworldTilemap.ClearAllTiles();
     }
 }

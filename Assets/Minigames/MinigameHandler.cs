@@ -19,7 +19,7 @@ public class MinigameHandler : MonoBehaviour
     void Start()
     {
         //Debug.Assert(minigamePrefabs.Count == checkpointPositions.Count);
-        checkpointPositions = GameManager.Singleton.scenarioManager.terrain.CheckpointList;
+        checkpointPositions = GameManager.Singleton.scenarioManager.terrain.checkpointList;
         SpawnCheckpoint(checkpointPositions[currentMinigameIndex + 1]);
     }
 

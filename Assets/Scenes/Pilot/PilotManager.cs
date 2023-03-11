@@ -28,7 +28,7 @@ public class PilotManager : MonoBehaviour
         var terrain = GameManager.Singleton.scenarioManager.terrain;
         var terrainBuilder = GetComponent<TerrainBuilder>();
         terrainBuilder.DrawTilemap(terrain);
-        var firstCheckpoint = terrain.CheckpointList[0];
+        var firstCheckpoint = terrain.checkpointList[0];
       
         spaceship.transform.localPosition = new Vector3(
             firstCheckpoint.x,
