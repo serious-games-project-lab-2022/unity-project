@@ -34,9 +34,11 @@ public class MinigameHandler : MonoBehaviour
 
         minigame.OnMinigameOver += (bool solved) =>
         {
+            GameObject.FindObjectOfType<PilotManager>().score += 100f;
             Destroy(minigame.gameObject);
             if (!solved)
             {
+                GameObject.FindObjectOfType<PilotManager>().score -= 100f;
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
         };
