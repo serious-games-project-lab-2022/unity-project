@@ -61,7 +61,7 @@ public class MinigameHandler : MonoBehaviour
         checkpoint.OnCheckpointReached += SpawnMinigame;
     }
 
-        public void SpawnGoal(Vector3Int newPosition) 
+    public void SpawnGoal(Vector3Int newPosition) 
     {
         var goal = Instantiate(
             goalPrefab,

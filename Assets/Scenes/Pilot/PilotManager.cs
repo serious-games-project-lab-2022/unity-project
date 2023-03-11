@@ -76,6 +76,5 @@ public class PilotManager : MonoBehaviour
         scoreText.SetText("Score:{0}", Mathf.RoundToInt(score*10));
         fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
-        //0.00007f
     }
 }
