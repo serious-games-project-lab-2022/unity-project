@@ -51,6 +51,7 @@ public class InstructorManager : MonoBehaviour
 
     void EndGame(bool gameEndedSuccessfully)
     {
-        SceneManager.LoadScene("EndScreenInstructor");
+        EndSceneManager.GameWon = gameEndedSuccessfully;
+        SceneManager.LoadScene("EndScreen");
     }
 }

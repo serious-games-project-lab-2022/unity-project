@@ -66,8 +66,14 @@ public class PilotManager : MonoBehaviour
         {
             score += currentFuelAmount*100;
         }
- 
-        GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+
+        var sharedGameState = GameManager.Singleton.sharedGameState;
+        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+
+        // EndgameScene Infos
+        EndSceneManager.GameWon = gameEndedSuccessfully;
+        sharedGameState.score.Value = score;
+        // Load EndGame
         SceneManager.LoadScene("EndScreen");
     }
 

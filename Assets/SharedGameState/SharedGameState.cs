@@ -20,7 +20,11 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
-    
+
+    // score Result
+    public NetworkVariable<float> score = new NetworkVariable<float>();
+
+
     private bool IsPilot {
         get { return IsHost; }
     }

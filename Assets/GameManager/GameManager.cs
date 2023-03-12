@@ -48,9 +48,6 @@ public class GameManager : NetworkBehaviour
 
             TransitionToGameScene();
         };
-        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) => {
-            SceneManager.LoadScene("Menu");
-        };
     }
 
     public void TransitionToGameScene()
@@ -94,5 +91,22 @@ public class GameManager : NetworkBehaviour
     public void BreakHost()
     {
         NetworkManager.Singleton.Shutdown();
+    }
+
+    public void DestroyAllPermanentObjects()
+    {
+        if(IsServer)
+        {
+            Destroy(GameManager.Singleton.sharedGameState.gameObject);
+            Destroy(GameManager.Singleton.scenarioManager.gameObject);
+            Destroy(GameManager.Singleton.gameObject);
+            Destroy(NetworkManager.Singleton.gameObject);
+            SceneManager.LoadScene("Menu");
+        }
+        
+        else
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 }
