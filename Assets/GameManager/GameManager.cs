@@ -20,6 +20,7 @@ public class GameManager : NetworkBehaviour
 
     private void Awake()
     {
+        
         var singletonAlreadyExists = Singleton != null && Singleton != this;
         if (singletonAlreadyExists)
         {
@@ -28,6 +29,8 @@ public class GameManager : NetworkBehaviour
         }
         Singleton = this;
         DontDestroyOnLoad(this);
+
+        stopTheGame();
 
         scenarioManager = Instantiate(scenarioManagerPrefab);
         DontDestroyOnLoad(scenarioManager);
@@ -116,4 +119,24 @@ public class GameManager : NetworkBehaviour
         }
     }
 
+
+    private void stopTheGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    private void continueTheGame()
+    {
+        Time.timeScale = 1;
+    }
+    public void ResumeGameInstructor()
+    {
+        print("hello inst");
+        continueTheGame();
+    }
+
+    public void ResumeGamePilot()
+    {
+        continueTheGame();
+    }
 }

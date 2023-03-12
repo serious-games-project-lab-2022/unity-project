@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,14 @@ public class InstructorManager : MonoBehaviour
 
     private TerrainBuilder terrainBuilder;
     [SerializeField] private Transform radar;
-
+    [SerializeField] private GameObject startWindow;
+    
+    [SerializeField] private GameObject instructorCheckMark;
+    [SerializeField] private GameObject pilotCheckMark;
+    private void Awake()
+    {
+        startWindow.SetActive(true);
+    }
     void Start()
     {
         terrainBuilder = GetComponent<TerrainBuilder>();
@@ -54,4 +62,19 @@ public class InstructorManager : MonoBehaviour
         EndSceneManager.GameWon = gameEndedSuccessfully;
         SceneManager.LoadScene("EndScreen");
     }
+
+    public void readyButton()
+    {
+        instructorCheckMark.gameObject.SetActive(true);
+        GameManager.Singleton.sharedGameState.InviteToStart();
+    }
+
+    public void ResumeGame()
+    {
+        pilotCheckMark.gameObject.SetActive(true);
+        startWindow.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+
 }
