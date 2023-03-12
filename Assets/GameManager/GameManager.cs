@@ -5,9 +5,11 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using System;
+using UnityEditor.PackageManager;
 
 public class GameManager : NetworkBehaviour
 {
+
     public static GameManager Singleton { get; private set; }
     [HideInInspector]
     public ScenarioManager scenarioManager;
@@ -45,14 +47,16 @@ public class GameManager : NetworkBehaviour
             {
                 InitiateSharedGameState();
             }
-
+         
             TransitionToGameScene();
         };
+       
     }
 
     public void TransitionToGameScene()
     {
         var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
+       
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
@@ -85,7 +89,9 @@ public class GameManager : NetworkBehaviour
 
     public void InitClient()
     {
+
         NetworkManager.Singleton.StartClient();
+
     }
 
     public void BreakHost()
@@ -109,4 +115,5 @@ public class GameManager : NetworkBehaviour
             SceneManager.LoadScene("Menu");
         }
     }
+
 }

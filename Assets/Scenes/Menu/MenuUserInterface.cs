@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
 using UnityEngine.Events;
+using System;
+using Unity.Networking.Transport;
+using Unity.VisualScripting;
+using System.Net;
+using UnityEditor.PackageManager;
 
 public class MenuUserInterface : NetworkBehaviour
 {
@@ -52,10 +57,9 @@ public class MenuUserInterface : NetworkBehaviour
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
             transport.MaxConnectAttempts = 1;
-            GameManager.Singleton.InitClient();
-
-            StartCoroutine(ShowErroMessage());
+            GameManager.Singleton.InitClient();            
         });
+            
 
         goBackPilotButton.onClick.AddListener(() =>
         {
@@ -84,9 +88,30 @@ public class MenuUserInterface : NetworkBehaviour
 
     }
 
-    private IEnumerator ShowErroMessage()
+    
+    private void ShowErroMessage()
     {
-        yield return new WaitForSeconds(0.4f);
-        connectionMessage.gameObject.SetActive(true);
+        if (!connectionMessage.gameObject.activeSelf)
+        {
+            connectionMessage.gameObject.SetActive(true);
+        }        
+    }
+
+    void OnEnable()
+    {
+        Application.logMessageReceived += HandleLog;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= HandleLog;
+    }
+
+    void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        if(logString.Contains("Failed to connect") || logString.Contains("Invalid network"))
+        {
+            ShowErroMessage();
+        }
     }
 }
