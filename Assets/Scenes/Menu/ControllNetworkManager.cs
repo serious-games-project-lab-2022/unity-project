@@ -14,7 +14,5 @@ public class ControllNetworkManager : MonoBehaviour
             return;
         }
         Singleton = this;
-
     }
-
 }

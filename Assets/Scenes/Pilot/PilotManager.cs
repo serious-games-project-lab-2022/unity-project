@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
 
 public class PilotManager : MonoBehaviour
 {
@@ -23,6 +24,17 @@ public class PilotManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public float score = 0;
 
+    [SerializeField] private GameObject startWindow;
+    [SerializeField] private GameObject instructorCheckMark;
+    [SerializeField] private GameObject pilotCheckMark;
+
+    private void Awake()
+    {
+        stopTheGame();
+        startWindow.SetActive(true);
+     
+    }
+    
     private void Start()
     {
         currentFuelAmount = maxFuel;
@@ -66,8 +78,14 @@ public class PilotManager : MonoBehaviour
         {
             score += currentFuelAmount*100;
         }
- 
-        GameManager.Singleton.sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+
+        var sharedGameState = GameManager.Singleton.sharedGameState;
+        sharedGameState.GameEndedClientRpc(gameEndedSuccessfully);
+
+        // EndgameScene Infos
+        EndSceneManager.GameWon = gameEndedSuccessfully;
+        sharedGameState.score.Value = score;
+        // Load EndGame
         SceneManager.LoadScene("EndScreen");
     }
 
@@ -76,5 +94,25 @@ public class PilotManager : MonoBehaviour
         scoreText.SetText("Score:{0}", Mathf.RoundToInt(score*10));
         fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
+    }
+
+    public void readyButton()
+    {
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            pilotCheckMark.gameObject.SetActive(true);
+            GameManager.Singleton.sharedGameState.InviteToStart(true);
+        }
+    }
+
+    public void stopTheGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void resumeTheGame()
+    {
+        Time.timeScale = 1;
+        GameManager.Singleton.sharedGameState.InviteToStart(false);
     }
 }

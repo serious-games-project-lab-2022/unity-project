@@ -16,21 +16,25 @@ public class SharedGameState : NetworkBehaviour
         0,
         0
     ));
-    public NetworkVariable<bool> instructorIsReady = new NetworkVariable<bool>(false);
-    public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
-    
-    private bool IsPilot {
+    // start screen
+    public NetworkVariable<bool> instructorInvitedToStart = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotInvitedToStart = new NetworkVariable<bool>(false);
+    // score Result
+    public NetworkVariable<float> score = new NetworkVariable<float>();
+
+    private bool IsPilot
+    {
         get { return IsHost; }
     }
-    private bool IsInstructor {
+    private bool IsInstructor
+    {
         get { return !IsHost; }
     }
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
-    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
-   
+    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate { };
 
     public override void OnNetworkSpawn()
     {
@@ -38,6 +42,7 @@ public class SharedGameState : NetworkBehaviour
         {
             instructorInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
             pilotInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+
         }
 
         if (IsInstructor)
@@ -78,6 +83,12 @@ public class SharedGameState : NetworkBehaviour
         instructorInvitedToRetry.Value = true;
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorInvitePilotToStartGameServerRpc(bool start)
+    {
+        instructorInvitedToStart.Value = start;
+    }
+
     [ClientRpc]
     public void GameEndedClientRpc(bool gameEndedSuccessfully)
     {
@@ -96,10 +107,21 @@ public class SharedGameState : NetworkBehaviour
         }
     }
 
+    public void InviteToStart(bool start)
+    {
+        if (IsInstructor)
+        {
+            InstructorInvitePilotToStartGameServerRpc(start);
+        }
+        if (IsPilot)
+        {
+            pilotInvitedToStart.Value = start;
+        }
+    }
+
     [ClientRpc]
     public void RetryGameForInstructorClientRpc()
     {
         GameManager.Singleton.TransitionToGameScene();
     }
-
 }

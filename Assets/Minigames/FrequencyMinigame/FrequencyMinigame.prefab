@@ -123,7 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59ac4f899df7dd74a8c1b4fadbc0e8c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 30
+  secondsToSolve: 60
   takeInput: 1
   timerBar: {fileID: 8770382352513242686}
   sineWaveController: {fileID: 6440254059197545573}

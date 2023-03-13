@@ -36,8 +36,6 @@ public class FrequencyMinigame : Minigame
     {
         print("Pilot");
         solution = scenarioManager.minigameSolutions.frequencyMinigameSolutions.solution;
-        Debug.Log(solution.amplitude);
-        Debug.Log(solution.frequency);
     }
 
     void Awake()

@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
-using UnityEngine.Events;
 
 public class MenuUserInterface : NetworkBehaviour
 {
@@ -51,12 +47,10 @@ public class MenuUserInterface : NetworkBehaviour
         confirmationButton.onClick.AddListener(() => {
             var transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
             transport.SetConnectionData(ipAddressInput.text, 7778);
-            transport.MaxConnectAttempts = 1;
-            GameManager.Singleton.InitClient();
-
-            StartCoroutine(ShowErroMessage());
+            transport.MaxConnectAttempts = 1000;
+            GameManager.Singleton.InitClient();            
         });
-
+            
         goBackPilotButton.onClick.AddListener(() =>
         {
             GameManager.Singleton.BreakHost();
@@ -80,13 +74,31 @@ public class MenuUserInterface : NetworkBehaviour
             goBackInstructorButton.gameObject.SetActive(false);
             connectionMessage.gameObject.SetActive(false);
         });
-
-
     }
 
-    private IEnumerator ShowErroMessage()
+    private void ShowErrorMessage()
     {
-        yield return new WaitForSeconds(0.4f);
-        connectionMessage.gameObject.SetActive(true);
+        if (!connectionMessage.gameObject.activeSelf)
+        {
+            connectionMessage.gameObject.SetActive(true);
+        }        
+    }
+
+    void OnEnable()
+    {
+        Application.logMessageReceived += HandleLog;
+    }
+
+    void OnDisable()
+    {
+        Application.logMessageReceived -= HandleLog;
+    }
+
+    void HandleLog(string logString, string stackTrace, LogType type)
+    {
+        if(logString.Contains("Failed to connect") || logString.Contains("Invalid network"))
+        {
+            ShowErrorMessage();
+        }
     }
 }
