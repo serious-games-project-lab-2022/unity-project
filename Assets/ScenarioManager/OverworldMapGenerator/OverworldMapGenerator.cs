@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class OverworldMapGenerator
 {
-    private static int mapWidth = 200;
-    private static int mapHeight = 200;
+    private static int mapWidth = 284;
+    private static int mapHeight = 252;
 
     // Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
-    private static int outerWallThickness = 7;
+    private static int outerWallThickness = 20;
 
     // This array has a 0 when there should be a wall and other integers that indicate empty space and in what iteration that empty space was generated
     private int[,] mapArray = new int[mapHeight, mapWidth];

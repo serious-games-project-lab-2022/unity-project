@@ -53,7 +53,7 @@ public class InstructorManager : MonoBehaviour
         terrainBuilder.DrawTilemap(terrain);
         print(terrain.mapWidth);
         print(terrain.mapHeight);
-        radar.localPosition = new Vector3(-terrain.mapWidth/2, -terrain.mapHeight/2, -1);
+        radar.localPosition = new Vector3(-terrain.mapHeight/2, -terrain.mapWidth/2, -1);
         print(radar.localPosition);
     }
 
