@@ -30,6 +30,7 @@ public class PilotManager : MonoBehaviour
 
     private void Awake()
     {
+        stopTheGame();
         startWindow.SetActive(true);
     }
     private void Start()
@@ -96,8 +97,20 @@ public class PilotManager : MonoBehaviour
 
     public void readyButton()
     {
-        pilotCheckMark.gameObject.SetActive(true);
-        GameManager.Singleton.sharedGameState.InviteToStart();
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            pilotCheckMark.gameObject.SetActive(true);
+            GameManager.Singleton.sharedGameState.InviteToStart();
+        }
+    }
 
+    public void stopTheGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    public void resumeTheGame()
+    {
+        Time.timeScale = 1;
     }
 }

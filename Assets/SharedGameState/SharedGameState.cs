@@ -28,16 +28,18 @@ public class SharedGameState : NetworkBehaviour
     public NetworkVariable<float> score = new NetworkVariable<float>();
 
 
-    private bool IsPilot {
+    private bool IsPilot
+    {
         get { return IsHost; }
     }
-    private bool IsInstructor {
+    private bool IsInstructor
+    {
         get { return !IsHost; }
     }
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
-    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
-   
+    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate { };
+
 
     public override void OnNetworkSpawn()
     {
@@ -45,9 +47,6 @@ public class SharedGameState : NetworkBehaviour
         {
             instructorInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
             pilotInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
-
-            instructorInvitedToStart.OnValueChanged += StartTheGameIfBothPlayersAreReady;
-            pilotInvitedToStart.OnValueChanged += StartTheGameIfBothPlayersAreReady;
 
         }
 
@@ -57,22 +56,6 @@ public class SharedGameState : NetworkBehaviour
             GameManager.Singleton.sharedGameState = this;
             GameObject.FindObjectOfType<InstructorManager>().OnReceivedGameState();
             InstructorReadyServerRpc();
-        }
-    }
-    private void StartTheGameIfBothPlayersAreReady(bool _previousInvitationStatus, bool _currentInvitationStatus)
-    {
-        if (!IsPilot)
-        {
-            return;
-        }
-
-        if (instructorInvitedToStart.Value && pilotInvitedToStart.Value)
-        {
-            StartTheGameInstructorClientRpc();
-            GameManager.Singleton.ResumeGamePilot();
-            /*instructorInvitedToStart.Value = false;
-            pilotInvitedToStart.Value = false;*/
-
         }
     }
 
@@ -145,11 +128,5 @@ public class SharedGameState : NetworkBehaviour
     public void RetryGameForInstructorClientRpc()
     {
         GameManager.Singleton.TransitionToGameScene();
-    }
-
-    [ClientRpc]
-    public void StartTheGameInstructorClientRpc()
-    {
-        GameManager.Singleton.ResumeGameInstructor();
     }
 }
