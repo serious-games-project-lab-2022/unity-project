@@ -1,15 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using System;
-using UnityEditor.PackageManager;
 
 public class GameManager : NetworkBehaviour
 {
-
     public static GameManager Singleton { get; private set; }
     [HideInInspector]
     public ScenarioManager scenarioManager;
@@ -20,7 +14,6 @@ public class GameManager : NetworkBehaviour
 
     private void Awake()
     {
-        
         var singletonAlreadyExists = Singleton != null && Singleton != this;
         if (singletonAlreadyExists)
         {
@@ -70,17 +63,15 @@ public class GameManager : NetworkBehaviour
     public void TransitionToGameScene()
     {
         var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
-       
+
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     private void InitiateSharedGameState()
     {
-
         sharedGameState = Instantiate(sharedGameStatePrefab);
         GenerateScenario();
         DontDestroyOnLoad(sharedGameState);
-
         sharedGameState.GetComponent<NetworkObject>().Spawn();
     }
 
@@ -103,9 +94,7 @@ public class GameManager : NetworkBehaviour
 
     public void InitClient()
     {
-
         NetworkManager.Singleton.StartClient();
-
     }
 
     public void BreakHost()
@@ -123,7 +112,5 @@ public class GameManager : NetworkBehaviour
             Destroy(NetworkManager.Singleton.gameObject);
         }
         SceneManager.LoadScene("Menu");
-
     }
-
 }

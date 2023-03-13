@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +7,6 @@ public class MinigameShapeController : MonoBehaviour
     private MinigameShape currentlyDraggedShape = null;
     private Vector2 grabOffset = Vector2.zero;
     private Grid grid;
-
     private bool canMoveShapes;
     private Camera minigameCamera;
 

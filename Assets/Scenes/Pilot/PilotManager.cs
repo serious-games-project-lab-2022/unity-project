@@ -34,6 +34,7 @@ public class PilotManager : MonoBehaviour
         startWindow.SetActive(true);
      
     }
+    
     private void Start()
     {
         currentFuelAmount = maxFuel;

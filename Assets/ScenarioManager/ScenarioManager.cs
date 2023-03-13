@@ -9,8 +9,8 @@ public class ScenarioManager : MonoBehaviour
     public MinigameSolutions minigameSolutions;
     public OverworldMapGenerator overworldMapGenerator;
     public Terrain terrain;
-
     public List<Slider> frequencyMinigameSliders;
+    
     public void generateMinigameSolutions()
     {
         minigameSolutions.shapeMinigameSolutions = ShapeMinigame.GenerateConfiguration(minigameShapePrefabs);

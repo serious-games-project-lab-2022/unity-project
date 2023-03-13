@@ -359,6 +359,7 @@ MonoBehaviour:
   gameWonText: {fileID: 715375580}
   gameLostText: {fileID: 199073097}
   scoreText: {fileID: 1826529016}
+  ready: {fileID: 0}
 --- !u!4 &209142302
 Transform:
   m_ObjectHideFlags: 0

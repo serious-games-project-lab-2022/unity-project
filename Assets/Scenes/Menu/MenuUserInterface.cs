@@ -1,17 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using Unity.Netcode.Transports.UTP;
 using TMPro;
-using UnityEngine.Events;
-using System;
-using Unity.Networking.Transport;
-using Unity.VisualScripting;
-using System.Net;
-using UnityEditor.PackageManager;
 
 public class MenuUserInterface : NetworkBehaviour
 {
@@ -60,7 +51,6 @@ public class MenuUserInterface : NetworkBehaviour
             GameManager.Singleton.InitClient();            
         });
             
-
         goBackPilotButton.onClick.AddListener(() =>
         {
             GameManager.Singleton.BreakHost();
@@ -84,12 +74,9 @@ public class MenuUserInterface : NetworkBehaviour
             goBackInstructorButton.gameObject.SetActive(false);
             connectionMessage.gameObject.SetActive(false);
         });
-
-
     }
 
-    
-    private void ShowErroMessage()
+    private void ShowErrorMessage()
     {
         if (!connectionMessage.gameObject.activeSelf)
         {
@@ -111,7 +98,7 @@ public class MenuUserInterface : NetworkBehaviour
     {
         if(logString.Contains("Failed to connect") || logString.Contains("Invalid network"))
         {
-            ShowErroMessage();
+            ShowErrorMessage();
         }
     }
 }

@@ -15,7 +15,6 @@ public class MinigameHandler : MonoBehaviour
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
 
-    
     void Start()
     {
         checkpointPositions = GameManager.Singleton.scenarioManager.terrain.checkpointList;
