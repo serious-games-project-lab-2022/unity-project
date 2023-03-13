@@ -28,9 +28,7 @@ public class InstructorManager : MonoBehaviour
         {
             BuildTerrainAndSubscribeToChange();
         }
-        OnInstructorReceivedGameState += () => {
-            BuildTerrainAndSubscribeToChange();
-        };
+        OnInstructorReceivedGameState += BuildTerrainAndSubscribeToChange;
     }
 
     public void OnReceivedGameState()
@@ -41,18 +39,18 @@ public class InstructorManager : MonoBehaviour
 
     void BuildTerrainAndSubscribeToChange()
     {
-        var terrain = GameManager.Singleton.sharedGameState.terrain;
-        BuildTerrain(terrain.Value);
-        terrain.OnValueChanged += (Terrain _, Terrain newTerrain) => {
-            BuildTerrain(newTerrain);
-        };
+        GameManager.Singleton.sharedGameState.terrain.OnValueChanged += SubscribeToBuilTerrain;
+        BuildTerrain(GameManager.Singleton.sharedGameState.terrain.Value); 
+    }
+    void SubscribeToBuilTerrain(Terrain _, Terrain newTerrain)
+    {
+        BuildTerrain(newTerrain);
     }
 
     void BuildTerrain(Terrain terrain)
     {
         terrainBuilder.ClearTilemap();
         terrainBuilder.DrawTilemap(terrain);
-        print("Hello");
         print(terrain.mapWidth);
         print(terrain.mapHeight);
         radar.localPosition = new Vector3(-terrain.mapWidth/2, -terrain.mapHeight/2, -1);
@@ -84,5 +82,9 @@ public class InstructorManager : MonoBehaviour
         Time.timeScale = 1;
         GameManager.Singleton.sharedGameState.InviteToStart(false);
     }
-
+    private void OnDestroy()
+    {
+        OnInstructorReceivedGameState -= BuildTerrainAndSubscribeToChange;
+        GameManager.Singleton.sharedGameState.terrain.OnValueChanged -= SubscribeToBuilTerrain;
+    }
 }

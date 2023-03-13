@@ -26,10 +26,10 @@ public class OverworldMapGenerator
     void GenerateCheckpointsAndEdges(int numberOfCheckpoints)
     {
         //TODO remove debug.log
-        Debug.Log("Limits");
+        /*Debug.Log("Limits");
         Debug.Log(outerWallThickness + 1);
         Debug.Log(mapWidth - outerWallThickness);
-        Debug.Log(mapHeight - outerWallThickness);
+        Debug.Log(mapHeight - outerWallThickness);*/
 
         checkpointList.Clear();
         edgesBetweenCheckpoints.Clear();
@@ -48,10 +48,10 @@ public class OverworldMapGenerator
         checkpointList = new List<Vector3Int>(new HashSet<Vector3Int>(checkpointList));
 
         //TODO remove debug.log
-        Debug.Log("Checkpoints:");
+        //Debug.Log("Checkpoints:");
         foreach (Vector3Int v in checkpointList)
         {
-            Debug.Log(v);
+            //Debug.Log(v);
         }
 
         float[,] distances = new float[checkpointList.Count, checkpointList.Count];
@@ -114,9 +114,9 @@ public class OverworldMapGenerator
             }
         }
         // Adds first edge to the edge list
-        Debug.Log("Distance of first Edge:" + minDistance);
+       /* Debug.Log("Distance of first Edge:" + minDistance);
         Debug.Log("point1:" + point1);
-        Debug.Log("point2:" + point2);
+        Debug.Log("point2:" + point2);*/
 
         edgesBetweenCheckpoints.Add((checkpointList[point1], checkpointList[point2]));
 
@@ -185,21 +185,21 @@ public class OverworldMapGenerator
 
         //TODO remove debug.log
 
-        Debug.Log("---End of Algo:---");
-        Debug.Log("Distance Table:");
+      /*  Debug.Log("---End of Algo:---");
+        Debug.Log("Distance Table:");*/
         foreach (float f in distances)
         {
-            Debug.Log(f);
+            //Debug.Log(f);
         }
-        Debug.Log("Checkpoints added:");
+        //Debug.Log("Checkpoints added:");
         foreach (int i in checkpointsAdded)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
         }
-        Debug.Log("Edges:");
+        //Debug.Log("Edges:");
         foreach ((Vector3Int, Vector3Int) e in edgesBetweenCheckpoints)
         {
-            Debug.Log(e);
+            //Debug.Log(e);
         }
     }
 
@@ -249,7 +249,7 @@ public class OverworldMapGenerator
         }
 
         //TODO Remove Debug Log
-        Debug.Log(edgesBetweenCheckpoints[0].Item1);
+      /*  Debug.Log(edgesBetweenCheckpoints[0].Item1);
         Debug.Log(edgesBetweenCheckpoints[0].Item2);
 
         //TODO Remove Debug Log
@@ -262,7 +262,7 @@ public class OverworldMapGenerator
         Debug.Log(mapArray[6, 6]);
         Debug.Log(mapArray[7, 7]);
         Debug.Log(mapArray[8, 8]);
-        Debug.Log(mapArray[9, 9]);
+        Debug.Log(mapArray[9, 9]);*/
     }
 
     //widenPaths makes the playable area larger by moving the walls back. It takes the an integer, which will be looked for in the mapArray and only those "walls" will be widened.
