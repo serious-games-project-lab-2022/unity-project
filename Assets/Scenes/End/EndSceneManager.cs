@@ -11,6 +11,7 @@ public class EndSceneManager : MonoBehaviour
     [SerializeField] GameObject gameWonText, gameLostText;
     public static bool GameWon;
     public TextMeshProUGUI scoreText;
+    [SerializeField] GameObject ready;
     private void Start()
     {
         gameWonText.SetActive(false);
@@ -36,6 +37,7 @@ public class EndSceneManager : MonoBehaviour
 
     public void InviteToRetry()
     {
+        ready.SetActive(true);
         GameManager.Singleton.sharedGameState.InviteToRetry();
     }
 

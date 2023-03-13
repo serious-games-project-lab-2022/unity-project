@@ -30,12 +30,23 @@ public class PilotManager : MonoBehaviour
 
     private void Awake()
     {
-        stopTheGame();
-        startWindow.SetActive(true);
+        if(GameManager.Singleton.sharedGameState== null)
+        {
+            stopTheGame();
+            startWindow.SetActive(true);
+        }
+        else
+        {
+            bool ready = GameManager.Singleton.sharedGameState.instructorInvitedToStart.Value && GameManager.Singleton.sharedGameState.pilotInvitedToStart.Value;
+            if(!ready)
+            {
+                stopTheGame();
+                startWindow.SetActive(true);
+            }
+        }
     }
     private void Start()
     {
-        print("hello start");
         currentFuelAmount = maxFuel;
 
         var terrain = GameManager.Singleton.scenarioManager.terrain;

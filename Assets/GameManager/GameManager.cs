@@ -51,6 +51,10 @@ public class GameManager : NetworkBehaviour
          
             TransitionToGameScene();
         };
+        NetworkManager.OnClientDisconnectCallback += (ulong clientIdentifier) =>
+        {
+
+        };
        
     }
 
@@ -108,13 +112,9 @@ public class GameManager : NetworkBehaviour
             Destroy(GameManager.Singleton.scenarioManager.gameObject);
             Destroy(GameManager.Singleton.gameObject);
             Destroy(NetworkManager.Singleton.gameObject);
-            SceneManager.LoadScene("Menu");
         }
-        
-        else
-        {
-            SceneManager.LoadScene("Menu");
-        }
+        SceneManager.LoadScene("Menu");
+
     }
 
 }
