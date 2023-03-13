@@ -12,12 +12,12 @@ public class StartScreenInstructor : MonoBehaviour
     {
         if(GameManager.Singleton.sharedGameState!= null)
         {
+            pilotCheckbox.SetActive(GameManager.Singleton.sharedGameState.pilotInvitedToStart.Value);
             bool ready = GameManager.Singleton.sharedGameState.instructorInvitedToStart.Value && GameManager.Singleton.sharedGameState.pilotInvitedToStart.Value;
-           
             if (ready || startedCount)
             {
                 startedCount = true;
-                pilotCheckbox.SetActive(true);
+
                 timer -= Time.fixedDeltaTime;
                 print(timer);
             }

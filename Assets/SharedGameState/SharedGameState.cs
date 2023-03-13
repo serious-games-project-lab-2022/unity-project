@@ -16,17 +16,13 @@ public class SharedGameState : NetworkBehaviour
         0,
         0
     ));
-    public NetworkVariable<bool> instructorIsReady = new NetworkVariable<bool>(false);
-    public NetworkVariable<bool> pilotIsReady = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
-
     // start screen
     public NetworkVariable<bool> instructorInvitedToStart = new NetworkVariable<bool>(false);
     public NetworkVariable<bool> pilotInvitedToStart = new NetworkVariable<bool>(false);
     // score Result
     public NetworkVariable<float> score = new NetworkVariable<float>();
-
 
     private bool IsPilot
     {
@@ -39,7 +35,6 @@ public class SharedGameState : NetworkBehaviour
 
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
     public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate { };
-
 
     public override void OnNetworkSpawn()
     {
