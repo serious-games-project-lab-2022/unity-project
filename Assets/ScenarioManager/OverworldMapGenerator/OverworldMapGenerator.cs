@@ -41,12 +41,7 @@ public class OverworldMapGenerator
         //remove duplicate checkpoints
         checkpointList = new List<Vector3Int>(new HashSet<Vector3Int>(checkpointList));
 
-        //TODO remove debug.log
-        //Debug.Log("Checkpoints:");
-        foreach (Vector3Int v in checkpointList)
-        {
-            //Debug.Log(v);
-        }
+        
 
         float[,] distances = new float[checkpointList.Count, checkpointList.Count];
         // Iterate through list of checkpoints
@@ -74,14 +69,7 @@ public class OverworldMapGenerator
             distances[i, i] = float.MaxValue;
         }
 
-        //TODO remove debug.log
-        /* Debug.Log("Distance Table:");
-          foreach (float f in distances)
-          {
-             Debug.Log(f);
-          }
-
-         */
+        
 
 
         // This HashSet contains all checkpoints that are connected via the edges
@@ -148,8 +136,7 @@ public class OverworldMapGenerator
             }
 
             // add the edge to the list
-            //TODO Make sure this part works!
-
+            
             edgesBetweenCheckpoints.Add((checkpointList[point1], checkpointList[point2]));
 
             // set distance to infinite to edges(distances) that can't be considered any further
@@ -177,31 +164,14 @@ public class OverworldMapGenerator
             checkpointsAdded.Add(point2);
         }
 
-        //TODO remove debug.log
-
-      /*  Debug.Log("---End of Algo:---");
-        Debug.Log("Distance Table:");*/
-        foreach (float f in distances)
-        {
-            //Debug.Log(f);
-        }
-        //Debug.Log("Checkpoints added:");
-        foreach (int i in checkpointsAdded)
-        {
-            //Debug.Log(i);
-        }
-        //Debug.Log("Edges:");
-        foreach ((Vector3Int, Vector3Int) e in edgesBetweenCheckpoints)
-        {
-            //Debug.Log(e);
-        }
+        
     }
 
     //GenerateOverworldMap is called to create a list of tileslocations that are the overworldmap from the list of checkpoint and edges
     void GenerateArrayMap()
     {
         //Lists of Checkpoints and Edges are complete
-        //TODO Make circle around checkpoints and make connecting path for edges (compute  x and y distance and draw a path where it is longer)
+        
 
         foreach (Vector3Int c in checkpointList)
         {
@@ -242,21 +212,7 @@ public class OverworldMapGenerator
             }
         }
 
-        //TODO Remove Debug Log
-      /*  Debug.Log(edgesBetweenCheckpoints[0].Item1);
-        Debug.Log(edgesBetweenCheckpoints[0].Item2);
-
-        //TODO Remove Debug Log
-        Debug.Log(mapArray[0, 0]);
-        Debug.Log(mapArray[1, 1]);
-        Debug.Log(mapArray[2, 2]);
-        Debug.Log(mapArray[3, 3]);
-        Debug.Log(mapArray[4, 4]);
-        Debug.Log(mapArray[5, 5]);
-        Debug.Log(mapArray[6, 6]);
-        Debug.Log(mapArray[7, 7]);
-        Debug.Log(mapArray[8, 8]);
-        Debug.Log(mapArray[9, 9]);*/
+        
     }
 
     //widenPaths makes the playable area larger by moving the walls back. It takes the an integer, which will be looked for in the mapArray and only those "walls" will be widened.
@@ -350,6 +306,7 @@ public class OverworldMapGenerator
         this.WidenPaths(1);
         this.WidenPaths(2);
         this.WidenPaths(3);
+        this.WidenPaths(4);
         this.ComputeCompressedList();
         return new Terrain(emptySpaceList, checkpointList, mapHeight, mapWidth);
     }

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8607063458042316264}
   - component: {fileID: 4872005665319868315}
   - component: {fileID: 6281456969225206896}
+  - component: {fileID: -2552810873683700792}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: MinigoalCheckpoint
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 5125080075872826505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -91,8 +92,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
-  m_Color: {r: 0.49411768, g: 0.7490196, b: 0.9960785, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 89140d55336902f41a928edb0b256ece, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -112,5 +113,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb824bac0a58ee4ea2dca575a6790ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-2552810873683700792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125080075872826505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3521cf43347d7344cb7d79973cd3c163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
