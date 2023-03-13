@@ -15,7 +15,7 @@ public class MiniatureSpaceship : MonoBehaviour
         {
             return;
         }
-        transform.localPosition = sharedGameState.spaceshipPosition.Value / 16;
+        transform.localPosition = sharedGameState.spaceshipPosition.Value / 8f;
         transform.eulerAngles = new Vector3(0, 0, sharedGameState.spaceshipRotation.Value);
     }
 }

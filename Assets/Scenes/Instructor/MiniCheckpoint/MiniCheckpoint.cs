@@ -20,7 +20,7 @@ public class MiniCheckpoint : MonoBehaviour
     void SubscribeToPositionChange()
     {
         transform.localPosition = (
-            GameManager.Singleton.sharedGameState.checkpointPosition.Value / 16f
+            GameManager.Singleton.sharedGameState.checkpointPosition.Value / 8f
         );
         GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged += SubscribeToPosition;
 
@@ -28,7 +28,7 @@ public class MiniCheckpoint : MonoBehaviour
 
     void SubscribeToPosition(Vector2 preValue, Vector2 newValue)
     {
-        transform.localPosition = newValue / 16f;
+        transform.localPosition = newValue / 8f;
     }
 
     private void OnDestroy()

@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87e191c90d2d6894f872ad9dd44e3957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 30
+  secondsToSolve: 90
   takeInput: 1
   timerBar: {fileID: 630978639257295847}
   symbols:

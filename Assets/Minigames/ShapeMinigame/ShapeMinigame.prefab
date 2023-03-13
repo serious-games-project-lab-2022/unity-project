@@ -1495,7 +1495,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de0090b38673047da8f4141ec1e1a5d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  secondsToSolve: 60
+  secondsToSolve: 90
   takeInput: 1
   timerBar: {fileID: 1731881943361495172}
   minigameShapeController: {fileID: 1731881943946424715}

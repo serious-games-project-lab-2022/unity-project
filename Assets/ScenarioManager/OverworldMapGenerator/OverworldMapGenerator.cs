@@ -5,11 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class OverworldMapGenerator
 {
-    private static int mapWidth = 200;
-    private static int mapHeight = 200;
+    private static int mapWidth = 142;
+    private static int mapHeight = 126;
 
     // Change this parameter to spawn checkpoints closer to the edges of the map or further in. Minimal number should be 2.
-    private static int outerWallThickness = 7;
+    private static int outerWallThickness = 10;
 
     // This array has a 0 when there should be a wall and other integers that indicate empty space and in what iteration that empty space was generated
     private int[,] mapArray = new int[mapHeight, mapWidth];
@@ -25,12 +25,6 @@ public class OverworldMapGenerator
     // GenerateCheckpointsAndEdges is called to create a list of checkpoints and a list of edges between those checkpoints
     void GenerateCheckpointsAndEdges(int numberOfCheckpoints)
     {
-        //TODO remove debug.log
-        /*Debug.Log("Limits");
-        Debug.Log(outerWallThickness + 1);
-        Debug.Log(mapWidth - outerWallThickness);
-        Debug.Log(mapHeight - outerWallThickness);*/
-
         checkpointList.Clear();
         edgesBetweenCheckpoints.Clear();
 
@@ -38,8 +32,8 @@ public class OverworldMapGenerator
         {
             checkpointList.Add(
                 new Vector3Int(
-                    Random.Range(outerWallThickness + 1, mapWidth - outerWallThickness),
                     Random.Range(outerWallThickness + 1, mapHeight - outerWallThickness),
+                    Random.Range(outerWallThickness + 1, mapWidth - outerWallThickness),
                     0
                 )
             );
@@ -341,7 +335,7 @@ public class OverworldMapGenerator
     // GenerateTerrain() generates a instance of the Terrain class
     public Terrain GenerateTerrain()
     {
-        this.GenerateCheckpointsAndEdges(50);
+        this.GenerateCheckpointsAndEdges(40);
         // Empty the area around the initial space ship spawn position
         mapArray[checkpointList[0].x, checkpointList[0].y] = 42;
         this.WidenPaths(42);
