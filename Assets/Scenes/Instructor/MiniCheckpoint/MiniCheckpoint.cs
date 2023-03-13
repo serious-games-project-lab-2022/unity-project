@@ -22,18 +22,18 @@ public class MiniCheckpoint : MonoBehaviour
         transform.localPosition = (
             GameManager.Singleton.sharedGameState.checkpointPosition.Value / 16f
         );
-        GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged += SubscribeToPisition;
+        GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged += SubscribeToPosition;
 
     }
 
-    void SubscribeToPisition(Vector2 preValue, Vector2 newValue)
+    void SubscribeToPosition(Vector2 preValue, Vector2 newValue)
     {
         transform.localPosition = newValue / 16f;
     }
 
     private void OnDestroy()
     {
-        GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged -=SubscribeToPisition;
+        GameManager.Singleton.sharedGameState.checkpointPosition.OnValueChanged -=SubscribeToPosition;
     }
 
 }
