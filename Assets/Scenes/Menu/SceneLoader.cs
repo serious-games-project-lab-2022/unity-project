@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SceneLoader : MonoBehaviour
 {
-
     public GameObject LoaderUI;
     public Slider progressSlider;
 

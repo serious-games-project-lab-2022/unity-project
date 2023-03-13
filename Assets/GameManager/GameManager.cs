@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
-using Unity.VisualScripting;
-using System;
 
 public class GameManager : NetworkBehaviour
 {
@@ -45,27 +41,37 @@ public class GameManager : NetworkBehaviour
             {
                 InitiateSharedGameState();
             }
-
+         
             TransitionToGameScene();
         };
-        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) => {
+        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) =>
+        {
+            if (IsServer)
+            {
+                // in case the game has been closed / stopped by the player
+                Destroy(GameManager.Singleton.sharedGameState.gameObject);
+                Destroy(GameManager.Singleton.scenarioManager.gameObject);
+                Destroy(GameManager.Singleton.gameObject);
+                Destroy(NetworkManager.Singleton.gameObject);
+            }
             SceneManager.LoadScene("Menu");
+
         };
+       
     }
 
     public void TransitionToGameScene()
     {
         var sceneName = IsHost ? "Scenes/Pilot/PilotGame" : "Scenes/Instructor/InstructorGame";
+
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
     private void InitiateSharedGameState()
     {
-
         sharedGameState = Instantiate(sharedGameStatePrefab);
         GenerateScenario();
         DontDestroyOnLoad(sharedGameState);
-
         sharedGameState.GetComponent<NetworkObject>().Spawn();
     }
 
@@ -94,5 +100,17 @@ public class GameManager : NetworkBehaviour
     public void BreakHost()
     {
         NetworkManager.Singleton.Shutdown();
+    }
+
+    public void DestroyAllPermanentObjects()
+    {
+        if(IsServer)
+        {
+            Destroy(GameManager.Singleton.sharedGameState.gameObject);
+            Destroy(GameManager.Singleton.scenarioManager.gameObject);
+            Destroy(GameManager.Singleton.gameObject);
+            Destroy(NetworkManager.Singleton.gameObject);
+        }
+        SceneManager.LoadScene("Menu");
     }
 }
