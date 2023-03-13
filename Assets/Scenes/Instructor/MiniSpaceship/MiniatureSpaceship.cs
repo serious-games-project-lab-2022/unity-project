@@ -8,6 +8,11 @@ using UnityEngine.XR;
 
 public class MiniatureSpaceship : MonoBehaviour
 {
+    private void Start() 
+    {
+        transform.localPosition = new Vector3(1000, 1000, 0);
+    }
+
     void FixedUpdate()
     {
         var sharedGameState = GameManager.Singleton.sharedGameState;
