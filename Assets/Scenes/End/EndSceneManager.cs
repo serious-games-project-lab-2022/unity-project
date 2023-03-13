@@ -11,11 +11,12 @@ public class EndSceneManager : MonoBehaviour
     [SerializeField] GameObject gameWonText, gameLostText;
     public static bool GameWon;
     public TextMeshProUGUI scoreText;
-    [SerializeField] GameObject ready;
+    [SerializeField] private GameObject ready;
     private void Start()
     {
         gameWonText.SetActive(false);
         gameLostText.SetActive(false);
+        ready.SetActive(false);
         
         if(GameWon)
         {
