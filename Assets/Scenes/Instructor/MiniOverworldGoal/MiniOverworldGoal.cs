@@ -10,11 +10,7 @@ public class MiniOverworldGoal : MonoBehaviour
         if (GameManager.Singleton.sharedGameState != null)
         {
             transform.localPosition = (
-<<<<<<< Updated upstream
-                GameManager.Singleton.sharedGameState.overworldGoalPosition.Value / 8f
-=======
                 GameManager.Singleton.sharedGameState.overworldGoalPosition.Value*1000 / 16f
->>>>>>> Stashed changes
             );
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
