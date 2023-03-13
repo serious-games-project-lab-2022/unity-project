@@ -6,6 +6,7 @@ public class StartScreenInstructor : MonoBehaviour
 {
     [SerializeField] private GameObject pilotCheckbox;
     [SerializeField] private float timer;
+    private bool startedCount =false;
 
     void Update()
     {
@@ -13,10 +14,12 @@ public class StartScreenInstructor : MonoBehaviour
         {
             bool ready = GameManager.Singleton.sharedGameState.instructorInvitedToStart.Value && GameManager.Singleton.sharedGameState.pilotInvitedToStart.Value;
            
-            if (ready)
+            if (ready || startedCount)
             {
+                startedCount = true;
                 pilotCheckbox.SetActive(true);
                 timer -= Time.fixedDeltaTime;
+                print(timer);
             }
             if (timer < 0)
             {

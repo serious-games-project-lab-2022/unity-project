@@ -25,10 +25,6 @@ public class EndSceneManager : MonoBehaviour
         {
             gameLostText.SetActive(true);
         }
-
-        var score = GameManager.Singleton.sharedGameState.score.Value;
-        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score * 10));
-
     }
     public void ReturnToMainMenu()
     {
@@ -45,11 +41,17 @@ public class EndSceneManager : MonoBehaviour
     {
         Application.Quit();
     }
-   /* private void DestroyAllPermanentObjects()
+    private void FixedUpdate()
     {
-        Destroy(GameManager.Singleton.sharedGameState.gameObject);
-        Destroy(GameManager.Singleton.scenarioManager.gameObject);
-        Destroy(GameManager.Singleton.gameObject);
-        Destroy(NetworkManager.Singleton.gameObject);
-    }*/
+        var score = GameManager.Singleton.sharedGameState.score.Value;
+        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score * 10));
+
+    }
+    /* private void DestroyAllPermanentObjects()
+     {
+         Destroy(GameManager.Singleton.sharedGameState.gameObject);
+         Destroy(GameManager.Singleton.scenarioManager.gameObject);
+         Destroy(GameManager.Singleton.gameObject);
+         Destroy(NetworkManager.Singleton.gameObject);
+     }*/
 }

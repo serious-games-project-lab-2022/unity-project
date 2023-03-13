@@ -89,9 +89,9 @@ public class SharedGameState : NetworkBehaviour
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void InstructorInvitePilotToStartGameServerRpc()
+    public void InstructorInvitePilotToStartGameServerRpc(bool start)
     {
-        instructorInvitedToStart.Value = true;
+        instructorInvitedToStart.Value = start;
     }
 
     [ClientRpc]
@@ -112,15 +112,15 @@ public class SharedGameState : NetworkBehaviour
         }
     }
 
-    public void InviteToStart()
+    public void InviteToStart(bool start)
     {
         if (IsInstructor)
         {
-            InstructorInvitePilotToStartGameServerRpc();
+            InstructorInvitePilotToStartGameServerRpc(start);
         }
         if (IsPilot)
         {
-            pilotInvitedToStart.Value = true;
+            pilotInvitedToStart.Value = start;
         }
     }
 

@@ -51,8 +51,17 @@ public class GameManager : NetworkBehaviour
          
             TransitionToGameScene();
         };
-        NetworkManager.OnClientDisconnectCallback += (ulong clientIdentifier) =>
+        NetworkManager.Singleton.OnClientDisconnectCallback += (ulong clientIdentifier) =>
         {
+            if (IsServer)
+            {
+                // in case the game has been closed / stopped by the player
+                Destroy(GameManager.Singleton.sharedGameState.gameObject);
+                Destroy(GameManager.Singleton.scenarioManager.gameObject);
+                Destroy(GameManager.Singleton.gameObject);
+                Destroy(NetworkManager.Singleton.gameObject);
+            }
+            SceneManager.LoadScene("Menu");
 
         };
        

@@ -30,7 +30,9 @@ public class PilotManager : MonoBehaviour
 
     private void Awake()
     {
-        if(GameManager.Singleton.sharedGameState== null)
+        stopTheGame();
+        startWindow.SetActive(true);
+        /*if(GameManager.Singleton.sharedGameState== null)
         {
             stopTheGame();
             startWindow.SetActive(true);
@@ -43,7 +45,7 @@ public class PilotManager : MonoBehaviour
                 stopTheGame();
                 startWindow.SetActive(true);
             }
-        }
+        }*/
     }
     private void Start()
     {
@@ -111,7 +113,7 @@ public class PilotManager : MonoBehaviour
         if (GameManager.Singleton.sharedGameState != null)
         {
             pilotCheckMark.gameObject.SetActive(true);
-            GameManager.Singleton.sharedGameState.InviteToStart();
+            GameManager.Singleton.sharedGameState.InviteToStart(true);
         }
     }
 
@@ -123,5 +125,6 @@ public class PilotManager : MonoBehaviour
     public void resumeTheGame()
     {
         Time.timeScale = 1;
+        GameManager.Singleton.sharedGameState.InviteToStart(false);
     }
 }

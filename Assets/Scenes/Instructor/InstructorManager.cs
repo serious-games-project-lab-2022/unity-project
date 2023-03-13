@@ -17,7 +17,9 @@ public class InstructorManager : MonoBehaviour
     [SerializeField] private GameObject pilotCheckMark;
     private void Awake()
     {
-        if (GameManager.Singleton.sharedGameState == null)
+        stopTheGame();
+        startWindow.SetActive(true);
+        /*if (GameManager.Singleton.sharedGameState == null)
         {
             stopTheGame();
             startWindow.SetActive(true);
@@ -30,7 +32,7 @@ public class InstructorManager : MonoBehaviour
                 stopTheGame();
                 startWindow.SetActive(true);
             }
-        }
+        }*/
     }
     void Start()
     {
@@ -81,7 +83,7 @@ public class InstructorManager : MonoBehaviour
         if(GameManager.Singleton.sharedGameState != null)
         {
             instructorCheckMark.gameObject.SetActive(true);
-            GameManager.Singleton.sharedGameState.InviteToStart();
+            GameManager.Singleton.sharedGameState.InviteToStart(true);
         }
     }
 
@@ -93,6 +95,7 @@ public class InstructorManager : MonoBehaviour
     public void resumeTheGame()
     {
         Time.timeScale = 1;
+        GameManager.Singleton.sharedGameState.InviteToStart(false);
     }
 
 }
