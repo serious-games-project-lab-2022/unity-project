@@ -41,17 +41,18 @@ public class EndSceneManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    /*private void showTheScore()
+    {
+        GameManager.Singleton.sharedGameState.score.OnValueChanged += (float preValue, float newValue) =>
+        {
+            scoreText.SetText("Score:{0}", Mathf.RoundToInt(newValue * 10));
+        };
+    }*/
     private void FixedUpdate()
     {
         var score = GameManager.Singleton.sharedGameState.score.Value;
         scoreText.SetText("Score:{0}", Mathf.RoundToInt(score * 10));
 
     }
-    /* private void DestroyAllPermanentObjects()
-     {
-         Destroy(GameManager.Singleton.sharedGameState.gameObject);
-         Destroy(GameManager.Singleton.scenarioManager.gameObject);
-         Destroy(GameManager.Singleton.gameObject);
-         Destroy(NetworkManager.Singleton.gameObject);
-     }*/
 }
