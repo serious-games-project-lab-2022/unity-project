@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 public class MiniOverworldGoal : MonoBehaviour
@@ -14,10 +15,17 @@ public class MiniOverworldGoal : MonoBehaviour
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
         instructorManager.OnInstructorReceivedGameState += () => {
-            GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged +=
-                (Vector2 preValue, Vector2 newValue) => {
-                    transform.localPosition = newValue / 16f;
-                };
+            GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged += SubscribeToOverWorldGoalPosition;
         };
+    }
+
+    void SubscribeToOverWorldGoalPosition(Vector2 preValue, Vector2 newValue)
+    {
+        transform.localPosition = newValue / 16f;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged -= SubscribeToOverWorldGoalPosition;
     }
 }
