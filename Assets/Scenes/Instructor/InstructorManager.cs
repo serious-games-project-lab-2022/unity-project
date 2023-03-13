@@ -15,6 +15,7 @@ public class InstructorManager : MonoBehaviour
     
     [SerializeField] private GameObject instructorCheckMark;
     [SerializeField] private GameObject pilotCheckMark;
+
     private void Awake()
     {
         stopTheGame();
@@ -53,7 +54,7 @@ public class InstructorManager : MonoBehaviour
         terrainBuilder.DrawTilemap(terrain);
         print(terrain.mapWidth);
         print(terrain.mapHeight);
-        radar.localPosition = new Vector3(-terrain.mapHeight/2, -terrain.mapWidth/2, -1);
+        radar.localPosition = new Vector3(-terrain.mapHeight, -terrain.mapWidth, -1);
         print(radar.localPosition);
     }
 
