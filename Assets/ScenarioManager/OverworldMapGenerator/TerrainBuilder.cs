@@ -21,6 +21,10 @@ public class TerrainBuilder : MonoBehaviour
     public Tile wallEDownLeftSquare;
     public Tile wallEDownRightSquare;
 
+    [SerializeField] private Transform worldOrigin;
+
+    [SerializeField] private SpaceCoin spaceCoinPrefab;
+
 
 
     public Tilemap overworldTilemap;
@@ -46,6 +50,21 @@ public class TerrainBuilder : MonoBehaviour
                    
                     overworldTilemap.SetTile(drawingPosition, wallSquare);
                     continue;
+                }
+                if (mapArray[k, m] == 2)
+                {
+                   
+                    //spawn coin with a chance
+                    int j = Random.Range(0, 30);
+                    if(j<1)
+                    {
+                        var currentCoin = Instantiate(
+                            spaceCoinPrefab,
+                            parent: worldOrigin.transform
+                        );
+                        currentCoin.transform.localPosition = drawingPosition;
+                        continue;
+                    }
                 }
                 if (mapArray[k, m] == 5)
                 {
