@@ -9,23 +9,30 @@ public class MiniOverworldGoal : MonoBehaviour
     {
         if (GameManager.Singleton.sharedGameState != null)
         {
-            transform.localPosition = (
-                (GameManager.Singleton.sharedGameState.overworldGoalPosition.Value + Vector2.one * 1000)/ 8f
-            );
+            SubscribeToPositionChange();
         }
-        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
-        instructorManager.OnInstructorReceivedGameState += () => {
-            GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged += SubscribeToOverWorldGoalPosition;
-        };
+        else
+        {
+            var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+            instructorManager.OnInstructorReceivedGameState += SubscribeToPositionChange;
+        }
     }
 
-    void SubscribeToOverWorldGoalPosition(Vector2 preValue, Vector2 newValue)
+    void SubscribeToPositionChange()
+    {
+        transform.localPosition = (
+            GameManager.Singleton.sharedGameState.overworldGoalPosition.Value / 8f
+        );
+        GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged += SubscribeToPosition;
+    }
+
+    void SubscribeToPosition(Vector2 preValue, Vector2 newValue)
     {
         transform.localPosition = newValue / 8f;
     }
 
     private void OnDestroy()
     {
-        GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged -= SubscribeToOverWorldGoalPosition;
+        GameManager.Singleton.sharedGameState.overworldGoalPosition.OnValueChanged -= SubscribeToPosition;
     }
 }
