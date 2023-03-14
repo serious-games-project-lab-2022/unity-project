@@ -57,7 +57,7 @@ public class PilotManager : MonoBehaviour
         
         spaceship.OnCollidedWithTerrain += () => {
             ShakeCamera();
-            DepleteFuel(by: 1.0f);
+            DepleteFuel(by: 2.0f);
         };
     }
 

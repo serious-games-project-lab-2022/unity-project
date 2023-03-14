@@ -477,6 +477,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1731881944157096351, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
+      propertyPath: secondsToSolve
+      value: 110
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2021503367715675946, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1cfaec3a091064b4c97b830f5bc2298b, type: 3}
@@ -534,6 +538,10 @@ PrefabInstance:
     - target: {fileID: 6459793091596911684, guid: 5f2278beeaf411b4e9259c894fb79569, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6459793091596911685, guid: 5f2278beeaf411b4e9259c894fb79569, type: 3}
+      propertyPath: secondsToSolve
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 6459793091596911690, guid: 5f2278beeaf411b4e9259c894fb79569, type: 3}
       propertyPath: m_Name
