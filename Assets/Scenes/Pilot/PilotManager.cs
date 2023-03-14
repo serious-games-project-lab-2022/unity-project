@@ -92,7 +92,7 @@ public class PilotManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score*10));
+        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score));
         fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
     }

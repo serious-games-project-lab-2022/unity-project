@@ -11,22 +11,35 @@ public class EndSceneManager : MonoBehaviour
     [SerializeField] GameObject gameWonText, gameLostText;
     public static bool GameWon;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI highScoreText;
     [SerializeField] private GameObject ready;
     private void Start()
     {
         gameWonText.SetActive(false);
         gameLostText.SetActive(false);
         ready.SetActive(false);
+
+        var score = GameManager.Singleton.sharedGameState.score.Value;
+        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score));
         
         if(GameWon)
         {
             gameWonText.SetActive(true);
+            if (score > PlayerPrefs.GetInt("HighScore"))
+            {
+             PlayerPrefs.SetInt("HighScore", Mathf.RoundToInt(GameManager.Singleton.sharedGameState.score.Value));
+            }
+
         }
+
         else
         {
             gameLostText.SetActive(true);
         }
+        
+        highScoreText.SetText("High Score: {0}", PlayerPrefs.GetInt("HighScore"));
     }
+    
     public void ReturnToMainMenu()
     {
         GameManager.Singleton.DestroyAllPermanentObjects();
@@ -41,19 +54,5 @@ public class EndSceneManager : MonoBehaviour
     public void Exit()
     {
         Application.Quit();
-    }
-
-    /*private void showTheScore()
-    {
-        GameManager.Singleton.sharedGameState.score.OnValueChanged += (float preValue, float newValue) =>
-        {
-            scoreText.SetText("Score:{0}", Mathf.RoundToInt(newValue * 10));
-        };
-    }*/
-    private void FixedUpdate()
-    {
-        var score = GameManager.Singleton.sharedGameState.score.Value;
-        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score * 10));
-
     }
 }
