@@ -13,6 +13,7 @@ public class Spaceship : MonoBehaviour
     public float hitStunDurationInSeconds = 2;
     private bool inHitStun = false;
     private float hitStunTimer = 0;
+    [SerializeField] private AudioSource terrainHitSound;
 
     void Start()
     {
@@ -54,6 +55,8 @@ public class Spaceship : MonoBehaviour
             rigidbody2D.AddForce(knockBackDirection * knockBackStrength, ForceMode2D.Impulse);
             blinkingAnimation.Play();
             inHitStun = true;
+
+            terrainHitSound.Play();
 
             OnCollidedWithTerrain();
         }

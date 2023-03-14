@@ -17,6 +17,10 @@ public class MinigameHandler : MonoBehaviour
     private Checkpoint currentCheckpoint;
     private OverworldGoal currentOverworldGoal;
 
+    [SerializeField] private AudioSource minigameAppearSound;
+    [SerializeField] private AudioSource minigameSuccessfulSound;
+    [SerializeField] private AudioSource minigameUnsuccessfulSound;
+
     void Start()
     {
         checkpointPositions = GameManager.Singleton.scenarioManager.terrain.checkpointList;
@@ -31,6 +35,7 @@ public class MinigameHandler : MonoBehaviour
             parent: this.transform
         );
         minigame.transform.localPosition = new Vector3Int(8, 0, 0);
+        minigameAppearSound.Play();
 
         minigame.OnMinigameOver += (bool solved) =>
         {
@@ -40,6 +45,11 @@ public class MinigameHandler : MonoBehaviour
             {
                 GameObject.FindObjectOfType<PilotManager>().score -= 100f;
                 OnPlayerLostMinigame(damageAmount: 3.0f);
+                minigameUnsuccessfulSound.Play();
+            }
+            else
+            {
+                minigameSuccessfulSound.Play();
             }
 
             if (currentCheckpoint != null)

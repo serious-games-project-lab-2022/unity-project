@@ -16,8 +16,6 @@ public class PilotManager : MonoBehaviour
     [SerializeField]
     private MinigameHandler minigameHandler;
     [SerializeField]
-    private OverworldGoal overworldGoal;
-    [SerializeField]
     private Spaceship spaceship;
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -28,13 +26,15 @@ public class PilotManager : MonoBehaviour
     [SerializeField] private GameObject instructorCheckMark;
     [SerializeField] private GameObject pilotCheckMark;
 
+    // Game Effects 
+    [SerializeField] private ParticleSystem fireParticles;
     private void Awake()
     {
         stopTheGame();
         startWindow.SetActive(true);
-     
+
     }
-    
+
     private void Start()
     {
         currentFuelAmount = maxFuel;
@@ -56,6 +56,7 @@ public class PilotManager : MonoBehaviour
         };
         
         spaceship.OnCollidedWithTerrain += () => {
+            ShakeCamera();
             DepleteFuel(by: 1.0f);
         };
     }
@@ -114,5 +115,11 @@ public class PilotManager : MonoBehaviour
     {
         Time.timeScale = 1;
         GameManager.Singleton.sharedGameState.InviteToStart(false);
+        fireParticles.Play();
+    }
+
+    private void ShakeCamera()
+    {
+        FindObjectOfType<CameraShaker>().shakePilot();
     }
 }
