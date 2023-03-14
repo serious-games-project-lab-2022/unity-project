@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Random = System.Random;
+using SystemRandom = System.Random;
+
 
 public class MinigameHandler : MonoBehaviour
 {
@@ -25,6 +27,7 @@ public class MinigameHandler : MonoBehaviour
     {
         checkpointPositions = GameManager.Singleton.scenarioManager.terrain.checkpointList;
         SpawnCheckpoint(checkpointPositions[currentMinigameIndex + 1]);
+        minigamePrefabs = minigamePrefabs.OrderBy(x => Random.value).ToList();
     }
 
     public void SpawnMinigame()
