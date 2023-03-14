@@ -57,6 +57,7 @@ public class PilotManager : MonoBehaviour
         
         spaceship.OnCollidedWithTerrain += () => {
             shakeTheCamera();
+            playTheCollisionSound();
             DepleteFuel(by: 1.0f);
         };
     }
@@ -120,5 +121,11 @@ public class PilotManager : MonoBehaviour
     private void shakeTheCamera()
     {
         FindObjectOfType<CameraShaker>().shakePilot();
+    }
+
+    private void playTheCollisionSound()
+    {
+        var audioSource = FindObjectOfType<AudioSource>();
+        audioSource.Play();
     }
 }
