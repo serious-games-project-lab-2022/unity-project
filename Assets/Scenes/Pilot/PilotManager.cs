@@ -28,13 +28,15 @@ public class PilotManager : MonoBehaviour
     [SerializeField] private GameObject instructorCheckMark;
     [SerializeField] private GameObject pilotCheckMark;
 
+    // Game Effects 
+    [SerializeField] private ParticleSystem fireParticles;
     private void Awake()
     {
         stopTheGame();
         startWindow.SetActive(true);
-     
+
     }
-    
+
     private void Start()
     {
         currentFuelAmount = maxFuel;
@@ -116,6 +118,7 @@ public class PilotManager : MonoBehaviour
     {
         Time.timeScale = 1;
         GameManager.Singleton.sharedGameState.InviteToStart(false);
+        fireParticles.Play();
     }
 
     private void shakeTheCamera()
