@@ -55,15 +55,18 @@ public class TerrainBuilder : MonoBehaviour
                 {
                    
                     //spawn coin with a chance
-                    int j = Random.Range(0, 30);
-                    if(j<1)
+                    if (worldOrigin != null)
                     {
-                        var currentCoin = Instantiate(
-                            spaceCoinPrefab,
-                            parent: worldOrigin.transform
-                        );
-                        currentCoin.transform.localPosition = drawingPosition;
-                        continue;
+                        int j = Random.Range(0, 30);
+                        if (j<1)
+                        {
+                            var currentCoin = Instantiate(
+                                spaceCoinPrefab,
+                                parent: worldOrigin.transform
+                            );
+                            currentCoin.transform.localPosition = drawingPosition;
+                            continue;
+                        }
                     }
                 }
                 if (mapArray[k, m] == 5)
