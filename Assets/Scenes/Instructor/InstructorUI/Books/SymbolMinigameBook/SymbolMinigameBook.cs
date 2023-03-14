@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class SymbolMinigameBook : MinigameBook
@@ -8,29 +9,30 @@ public class SymbolMinigameBook : MinigameBook
     [SerializeField] private List<GameObject> symbols;
     [SerializeField] private List<Sprite> textures;
 
-    
     // Start is called before the first frame update
     void Start()
     {
         Hide();
         if (GameManager.Singleton.sharedGameState != null)
         {
-            StartCoroutine(GenerateSolutionExplanation());
+            GenerateSolutionAndSubscribe();
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
-        instructorManager.OnInstructorReceivedGameState += () => {
-            StartCoroutine(GenerateSolutionExplanation());
-        };
+        instructorManager.OnInstructorReceivedGameState += GenerateSolutionAndSubscribe;
+    }
+    void GenerateSolutionAndSubscribe()
+    {
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged += SubscribeToSolution;
+        GenerateSolutionExplanation(GameManager.Singleton.sharedGameState.minigameSolutions.Value.symbolMinigameSolutions.solution);
     }
 
-    IEnumerator GenerateSolutionExplanation()
+    void SubscribeToSolution(MinigameSolutions _, MinigameSolutions newMinigameSolution)
     {
-        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        // TODO: this should not be hard coded
-        yield return new WaitForSeconds(0.5f);
-        var symbolMinigameSolution = sharedGameState.minigameSolutions.Value.symbolMinigameSolutions.solution;
-        
-        mapTheTexturesToTheSymbols(symbolMinigameSolution.instructorSymbolIndices, symbolMinigameSolution.sameSymbolsIndices);
+        GenerateSolutionExplanation(newMinigameSolution.symbolMinigameSolutions.solution);
+    }
+    private void GenerateSolutionExplanation(SymbolMinigameSolution solution)
+    {
+        mapTheTexturesToTheSymbols(solution.instructorSymbolIndices, solution.sameSymbolsIndices);
     }
 
     private void mapTheTexturesToTheSymbols(int[] instructorIndices, int[] similarIndices)
@@ -72,5 +74,10 @@ public class SymbolMinigameBook : MinigameBook
             list[k].transform.position = list[n].transform.position;
             list[n].transform.position = value;
         }
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged -= SubscribeToSolution;
     }
 }

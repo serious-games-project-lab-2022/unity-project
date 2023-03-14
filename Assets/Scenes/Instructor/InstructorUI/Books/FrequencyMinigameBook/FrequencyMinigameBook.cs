@@ -13,33 +13,31 @@ public class FrequencyMinigameBook : MinigameBook
 
         if (GameManager.Singleton.sharedGameState != null)
         {
-            StartCoroutine( GenerateSolutionExplanation());
+            GenerateSolutionAndSubscribe();
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
-
-        instructorManager.OnInstructorReceivedGameState += () => {
-            StartCoroutine(GenerateSolutionExplanation());
-        };
+        instructorManager.OnInstructorReceivedGameState += GenerateSolutionAndSubscribe;
     }
 
-    IEnumerator GenerateSolutionExplanation()
+    void GenerateSolutionAndSubscribe()
     {
-        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        // TODO: this should not be hard coded
-        yield return new WaitForSeconds(0.5f);
-        var frequencyMinigameSolution = sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution;
-        sinewave.amplitude = frequencyMinigameSolution.amplitude;
-        sinewave.frequency = frequencyMinigameSolution.frequency;
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged += SubscribeToSolution;
+        GenerateSolutionExplanation(GameManager.Singleton.sharedGameState.minigameSolutions.Value.frequencyMinigameSolutions.solution);
+    }
+    void SubscribeToSolution(MinigameSolutions _, MinigameSolutions newMinigameSolution)
+    {
+        GenerateSolutionExplanation(newMinigameSolution.frequencyMinigameSolutions.solution);
+    }
 
-        // test
-        print("instructor");
+    private void GenerateSolutionExplanation(FrequencyMinigameSolution solution)
+    {
+        sinewave.amplitude = solution.amplitude;
+        sinewave.frequency = solution.frequency;
+        sinewave.DrawSineWave();
+        print("test");
         print(sinewave.amplitude);
         print(sinewave.frequency);
-
-        sinewave.DrawSineWave();
-
     }
-
     public override void Display()
     {
         transform.localPosition = Vector3.zero;
@@ -50,5 +48,9 @@ public class FrequencyMinigameBook : MinigameBook
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
         Desktop.DesktopClean = true;
+    }
+    private void OnDestroy()
+    {
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged -= SubscribeToSolution;
     }
 }
