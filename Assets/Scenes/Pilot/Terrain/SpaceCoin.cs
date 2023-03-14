@@ -21,7 +21,7 @@ public class SpaceCoin : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {   
         if(other.tag == "OverworldSpaceship"){
-            GameObject.FindObjectOfType<PilotManager>().score += 1f;
+            GameObject.FindObjectOfType<PilotManager>().score += 50f;
             Destroy(gameObject);
         }
     }
