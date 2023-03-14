@@ -56,6 +56,7 @@ public class PilotManager : MonoBehaviour
         };
         
         spaceship.OnCollidedWithTerrain += () => {
+            shakeTheCamera();
             DepleteFuel(by: 1.0f);
         };
     }
@@ -114,5 +115,10 @@ public class PilotManager : MonoBehaviour
     {
         Time.timeScale = 1;
         GameManager.Singleton.sharedGameState.InviteToStart(false);
+    }
+
+    private void shakeTheCamera()
+    {
+        FindObjectOfType<CameraShaker>().shakePilot();
     }
 }
