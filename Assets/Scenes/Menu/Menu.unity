@@ -2264,17 +2264,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Oh no, an evil alienrace kidnapped and trapped you inside their huge spaceconstruct
-    above earth! Now you have to cooperate with another human to prove humanities
-    worth to the greater cosmos. If you two fail to beat their tests humanity will
-    be whiped out!
+  m_text: 'Oh no! An evil alienrace kidnapped and trapped you inside their huge space
+    construct above earth! Now you have to cooperate with another human to prove
+    humanities worth to the greater cosmos. If you two fail to beat their tests humanity
+    will be whiped out!
 
 
-    As the pilot you have to steere a spaceship safely and solve
-    alien puzzles.
+    As the pilot you have to steere a spaceship safely
+    and solve alien puzzles.
 
-    As the instructor you have to give the pilot the crucial
-    information needed to find the way and solve the puzzles.'
+    As the instructor you have to give the pilot the
+    crucial information needed to find the way and solve the puzzles.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 54692f6e38fba4c729e4799aef17556d, type: 2}
   m_sharedMaterial: {fileID: 5263673625628144072, guid: 54692f6e38fba4c729e4799aef17556d, type: 2}
