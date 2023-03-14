@@ -5,13 +5,11 @@ using UnityEngine;
 public class OverworldGoal : MonoBehaviour
 {
     public delegate void CollidedWithSpaceship();
-    public static event CollidedWithSpaceship OnCollidedWithSpaceship;
-
-    private SharedGameState sharedGameState;
+    public event CollidedWithSpaceship OnCollidedWithSpaceship;
 
     void Start()
     {
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        var sharedGameState = GameManager.Singleton.sharedGameState;
        
         if (sharedGameState != null)
         {
@@ -23,6 +21,7 @@ public class OverworldGoal : MonoBehaviour
     {
         if(other.tag == "OverworldSpaceship"){
             OnCollidedWithSpaceship();
+            Destroy(gameObject);
         }
     }
 }

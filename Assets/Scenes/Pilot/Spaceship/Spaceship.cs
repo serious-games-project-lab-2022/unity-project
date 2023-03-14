@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,31 +5,38 @@ using UnityEngine.SceneManagement;
 
 public class Spaceship : MonoBehaviour
 {
-    //Space Ship Effects
-    private CameraShaker shaker;
-    public AudioSource collisionSound;
-  
-
-
-    private SharedGameState sharedGameState;
-    
     public delegate void CollidedWithTerrain();
-    public static event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
+    public event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
+    private Rigidbody2D rigidbody2D;
+    private Animation blinkingAnimation;
+    public float knockBackStrength = 3;
+    public float hitStunDurationInSeconds = 2;
+    private bool inHitStun = false;
+    private float hitStunTimer = 0;
 
     void Start()
     {
-        sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        shaker = GameObject.Find("FollowSpaceShipCam").GetComponent<CameraShaker>();
+        rigidbody2D = GetComponent<Rigidbody2D>();
+        blinkingAnimation = GetComponent<Animation>();
     }
 
     void Update()
     {
-        
+        var sharedGameState = GameManager.Singleton.sharedGameState;
         if (sharedGameState != null)
         {
             sharedGameState.spaceshipPosition.Value = new Vector2(transform.localPosition.x, transform.localPosition.y);
             sharedGameState.spaceshipRotation.Value = transform.eulerAngles.z;
-            
+        }
+
+        if (inHitStun)
+        {
+            hitStunTimer += Time.fixedDeltaTime;
+            if (hitStunTimer >= hitStunDurationInSeconds)
+            {
+                hitStunTimer = 0;
+                inHitStun = false;
+            }
         }
     }
 
@@ -38,12 +44,18 @@ public class Spaceship : MonoBehaviour
     {
         if (collision.gameObject.tag == "OverworldTerrain")
         {
-            collisionSound.Play();
+            if (inHitStun)
+            {
+                return;
+            }
+            var collisionPoint = collision.GetContact(0).point;
+            var knockBackDirection = (rigidbody2D.position - collisionPoint).normalized;
+
+            rigidbody2D.AddForce(knockBackDirection * knockBackStrength, ForceMode2D.Impulse);
+            blinkingAnimation.Play();
+            inHitStun = true;
+
             OnCollidedWithTerrain();
-            shaker.shakePilot();
-           
         }
     }
-
-    
 }

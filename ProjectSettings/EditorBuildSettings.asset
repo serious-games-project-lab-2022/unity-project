@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu/Menu.unity
     guid: b30e4829a00644bebac112c07b06cf4b
   - enabled: 1
-    path: Assets/Scenes/End/GameOver.unity
+    path: Assets/Scenes/End/EndScreen.unity
     guid: 2bd01e7bb329c574eb5c9dcb198bb1d8
   - enabled: 1
     path: Assets/Scenes/Pilot/PilotGame.unity
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Instructor/InstructorGame.unity
     guid: bf97000b1547742839587a4d474e567e
-  - enabled: 1
-    path: Assets/Scenes/End/GameWon.unity
-    guid: 58391c80a4bce974aa549d27f56d1991
+  - enabled: 0
+    path: Assets/Scenes/End/EndScreenInstructor.unity
+    guid: 68c0c4b7d13d6e24cacbd9eefc8846df
   m_configObjects: {}

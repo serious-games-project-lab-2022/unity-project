@@ -4,29 +4,34 @@ using System.Linq;
 using UnityEngine;
 
 public class ShapeMinigameBook : MinigameBook
+
 {
-    [SerializeField]
-    private ScenarioManager scenarioManagerPrefab;
     private Grid grid;
 
     void Start()
     {
         Hide();
         grid = transform.Find("Grid").GetComponent<Grid>();
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            GenerateSolutionExplanation();
+
+        if (GameManager.Singleton.sharedGameState != null)
+        {
+            StartCoroutine(GenerateSolutionExplanation());
+        }
+        var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
+        instructorManager.OnInstructorReceivedGameState += () => {
+            StartCoroutine(GenerateSolutionExplanation());
         };
     }
 
-    void GenerateSolutionExplanation()
+    IEnumerator GenerateSolutionExplanation()
     {
-        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
         // TODO: this should not be hard coded
+        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
+        yield return new WaitForSeconds(0.5f);
         var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
-
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {
-            var shapePrefab = scenarioManagerPrefab.minigameShapePrefabs[index];
+            var shapePrefab = GameManager.Singleton.scenarioManager.minigameShapePrefabs[index];
             var shapePosition = shapeMinigameSolution.relativePositions[index];
 
             var shape = Instantiate(shapePrefab, parent: grid.transform);
@@ -43,5 +48,6 @@ public class ShapeMinigameBook : MinigameBook
     {
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
+        Desktop.DesktopClean = true;
     }
 }

@@ -8,16 +8,11 @@ public abstract class Minigame : MonoBehaviour
     [SerializeField] private float secondsToSolve = 30f;
     private float secondsLeftToSolve;
     public bool takeInput = true;  
-
     [SerializeField] protected Image timerBar;
-
     public delegate void MinigameOver(bool solved);
     public event MinigameOver OnMinigameOver = delegate { };
 
 
-
-
-    // Start is called before the first frame update
     virtual protected void Start()
     { 
         GetSolution();
@@ -65,4 +60,6 @@ public abstract class Minigame : MonoBehaviour
         var minigameCamera = GameObject.FindGameObjectWithTag("MinigameCamera").GetComponent<Camera>();
         canvas.worldCamera = minigameCamera;
     }
+
+    
 }

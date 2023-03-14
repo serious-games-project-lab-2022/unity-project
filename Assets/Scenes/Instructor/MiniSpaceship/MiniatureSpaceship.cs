@@ -8,22 +8,19 @@ using UnityEngine.XR;
 
 public class MiniatureSpaceship : MonoBehaviour
 {
-    private SharedGameState sharedGameState;
-
-    void Start()
+    private void Start() 
     {
-        SharedGameState.OnInstructorReceivedGameState += () => {
-            sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        };
+        transform.localPosition = new Vector3(1000, 1000, 0);
     }
 
     void FixedUpdate()
     {
+        var sharedGameState = GameManager.Singleton.sharedGameState;
         if (sharedGameState == null)
         {
             return;
         }
-        transform.localPosition = sharedGameState.spaceshipPosition.Value / 16;
+        transform.localPosition = sharedGameState.spaceshipPosition.Value / 8f;
         transform.eulerAngles = new Vector3(0, 0, sharedGameState.spaceshipRotation.Value);
     }
 }

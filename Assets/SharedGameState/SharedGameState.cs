@@ -7,31 +7,68 @@ public class SharedGameState : NetworkBehaviour
 {
     public NetworkVariable<Vector2> spaceshipPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<float> spaceshipRotation = new NetworkVariable<float>(0f);
+    public NetworkVariable<Vector2> checkpointPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
     public NetworkVariable<Vector2> overworldGoalPosition = new NetworkVariable<Vector2>(new Vector2(0, 0));
-
     public NetworkVariable<MinigameSolutions> minigameSolutions = new NetworkVariable<MinigameSolutions>();
+    public NetworkVariable<Terrain> terrain = new NetworkVariable<Terrain>(new Terrain(
+        new List<Vector3Int>(),
+        new List<Vector3Int>(),
+        0,
+        0
+    ));
+    public NetworkVariable<bool> instructorInvitedToRetry = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotInvitedToRetry = new NetworkVariable<bool>(false);
+    // start screen
+    public NetworkVariable<bool> instructorInvitedToStart = new NetworkVariable<bool>(false);
+    public NetworkVariable<bool> pilotInvitedToStart = new NetworkVariable<bool>(false);
+    // score Result
+    public NetworkVariable<float> score = new NetworkVariable<float>();
 
-    private bool IsPilot {
+    private bool IsPilot
+    {
         get { return IsHost; }
     }
-    private bool IsInstructor {
+    private bool IsInstructor
+    {
         get { return !IsHost; }
     }
 
-    public delegate void InstructorReceivedGameState();
-    public static event InstructorReceivedGameState OnInstructorReceivedGameState = delegate {};
-
     public delegate void InstructorReceivedGameEndedRpc(bool gameEndedSuccessfully);
-    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate {};
-   
+    public event InstructorReceivedGameEndedRpc OnInstructorReceivedGameEndedRpc = delegate { };
 
     public override void OnNetworkSpawn()
     {
+        if (IsPilot)
+        {
+            instructorInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+            pilotInvitedToRetry.OnValueChanged += RetryGameIfBothPlayersInvitedEachOther;
+
+        }
+
         if (IsInstructor)
         {
             DontDestroyOnLoad(this);
-            OnInstructorReceivedGameState();
+            GameManager.Singleton.sharedGameState = this;
+            GameObject.FindObjectOfType<InstructorManager>().OnReceivedGameState();
             InstructorReadyServerRpc();
+        }
+    }
+
+    private void RetryGameIfBothPlayersInvitedEachOther(bool _previousInvitationStatus, bool _currentInvitationStatus)
+    {
+        if (!IsPilot)
+        {
+            return;
+        }
+
+        if (instructorInvitedToRetry.Value && pilotInvitedToRetry.Value)
+        {
+            instructorInvitedToRetry.Value = false;
+            pilotInvitedToRetry.Value = false;
+
+            GameManager.Singleton.GenerateScenario();
+            RetryGameForInstructorClientRpc();
+            GameManager.Singleton.TransitionToGameScene();
         }
     }
 
@@ -40,9 +77,51 @@ public class SharedGameState : NetworkBehaviour
     {
     }
 
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorInvitePilotToNewGameServerRpc()
+    {
+        instructorInvitedToRetry.Value = true;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void InstructorInvitePilotToStartGameServerRpc(bool start)
+    {
+        instructorInvitedToStart.Value = start;
+    }
+
     [ClientRpc]
     public void GameEndedClientRpc(bool gameEndedSuccessfully)
     {
         OnInstructorReceivedGameEndedRpc(gameEndedSuccessfully);
+    }
+
+    public void InviteToRetry()
+    {
+        if (IsInstructor)
+        {
+            InstructorInvitePilotToNewGameServerRpc();
+        }
+        if (IsPilot)
+        {
+            pilotInvitedToRetry.Value = true;
+        }
+    }
+
+    public void InviteToStart(bool start)
+    {
+        if (IsInstructor)
+        {
+            InstructorInvitePilotToStartGameServerRpc(start);
+        }
+        if (IsPilot)
+        {
+            pilotInvitedToStart.Value = start;
+        }
+    }
+
+    [ClientRpc]
+    public void RetryGameForInstructorClientRpc()
+    {
+        GameManager.Singleton.TransitionToGameScene();
     }
 }
