@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OverworldGoal : MonoBehaviour
+public class OverworldGoal : OverworldCollectible
 {
     public delegate void CollidedWithSpaceship();
     public event CollidedWithSpaceship OnCollidedWithSpaceship;

@@ -14,6 +14,8 @@ public class MinigameHandler : MonoBehaviour
     [SerializeField] private Transform worldOrigin;
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+    private Checkpoint currentCheckpoint;
+    private OverworldGoal currentOverworldGoal;
 
     void Start()
     {
@@ -39,6 +41,15 @@ public class MinigameHandler : MonoBehaviour
                 GameObject.FindObjectOfType<PilotManager>().score -= 100f;
                 OnPlayerLostMinigame(damageAmount: 3.0f);
             }
+
+            if (currentCheckpoint != null)
+            {
+                currentCheckpoint.Activate();
+            }
+            if (currentOverworldGoal != null)
+            {
+                currentOverworldGoal.Activate();
+            }
         };
 
         currentMinigameIndex++;
@@ -51,24 +62,29 @@ public class MinigameHandler : MonoBehaviour
 
     public void SpawnCheckpoint(Vector3Int newPosition) 
     {
-        var checkpoint = Instantiate(
+        currentCheckpoint = Instantiate(
             checkpointPrefab,
             parent: worldOrigin.transform
         );
-        checkpoint.transform.localPosition = newPosition;
-        checkpoint.OnCheckpointReached += SpawnMinigame;
+        currentCheckpoint.transform.localPosition = newPosition;
+        currentCheckpoint.OnCheckpointReached += SpawnMinigame;
+        if (currentMinigameIndex != 0)
+        {
+            currentCheckpoint.Deactivate();
+        }
     }
 
     public void SpawnGoal(Vector3Int newPosition) 
     {
-        var goal = Instantiate(
+        currentOverworldGoal = Instantiate(
             goalPrefab,
             parent: worldOrigin.transform
         );
-        goal.transform.localPosition = newPosition;
-        goal.OnCollidedWithSpaceship += () =>
+        currentOverworldGoal.transform.localPosition = newPosition;
+        currentOverworldGoal.OnCollidedWithSpaceship += () =>
         {
             GameObject.FindObjectOfType<PilotManager>().EndGame(gameEndedSuccessfully: true);
         };
+        currentOverworldGoal.Deactivate();
     }
 }

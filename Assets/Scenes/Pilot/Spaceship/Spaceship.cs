@@ -7,7 +7,7 @@ public class Spaceship : MonoBehaviour
 {
     public delegate void CollidedWithTerrain();
     public event CollidedWithTerrain OnCollidedWithTerrain = delegate {};
-    private Rigidbody2D rigidbody2D;
+    new private Rigidbody2D rigidbody2D;
     private Animation blinkingAnimation;
     public float knockBackStrength = 3;
     public float hitStunDurationInSeconds = 2;
