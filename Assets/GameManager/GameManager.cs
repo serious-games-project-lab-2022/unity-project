@@ -80,6 +80,7 @@ public class GameManager : NetworkBehaviour
         scenarioManager.generateScenario();
         sharedGameState.minigameSolutions.Value = scenarioManager.minigameSolutions;
         sharedGameState.terrain.Value = scenarioManager.terrain;
+        sharedGameState.overworldGoalPosition.Value = new Vector2(1000, 1000);
     }
 
     public void GoBackToMainMenu()

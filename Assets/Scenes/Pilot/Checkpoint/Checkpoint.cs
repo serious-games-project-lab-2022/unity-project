@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Checkpoint : MonoBehaviour
+public class Checkpoint : OverworldCollectible
 {
     public delegate void CheckpointReached();
     public event CheckpointReached OnCheckpointReached;

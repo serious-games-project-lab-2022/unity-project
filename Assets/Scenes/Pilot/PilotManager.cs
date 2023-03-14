@@ -16,8 +16,6 @@ public class PilotManager : MonoBehaviour
     [SerializeField]
     private MinigameHandler minigameHandler;
     [SerializeField]
-    private OverworldGoal overworldGoal;
-    [SerializeField]
     private Spaceship spaceship;
     public delegate void FuelChanged(float newFuelValue);
     public event FuelChanged OnFuelChanged = delegate {};
@@ -58,8 +56,7 @@ public class PilotManager : MonoBehaviour
         };
         
         spaceship.OnCollidedWithTerrain += () => {
-            shakeTheCamera();
-            playTheCollisionSound();
+            ShakeCamera();
             DepleteFuel(by: 1.0f);
         };
     }
@@ -95,7 +92,7 @@ public class PilotManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score*10));
+        scoreText.SetText("Score:{0}", Mathf.RoundToInt(score));
         fuelLoss = 0.007f * Time.fixedDeltaTime;
         DepleteFuel(fuelLoss);
     }
@@ -121,14 +118,8 @@ public class PilotManager : MonoBehaviour
         fireParticles.Play();
     }
 
-    private void shakeTheCamera()
+    private void ShakeCamera()
     {
         FindObjectOfType<CameraShaker>().shakePilot();
-    }
-
-    private void playTheCollisionSound()
-    {
-        var audioSource = FindObjectOfType<AudioSource>();
-        audioSource.Play();
     }
 }

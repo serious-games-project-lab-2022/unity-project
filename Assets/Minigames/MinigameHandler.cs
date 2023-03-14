@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using Random = System.Random;
+using SystemRandom = System.Random;
+
 
 public class MinigameHandler : MonoBehaviour
 {
@@ -14,11 +16,18 @@ public class MinigameHandler : MonoBehaviour
     [SerializeField] private Transform worldOrigin;
     public delegate void PlayerLostMinigame(float damageAmount);
     public event PlayerLostMinigame OnPlayerLostMinigame = delegate { };
+    private Checkpoint currentCheckpoint;
+    private OverworldGoal currentOverworldGoal;
+
+    [SerializeField] private AudioSource minigameAppearSound;
+    [SerializeField] private AudioSource minigameSuccessfulSound;
+    [SerializeField] private AudioSource minigameUnsuccessfulSound;
 
     void Start()
     {
         checkpointPositions = GameManager.Singleton.scenarioManager.terrain.checkpointList;
         SpawnCheckpoint(checkpointPositions[currentMinigameIndex + 1]);
+        minigamePrefabs = minigamePrefabs.OrderBy(x => Random.value).ToList();
     }
 
     public void SpawnMinigame()
@@ -29,15 +38,30 @@ public class MinigameHandler : MonoBehaviour
             parent: this.transform
         );
         minigame.transform.localPosition = new Vector3Int(8, 0, 0);
+        minigameAppearSound.Play();
 
         minigame.OnMinigameOver += (bool solved) =>
         {
-            GameObject.FindObjectOfType<PilotManager>().score += 100f;
+            GameObject.FindObjectOfType<PilotManager>().score += 1000f;
             Destroy(minigame.gameObject);
             if (!solved)
             {
-                GameObject.FindObjectOfType<PilotManager>().score -= 100f;
+                GameObject.FindObjectOfType<PilotManager>().score -= 1000f;
                 OnPlayerLostMinigame(damageAmount: 3.0f);
+                minigameUnsuccessfulSound.Play();
+            }
+            else
+            {
+                minigameSuccessfulSound.Play();
+            }
+
+            if (currentCheckpoint != null)
+            {
+                currentCheckpoint.Activate();
+            }
+            if (currentOverworldGoal != null)
+            {
+                currentOverworldGoal.Activate();
             }
         };
 
@@ -51,24 +75,29 @@ public class MinigameHandler : MonoBehaviour
 
     public void SpawnCheckpoint(Vector3Int newPosition) 
     {
-        var checkpoint = Instantiate(
+        currentCheckpoint = Instantiate(
             checkpointPrefab,
             parent: worldOrigin.transform
         );
-        checkpoint.transform.localPosition = newPosition;
-        checkpoint.OnCheckpointReached += SpawnMinigame;
+        currentCheckpoint.transform.localPosition = newPosition;
+        currentCheckpoint.OnCheckpointReached += SpawnMinigame;
+        if (currentMinigameIndex != 0)
+        {
+            currentCheckpoint.Deactivate();
+        }
     }
 
     public void SpawnGoal(Vector3Int newPosition) 
     {
-        var goal = Instantiate(
+        currentOverworldGoal = Instantiate(
             goalPrefab,
             parent: worldOrigin.transform
         );
-        goal.transform.localPosition = newPosition;
-        goal.OnCollidedWithSpaceship += () =>
+        currentOverworldGoal.transform.localPosition = newPosition;
+        currentOverworldGoal.OnCollidedWithSpaceship += () =>
         {
             GameObject.FindObjectOfType<PilotManager>().EndGame(gameEndedSuccessfully: true);
         };
+        currentOverworldGoal.Deactivate();
     }
 }

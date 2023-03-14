@@ -15,20 +15,26 @@ public class ShapeMinigameBook : MinigameBook
 
         if (GameManager.Singleton.sharedGameState != null)
         {
-            StartCoroutine(GenerateSolutionExplanation());
+            GenerateSolutionAndSubscribe();
         }
         var instructorManager = GameObject.FindObjectOfType<InstructorManager>();
-        instructorManager.OnInstructorReceivedGameState += () => {
-            StartCoroutine(GenerateSolutionExplanation());
-        };
+        instructorManager.OnInstructorReceivedGameState += GenerateSolutionAndSubscribe;
+    }
+    void GenerateSolutionAndSubscribe()
+    {
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged += SubscribeToSolution;
+        GenerateSolutionExplanation(GameManager.Singleton.sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions);
     }
 
-    IEnumerator GenerateSolutionExplanation()
+    void SubscribeToSolution(MinigameSolutions _, MinigameSolutions newMinigameSolution)
     {
-        // TODO: this should not be hard coded
-        var sharedGameState = GameObject.FindObjectOfType<SharedGameState>();
-        yield return new WaitForSeconds(0.5f);
-        var shapeMinigameSolution = sharedGameState.minigameSolutions.Value.shapeMinigameSolutions.solutions;
+
+        GenerateSolutionExplanation(newMinigameSolution.shapeMinigameSolutions.solutions);
+    }
+    private void GenerateSolutionExplanation(ShapeMinigameSolution solution)
+    {
+        clearTheShapes(grid);
+        var shapeMinigameSolution = solution;
         foreach (var index in shapeMinigameSolution.shapeIndices)
         {
             var shapePrefab = GameManager.Singleton.scenarioManager.minigameShapePrefabs[index];
@@ -49,5 +55,17 @@ public class ShapeMinigameBook : MinigameBook
         // I'm sorry for this but this is really the simplest solution
         transform.localPosition = new Vector3(1000, 1000, 1000);
         Desktop.DesktopClean = true;
+    }
+    private void OnDestroy()
+    {
+        GameManager.Singleton.sharedGameState.minigameSolutions.OnValueChanged -= SubscribeToSolution;
+
+    }
+    private void clearTheShapes(Grid grid)
+    {
+        for(int i = 0; i< grid.transform.childCount; i++)
+        {
+            Destroy(grid.transform.GetChild(i).gameObject);
+        }
     }
 }
